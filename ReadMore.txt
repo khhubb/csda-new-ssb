@@ -1,0 +1,164 @@
+Files and classes in the project
+================================
+
+
+First, the AppWizard generated classes and files.
+
+CAboutDlg         
+	default About dialog
+    I've made a few modifications.
+	Defined in csda.cpp
+	              
+CChildFrame
+	Derived from CMDIChildWnd
+	defined in ChildFrm.{h,cpp}
+	I've made the following modifications
+		- in PreCreateWindow, set the style to exclude the filename
+		  in the title
+
+CCsdaApp
+	The CWinApp-based application class.
+	Defined in csda.{h,cpp}
+	I've added a variety of members here:
+	    a CDatabase object
+		a CICodeGroupMgr object
+		pointers to CMultiDocTemplates needed to define various
+			doc/view/frame pairs
+
+CMainFrame
+	The CFrameWnd-derived class.
+	Defined in MainFrm.{h,cpp}.
+	Changed the style a little.
+
+
+Now, on to my goodies:
+
+
+Queries
+=======
+
+CCIBogieSet
+	manages the query:	SELECT * FROM 80HSM_BOGIES
+	               DB:	csda
+
+CCICodeSet
+	Manages the query:	SELECT * FROM CI_CODES
+	               DB:	csda
+
+CDalyPlanSet
+	Manages the query:	SELECT * FROM DALYPLAN
+						WHERE PLAN_CAST_UNIT_CODE = ?
+						ORDER BY lots of things
+						(parameterized)
+				   DB:	DPA
+
+CUnappOrderSet
+	Manages the query:	SELECT * FROM 80HSM_UNAPPLIED_DEMAND
+						WHERE MORD_PRODUCT_CMDTY_CD = ?
+						ORDER BY lots of things
+						(parameterized)
+				   DB:	DPA
+
+
+
+
+General classes
+===============
+
+CICodeGroup
+	CI codes are grouped together into categories
+	on the commodity report.  An instance of this class
+	represents one of those categories.  Associated with
+	the category is the set of CI codes that are grouped,
+	the name, the current bogie, and a sort order.
+
+CICodeGroupMgr
+	Manages a set of CICodeGroups.  Keeps them sorted in order.
+	Provides convenient lookup of the group given a CI code.
+	Can initialize by running the queries in CCICodeSet and
+	CCIBogieSet.
+
+CICodeGroupException
+	Used in the implementation of CICodeGroupMgr as a throw value.
+
+
+Order
+	A customer order.
+	
+
+CastStringId
+	Represents the id of a cast string.
+	Year,week,caster,stringId.
+
+CastString
+	A cast string.  Has an id and a sequence (vector) of CSOrders.
+	Primary initialization source is the DALYPLAN.
+
+CSOrder
+	Ordered material in a cast string.
+	Details still pending.
+	Primary initialization source is the DALYPLAN.
+
+
+Scenario
+	A little base class for the various types of scenario,
+	contributing primarily an id.
+
+CasterScen
+	A scenario on one of the casters.  A sequence of CastStrings
+	on each strand.
+
+ProdnScen	
+	Details on production.  Downtimes, etc.
+
+SuperScen
+	A combination of one or more of:
+		CasterScen for caster #1
+		CasterScen for caster #2
+		CasterScen for caster #3
+		ProdnScen
+
+
+//  Editors
+
+CCIBogieDoc
+CCIBogieView
+	This doc/view pair are used to display bogies for all ciCodes.
+	The data underlying the document is a CICodeGroupMgr.
+	At the moment, this is global in the CCsdaApp object, but
+	eventually should be made local to the doc.
+	The view is a CListView.
+	This is the initial doc/view started by the application.
+
+
+COrderBookDoc			: public CDocument
+COrderBookSummaryView	: public CListView
+COrderBookSelectionView	: public CListView
+COrderBookChildFrame	: public CChildFrame
+	COrderBookChildFrame implements a frame with a splitter window
+	with a COrderBookSummaryView on the top and a COrderBookSelectionView
+	on the bottom.  Both views are onto a COrderBookDoc.  A COrderViewDoc
+	views a selection from order book, namely, all orders of a given set
+	of CI codes from 80HSM_UNAPPLIED_DEMAND.
+	The COrderBookSummaryView shows summary information on grouped orders,
+	e.g. grouped on spec/width.
+	The COrderBookSelectionView lists all the orders in the currently selected
+	group.
+
+
+
+CSuperScenDoc			: public CDocument
+CSuperScenTreeView		: public CTreeView
+CSuperScenGanttView		: public CScrollView
+CSuperScenChildFrame	: public CChildFrame
+
+	CSuperScenChildFrame implements a frame with a splitter window
+	with a CSuperScenTreeView on the left and a CSuperScenGanttView
+	on the right.  Both views are onto a CSuperScenDoc.
+	A SuperScen is the data being edited by the CSuperScenDoc.
+
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+	

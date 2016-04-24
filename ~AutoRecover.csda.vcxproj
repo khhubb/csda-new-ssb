@@ -1,0 +1,706 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <SccProjectName>"$/Cast String Design/910Csd/csda_03-06-06", BXMDAAAA</SccProjectName>
+    <SccLocalPath>.</SccLocalPath>
+    <Keyword>MFCProj</Keyword>
+    <ProjectGuid>{6C93E887-6ECC-4BEE-B9C7-EDA5712A27DD}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
+    <Import Project="..\..\..\Rogue Wave\Stingray Studio 11.2\Src\SS-X64-PropSheet12.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
+    <Import Project="..\..\..\Rogue Wave\Stingray Studio 11.2\Src\SS-Win32-PropSheet12.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
+    <Import Project="..\..\..\Rogue Wave\Stingray Studio 11.2\Src\SS-X64-PropSheet12.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
+    <Import Project="..\..\..\Rogue Wave\Stingray Studio 11.2\Src\SS-Win32-PropSheet12.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <LibraryPath>d:\Rogue Wave\Stingray Studio 11.2\Lib\vc12\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <LibraryPath>d:\Rogue Wave\Stingray Studio 11.2\Lib\vc12\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <Optimization>Disabled</Optimization>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <WarningLevel>Level3</WarningLevel>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <DebugInformationFormat>None</DebugInformationFormat>
+      <PreprocessorDefinitions>_DEBUG;WIN32;_WINDOWS;_SECDLL;_GXDLL;_CMNDLL;_MVCDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AssemblerListingLocation>.\Debug\</AssemblerListingLocation>
+      <BrowseInformation>true</BrowseInformation>
+      <PrecompiledHeaderOutputFile>.\Debug\csda.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <ObjectFileName>.\Debug\</ObjectFileName>
+      <ProgramDataBaseFileName>.\Debug\</ProgramDataBaseFileName>
+    </ClCompile>
+    <Midl>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TypeLibraryName>.\Debug\csda.tlb</TypeLibraryName>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <RedirectOutputAndErrors>NUL</RedirectOutputAndErrors>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\Debug\csda.bsc</OutputFile>
+    </Bscmake>
+    <Link>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OutputFile>.\x64\Debug\csda.exe</OutputFile>
+      <AdditionalDependencies>msvcrtd.lib;msvcmrtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <Optimization>Disabled</Optimization>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <WarningLevel>Level3</WarningLevel>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <DebugInformationFormat>None</DebugInformationFormat>
+      <PreprocessorDefinitions>_DEBUG;WIN32;_WINDOWS;_SECDLL;_GXDLL;_CMNDLL;_MVCDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AssemblerListingLocation>.\Debug\</AssemblerListingLocation>
+      <BrowseInformation>true</BrowseInformation>
+      <PrecompiledHeaderOutputFile>.\Debug\csda.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <ObjectFileName>.\Debug\</ObjectFileName>
+      <ProgramDataBaseFileName>.\Debug\</ProgramDataBaseFileName>
+    </ClCompile>
+    <Midl>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TypeLibraryName>.\Debug\csda.tlb</TypeLibraryName>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <RedirectOutputAndErrors>NUL</RedirectOutputAndErrors>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\Debug\csda.bsc</OutputFile>
+    </Bscmake>
+    <Link>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OutputFile>.\Debug\csda.exe</OutputFile>
+      <AdditionalDependencies>msvcrtd.lib;msvcmrtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <Optimization>Disabled</Optimization>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <WarningLevel>Level3</WarningLevel>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;WIN32;_WINDOWS;_SECDLL;_GXDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AssemblerListingLocation>.\Release\</AssemblerListingLocation>
+      <PrecompiledHeaderOutputFile>.\Release\csda.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <ObjectFileName>.\Release\</ObjectFileName>
+      <ProgramDataBaseFileName>.\Release\</ProgramDataBaseFileName>
+    </ClCompile>
+    <Midl>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TypeLibraryName>.\Release\csda.tlb</TypeLibraryName>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <RedirectOutputAndErrors>NUL</RedirectOutputAndErrors>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\Release\csda.bsc</OutputFile>
+    </Bscmake>
+    <Link>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <SubSystem>Windows</SubSystem>
+      <OutputFile>.\x64\Release\csda.exe</OutputFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <Optimization>Disabled</Optimization>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <WarningLevel>Level3</WarningLevel>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;WIN32;_WINDOWS;_SECDLL;_GXDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AssemblerListingLocation>.\Release\</AssemblerListingLocation>
+      <PrecompiledHeaderOutputFile>.\Release\csda.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <ObjectFileName>.\Release\</ObjectFileName>
+      <ProgramDataBaseFileName>.\Release\</ProgramDataBaseFileName>
+    </ClCompile>
+    <Midl>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TypeLibraryName>.\Release\csda.tlb</TypeLibraryName>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <RedirectOutputAndErrors>NUL</RedirectOutputAndErrors>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\Release\csda.bsc</OutputFile>
+    </Bscmake>
+    <Link>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <SubSystem>Windows</SubSystem>
+      <OutputFile>.\Release\csda.exe</OutputFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="ArchiveQueue.cpp" />
+    <ClCompile Include="AvailCasterScenId.cpp" />
+    <ClCompile Include="bofspecmgr.cpp" />
+    <ClCompile Include="CasterScen.cpp" />
+    <ClCompile Include="CasterScenArchiver.cpp" />
+    <ClCompile Include="CasterScenariosMaxIdSet.cpp" />
+    <ClCompile Include="CasterScenariosSet.cpp" />
+    <ClCompile Include="CasterScenInfoDlg.cpp" />
+    <ClCompile Include="CasterStringHeatChemsSet.cpp" />
+    <ClCompile Include="CasterStringHeatsSet.cpp" />
+    <ClCompile Include="CasterStringOrdersSet.cpp" />
+    <ClCompile Include="CasterStringsSet.cpp" />
+    <ClCompile Include="CasterStringTemplateChemsSet.cpp" />
+    <ClCompile Include="CasterStringTemplateSortsSet.cpp" />
+    <ClCompile Include="CasterStringTemplateSpecsSet.cpp" />
+    <ClCompile Include="CasterStringTemplatesSet.cpp" />
+    <ClCompile Include="CastString.cpp" />
+    <ClCompile Include="CastStringEditorChildFrame.cpp" />
+    <ClCompile Include="CastStringEditorDoc.cpp" />
+    <ClCompile Include="CastStringEditorGanttBars.cpp" />
+    <ClCompile Include="CastStringEditorGanttView.cpp" />
+    <ClCompile Include="CastStringEditorMvc.cpp" />
+    <ClCompile Include="CastStringEditorScenMgrView.cpp" />
+    <ClCompile Include="CastStringEditorStrandSummaryView.cpp" />
+    <ClCompile Include="CastStringEditorTextView.cpp" />
+    <ClCompile Include="CastStringEditorValidnView.cpp" />
+    <ClCompile Include="CastStringHeat.cpp" />
+    <ClCompile Include="CastStringHeatValidnError.cpp" />
+    <ClCompile Include="CastStringId.cpp" />
+    <ClCompile Include="CastStringIdDlg.cpp" />
+    <ClCompile Include="CastStringMiscProps.cpp" />
+    <ClCompile Include="CastStringSummaryRecord.cpp" />
+    <ClCompile Include="CastStringValidator.cpp" />
+    <ClCompile Include="CheckStockApplicationRules.cpp" />
+    <ClCompile Include="Chem.cpp" />
+    <ClCompile Include="ChemRange.cpp" />
+    <ClCompile Include="ChildFrm.cpp" />
+    <ClCompile Include="CIBogieSet.cpp" />
+    <ClCompile Include="CICode.cpp" />
+    <ClCompile Include="CICodeGroupDefSet.cpp" />
+    <ClCompile Include="CICodeGroupXrefSet.cpp" />
+    <ClCompile Include="CICodeSet.cpp" />
+    <ClCompile Include="clipFormat.cpp" />
+    <ClCompile Include="csda.cpp" />
+    <ClCompile Include="CsdaEventLogMaxId.cpp" />
+    <ClCompile Include="CsdaEventLogSet.cpp" />
+    <ClCompile Include="CsdaEventLogSet2.cpp" />
+    <ClCompile Include="CSOrder.cpp" />
+    <ClCompile Include="CSOrderParmDlg.cpp" />
+    <ClCompile Include="DailyPlanLastDownloadTimeSet.cpp" />
+    <ClCompile Include="DailyPlanLineupsUploadSet.cpp" />
+    <ClCompile Include="DailyPlanUploadSet.cpp" />
+    <ClCompile Include="DalyPlanOrdersOnlySet.cpp" />
+    <ClCompile Include="DalyPlanSet.cpp" />
+    <ClCompile Include="DateTimeDlg.cpp" />
+    <ClCompile Include="DBConn.cpp" />
+    <ClCompile Include="DocBase.cpp" />
+    <ClCompile Include="DocMvcMixin.cpp" />
+    <ClCompile Include="DragSourceButton.cpp" />
+    <ClCompile Include="EMailDlg.cpp" />
+    <ClCompile Include="GanttColorChartDlg.cpp" />
+    <ClCompile Include="GanttDisplay.cpp" />
+    <ClCompile Include="HeaderInfo.cpp" />
+    <ClCompile Include="HeatChemsGrid.cpp" />
+    <ClCompile Include="HeatDetailsDlg.cpp" />
+    <ClCompile Include="HeatDetailsGrid.cpp" />
+    <ClCompile Include="HeatLockDlg.cpp" />
+    <ClCompile Include="HeatSpecCrossApp.cpp" />
+    <ClCompile Include="HeatSpecCrossAppSet.cpp" />
+    <ClCompile Include="HMLastLoadCountSet.cpp" />
+    <ClCompile Include="HMLoadGraphBars.cpp" />
+    <ClCompile Include="HMLoadGraphChildFrame.cpp" />
+    <ClCompile Include="HMLoadGraphDoc.cpp" />
+    <ClCompile Include="HMLoadGraphMvc.cpp" />
+    <ClCompile Include="HMLoadGraphScenSeqView.cpp" />
+    <ClCompile Include="HMLoadGraphSheetView.cpp" />
+    <ClCompile Include="HMLoadGraphView.cpp" />
+    <ClCompile Include="HMStartTimeDlg.cpp" />
+    <ClCompile Include="HMSupplyActual.cpp" />
+    <ClCompile Include="HMSupplyMgr.cpp" />
+    <ClCompile Include="HMSupplyProjected.cpp" />
+    <ClCompile Include="InitialScenLoaderDlg.cpp" />
+    <ClCompile Include="ListCtrlEx.cpp" />
+    <ClCompile Include="LoginDlg.cpp" />
+    <ClCompile Include="LongOpn.cpp" />
+    <ClCompile Include="LongOpnFrameWnd.cpp" />
+    <ClCompile Include="MainFrm.cpp" />
+    <ClCompile Include="MaintainListCtrlPosn.cpp" />
+    <ClCompile Include="MessageBus.cpp" />
+    <ClCompile Include="MillOrderChemsSet.cpp" />
+    <ClCompile Include="MiscConstants.cpp" />
+    <ClCompile Include="MruOneScenDlgBar.cpp" />
+    <ClCompile Include="MruOneScenMVC.cpp" />
+    <ClCompile Include="MsgDlg.cpp" />
+    <ClCompile Include="msoutl85.cpp" />
+    <ClCompile Include="MultipleOrderInsertDlg.cpp" />
+    <ClCompile Include="MultipleOrderInsertGrid.cpp" />
+    <ClCompile Include="MultiSelectDlg.cpp" />
+    <ClCompile Include="Notify.cpp" />
+    <ClCompile Include="NOutputWnd.cpp" />
+    <ClCompile Include="NReport.cpp" />
+    <ClCompile Include="NStateBitmapButton.cpp" />
+    <ClCompile Include="nTime.cpp" />
+    <ClCompile Include="order.cpp" />
+    <ClCompile Include="OrderColor.cpp" />
+    <ClCompile Include="OrderInquiryDlg.cpp" />
+    <ClCompile Include="OrderNumDlg.cpp" />
+    <ClCompile Include="OrderSelection.cpp" />
+    <ClCompile Include="OutputControlBar.cpp" />
+    <ClCompile Include="OutputWnd.cpp" />
+    <ClCompile Include="PerUserDefaultValuesSet.cpp" />
+    <ClCompile Include="PickCasterDlg.cpp" />
+    <ClCompile Include="PlanWorksheetReport.cpp" />
+    <ClCompile Include="PpgCICodeSelect.cpp" />
+    <ClCompile Include="PpgHeatSizes.cpp" />
+    <ClCompile Include="PpgOrderChemRange.cpp" />
+    <ClCompile Include="PpgOrderRange.cpp" />
+    <ClCompile Include="ProdnScen.cpp" />
+    <ClCompile Include="PSheetAvailOrders.cpp" />
+    <ClCompile Include="PSheetMiscConstants.cpp" />
+    <ClCompile Include="PstConformanceReport.cpp" />
+    <ClCompile Include="ReportDlg.cpp" />
+    <ClCompile Include="sbdriver.cpp" />
+    <ClCompile Include="Scenario.cpp" />
+    <ClCompile Include="ScenMasterChildFrame.cpp" />
+    <ClCompile Include="ScenMasterCtrlView.cpp" />
+    <ClCompile Include="ScenMasterDoc.cpp" />
+    <ClCompile Include="ScenMasterGraphView.cpp" />
+    <ClCompile Include="ScenMasterMvc.cpp" />
+    <ClCompile Include="ScenMgr.cpp" />
+    <ClCompile Include="ScenMgrChildFrame.cpp" />
+    <ClCompile Include="ScenMgrDoc.cpp" />
+    <ClCompile Include="ScenMgrMvc.cpp" />
+    <ClCompile Include="ScenMgrView.cpp" />
+    <ClCompile Include="ScenMru.cpp" />
+    <ClCompile Include="Select909sDlg.cpp" />
+    <ClCompile Include="Snapshot.cpp" />
+    <ClCompile Include="Spec.cpp" />
+    <ClCompile Include="SpecChemRangePreset.cpp" />
+    <ClCompile Include="SpecChemRangePresetSet.cpp" />
+    <ClCompile Include="SpecCmp.cpp" />
+    <ClCompile Include="SpecDPAChemsSet.cpp" />
+    <ClCompile Include="SpecDPASet.cpp" />
+    <ClCompile Include="SpecMgr.cpp" />
+    <ClCompile Include="SpecSelectionDlg.cpp" />
+    <ClCompile Include="StdAfx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">stdafx.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="SteelSpecCrossAppSet.cpp" />
+    <ClCompile Include="stlUtils.cpp" />
+    <ClCompile Include="StringBuilderDlg.cpp" />
+    <ClCompile Include="StringBuilderInputSet.cpp" />
+    <ClCompile Include="StringBuilderOutputSet.cpp" />
+    <ClCompile Include="StringStatusDlg.cpp" />
+    <ClCompile Include="StringStatusGrid.cpp" />
+    <ClCompile Include="SuperScen.cpp" />
+    <ClCompile Include="TabNumDlg.cpp" />
+    <ClCompile Include="UnappOrderSet.cpp" />
+    <ClCompile Include="UploadDlg.cpp" />
+    <ClCompile Include="UploadMgr.cpp" />
+    <ClCompile Include="UploadProcessMgr.cpp" />
+    <ClCompile Include="UploadValidnErrorsDlg.cpp" />
+    <ClCompile Include="UserInfo.cpp" />
+    <ClCompile Include="UsersSet.cpp" />
+    <ClCompile Include="webbrowser2.cpp" />
+    <ClCompile Include="Week.cpp" />
+    <ClCompile Include="WinUtils.cpp" />
+    <ClCompile Include="_remotedl1.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Midl Include="csda.odl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="csda.rc">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OUTDIR);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OUTDIR);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OUTDIR);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(OUTDIR);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ArchiveQueue.h" />
+    <ClInclude Include="AvailCasterScenId.h" />
+    <ClInclude Include="bofspecmgr.h" />
+    <ClInclude Include="CasterScen.h" />
+    <ClInclude Include="CasterScenArchiver.h" />
+    <ClInclude Include="CasterScenariosMaxIdSet.h" />
+    <ClInclude Include="CasterScenariosSet.h" />
+    <ClInclude Include="CasterScenInfoDlg.h" />
+    <ClInclude Include="CasterStringHeatChemsSet.h" />
+    <ClInclude Include="CasterStringHeatsSet.h" />
+    <ClInclude Include="CasterStringOrdersSet.h" />
+    <ClInclude Include="CasterStringsSet.h" />
+    <ClInclude Include="CasterStringTemplateChemsSet.h" />
+    <ClInclude Include="CasterStringTemplateSortsSet.h" />
+    <ClInclude Include="CasterStringTemplateSpecsSet.h" />
+    <ClInclude Include="CasterStringTemplatesSet.h" />
+    <ClInclude Include="CastString.h" />
+    <ClInclude Include="CastStringEditorChildFrame.h" />
+    <ClInclude Include="CastStringEditorDoc.h" />
+    <ClInclude Include="CastStringEditorGanttBars.h" />
+    <ClInclude Include="CastStringEditorGanttView.h" />
+    <ClInclude Include="CastStringEditorMvc.h" />
+    <ClInclude Include="CastStringEditorScenMgrView.h" />
+    <ClInclude Include="CastStringEditorStrandSummaryView.h" />
+    <ClInclude Include="CastStringEditorTextView.h" />
+    <ClInclude Include="CastStringEditorValidnView.h" />
+    <ClInclude Include="CastStringHeat.h" />
+    <ClInclude Include="CastStringHeatValidnError.h" />
+    <ClInclude Include="CastStringId.h" />
+    <ClInclude Include="CastStringIdDlg.h" />
+    <ClInclude Include="CastStringMiscProps.h" />
+    <ClInclude Include="CastStringSummaryRecord.h" />
+    <ClInclude Include="CastStringValidator.h" />
+    <ClInclude Include="CheckStockApplicationRules.h" />
+    <ClInclude Include="Chem.h" />
+    <ClInclude Include="ChemRange.h" />
+    <ClInclude Include="ChildFrm.h" />
+    <ClInclude Include="CIBogieSet.h" />
+    <ClInclude Include="CICode.h" />
+    <ClInclude Include="CICodeGroupDefSet.h" />
+    <ClInclude Include="CICodeGroupXrefSet.h" />
+    <ClInclude Include="CICodeSet.h" />
+    <ClInclude Include="clipFormat.h" />
+    <ClInclude Include="csda.h" />
+    <ClInclude Include="CsdaEventLogMaxId.h" />
+    <ClInclude Include="CsdaEventLogSet.h" />
+    <ClInclude Include="CsdaEventLogSet2.h" />
+    <ClInclude Include="CSOrder.h" />
+    <ClInclude Include="CSOrderParmDlg.h" />
+    <ClInclude Include="DailyPlanLastDownloadTimeSet.h" />
+    <ClInclude Include="DailyPlanLineupsUploadSet.h" />
+    <ClInclude Include="DailyPlanUploadSet.h" />
+    <ClInclude Include="DalyPlanOrdersOnlySet.h" />
+    <ClInclude Include="DalyPlanSet.h" />
+    <ClInclude Include="DateTimeDlg.h" />
+    <ClInclude Include="DBConn.h" />
+    <ClInclude Include="DocBase.h" />
+    <ClInclude Include="DocMvcMixin.h" />
+    <ClInclude Include="DragSourceButton.h" />
+    <ClInclude Include="EMailDlg.h" />
+    <ClInclude Include="GanttColorChartDlg.h" />
+    <ClInclude Include="GanttDisplay.h" />
+    <ClInclude Include="HeaderInfo.h" />
+    <ClInclude Include="HeatChemsGrid.h" />
+    <ClInclude Include="HeatDetailsDlg.h" />
+    <ClInclude Include="HeatDetailsGrid.h" />
+    <ClInclude Include="HeatLockDlg.h" />
+    <ClInclude Include="HeatSpecCrossApp.h" />
+    <ClInclude Include="HeatSpecCrossAppSet.h" />
+    <ClInclude Include="HMLastLoadCountSet.h" />
+    <ClInclude Include="HMLoadGraphBars.h" />
+    <ClInclude Include="HMLoadGraphChildFrame.h" />
+    <ClInclude Include="HMLoadGraphDoc.h" />
+    <ClInclude Include="HMLoadGraphMvc.h" />
+    <ClInclude Include="HMLoadGraphScenSeqView.h" />
+    <ClInclude Include="HMLoadGraphSheetView.h" />
+    <ClInclude Include="HMLoadGraphView.h" />
+    <ClInclude Include="HMStartTimeDlg.h" />
+    <ClInclude Include="HMSupplyActual.h" />
+    <ClInclude Include="HMSupplyMgr.h" />
+    <ClInclude Include="HMSupplyProjected.h" />
+    <ClInclude Include="InitialScenLoaderDlg.h" />
+    <ClInclude Include="ListCtrlEx.h" />
+    <ClInclude Include="LoginDlg.h" />
+    <ClInclude Include="LongOpn.h" />
+    <ClInclude Include="LongOpnFrameWnd.h" />
+    <ClInclude Include="MainFrm.h" />
+    <ClInclude Include="MaintainListCtrlPosn.h" />
+    <ClInclude Include="MessageBus.h" />
+    <ClInclude Include="MillOrderChemsSet.h" />
+    <ClInclude Include="MiscConstants.h" />
+    <ClInclude Include="modelTypes.h" />
+    <ClInclude Include="MruOneScenDlgBar.h" />
+    <ClInclude Include="MruOneScenMVC.h" />
+    <ClInclude Include="MsgDlg.h" />
+    <ClInclude Include="msoutl85.h" />
+    <ClInclude Include="MultipleOrderInsertDlg.h" />
+    <ClInclude Include="MultipleOrderInsertGrid.h" />
+    <ClInclude Include="MultiSelectDlg.h" />
+    <ClInclude Include="Notify.h" />
+    <ClInclude Include="NOutputWnd.h" />
+    <ClInclude Include="NReport.h" />
+    <ClInclude Include="NStateBitmapButton.h" />
+    <ClInclude Include="nTime.h" />
+    <ClInclude Include="Order.h" />
+    <ClInclude Include="OrderColor.h" />
+    <ClInclude Include="OrderInquiryDlg.h" />
+    <ClInclude Include="OrderNumDlg.h" />
+    <ClInclude Include="OrderSelection.h" />
+    <ClInclude Include="OutputControlBar.h" />
+    <ClInclude Include="OutputWnd.h" />
+    <ClInclude Include="PerUserDefaultValuesSet.h" />
+    <ClInclude Include="PickCasterDlg.h" />
+    <ClInclude Include="PlanWorksheetReport.h" />
+    <ClInclude Include="PpgCICodeSelect.h" />
+    <ClInclude Include="PpgHeatSizes.h" />
+    <ClInclude Include="PpgOrderChemRange.h" />
+    <ClInclude Include="PpgOrderRange.h" />
+    <ClInclude Include="ProdnScen.h" />
+    <ClInclude Include="PSheetAvailOrders.h" />
+    <ClInclude Include="PSheetMiscConstants.h" />
+    <ClInclude Include="PstConformanceReport.h" />
+    <ClInclude Include="ReportDlg.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="resource2.h" />
+    <ClInclude Include="sbdriver.h" />
+    <ClInclude Include="Scenario.h" />
+    <ClInclude Include="ScenMasterChildFrame.h" />
+    <ClInclude Include="ScenMasterCtrlView.h" />
+    <ClInclude Include="ScenMasterDoc.h" />
+    <ClInclude Include="ScenMasterGraphView.h" />
+    <ClInclude Include="ScenMasterMvc.h" />
+    <ClInclude Include="ScenMgr.h" />
+    <ClInclude Include="ScenMgrChildFrame.h" />
+    <ClInclude Include="ScenMgrDoc.h" />
+    <ClInclude Include="ScenMgrMvc.h" />
+    <ClInclude Include="ScenMgrView.h" />
+    <ClInclude Include="ScenMru.h" />
+    <ClInclude Include="Select909sDlg.h" />
+    <ClInclude Include="Snapshot.h" />
+    <ClInclude Include="Spec.h" />
+    <ClInclude Include="SpecChemRangePreset.h" />
+    <ClInclude Include="SpecChemRangePresetSet.h" />
+    <ClInclude Include="SpecCmp.h" />
+    <ClInclude Include="SpecDPAChemsSet.h" />
+    <ClInclude Include="SpecDPASet.h" />
+    <ClInclude Include="SpecMgr.h" />
+    <ClInclude Include="SpecSelectionDlg.h" />
+    <ClInclude Include="StdAfx.h" />
+    <ClInclude Include="SteelSpecCrossAppSet.h" />
+    <ClInclude Include="stlext.h" />
+    <ClInclude Include="stlUtils.h" />
+    <ClInclude Include="StringBuilderDlg.h" />
+    <ClInclude Include="StringBuilderInputSet.h" />
+    <ClInclude Include="StringBuilderOutputSet.h" />
+    <ClInclude Include="StringStatusDlg.h" />
+    <ClInclude Include="StringStatusGrid.h" />
+    <ClInclude Include="SuperScen.h" />
+    <ClInclude Include="TabNumDlg.h" />
+    <ClInclude Include="toolbars.h" />
+    <ClInclude Include="UnappOrderSet.h" />
+    <ClInclude Include="UploadDlg.h" />
+    <ClInclude Include="UploadMgr.h" />
+    <ClInclude Include="UploadProcessMgr.h" />
+    <ClInclude Include="UploadValidnErrorsDlg.h" />
+    <ClInclude Include="UserInfo.h" />
+    <ClInclude Include="UsersSet.h" />
+    <ClInclude Include="webbrowser2.h" />
+    <ClInclude Include="Week.h" />
+    <ClInclude Include="winUtils.h" />
+    <ClInclude Include="_remotedl1.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="hlp\AppExit.bmp" />
+    <Image Include="hlp\Bullet.bmp" />
+    <Image Include="hlp\CurArw2.bmp" />
+    <Image Include="hlp\CurArw4.bmp" />
+    <Image Include="hlp\CurHelp.bmp" />
+    <Image Include="hlp\EditCopy.bmp" />
+    <Image Include="hlp\EditCut.bmp" />
+    <Image Include="hlp\EditPast.bmp" />
+    <Image Include="hlp\EditUndo.bmp" />
+    <Image Include="hlp\FileNew.bmp" />
+    <Image Include="hlp\FileOpen.bmp" />
+    <Image Include="hlp\FilePrnt.bmp" />
+    <Image Include="hlp\FileSave.bmp" />
+    <Image Include="hlp\HlpSBar.bmp" />
+    <Image Include="hlp\HlpTBar.bmp" />
+    <Image Include="hlp\RecFirst.bmp" />
+    <Image Include="hlp\RecLast.bmp" />
+    <Image Include="hlp\RecNext.bmp" />
+    <Image Include="hlp\RecPrev.bmp" />
+    <Image Include="hlp\Scmax.bmp" />
+    <Image Include="hlp\ScMenu.bmp" />
+    <Image Include="hlp\Scmin.bmp" />
+    <Image Include="res\aip_tagl.bmp" />
+    <Image Include="res\bitmap1.bmp" />
+    <Image Include="res\bitmap_m.bmp" />
+    <Image Include="res\bitmap_o.bmp" />
+    <Image Include="res\bmp00001.bmp" />
+    <Image Include="res\bmp00002.bmp" />
+    <Image Include="res\bmp00003.bmp" />
+    <Image Include="res\bmp00004.bmp" />
+    <Image Include="res\bmp00005.bmp" />
+    <Image Include="res\bmp00006.bmp" />
+    <Image Include="res\bmp00007.bmp" />
+    <Image Include="res\calcbtn.bmp" />
+    <Image Include="res\cand_hap.ico" />
+    <Image Include="res\cfolder.ico" />
+    <Image Include="res\csda.bmp" />
+    <Image Include="res\csda.ico" />
+    <Image Include="res\csdaDoc.ico" />
+    <Image Include="res\end_of_o.bmp" />
+    <Image Include="res\ico00001.ico" />
+    <Image Include="res\ico00002.ico" />
+    <Image Include="res\icon_cal.ico" />
+    <Image Include="res\icon_que.ico" />
+    <Image Include="res\icon_was.ico" />
+    <Image Include="res\inland_i.bmp" />
+    <Image Include="res\inland_s.bmp" />
+    <Image Include="res\insert_o.bmp" />
+    <Image Include="res\insert_s.bmp" />
+    <Image Include="res\ispat_logo.bmp" />
+    <Image Include="res\locked1.bmp" />
+    <Image Include="res\locked_h.bmp" />
+    <Image Include="res\long_opn.bmp" />
+    <Image Include="res\mainfram.bmp" />
+    <Image Include="res\ofolder.ico" />
+    <Image Include="res\order_im.bmp" />
+    <Image Include="res\order_li.bmp" />
+    <Image Include="res\scen_mas.bmp" />
+    <Image Include="res\semilock.bmp" />
+    <Image Include="res\small_do.bmp" />
+    <Image Include="res\splashwn.bmp" />
+    <Image Include="res\Toolbar.bmp" />
+    <Image Include="res\Toolbar1.bmp" />
+    <Image Include="res\toolbar2.bmp" />
+    <Image Include="res\unlocked.bmp" />
+    <Image Include="res\upload.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="csda.reg" />
+    <CustomBuild Include="hlp\AfxCore.rtf" />
+    <CustomBuild Include="hlp\AfxPrint.rtf" />
+    <CustomBuild Include="hlp\csda.cnt" />
+    <CustomBuild Include="MakeHelp.bat" />
+    <CustomBuild Include="res\csda.rc2" />
+    <CustomBuild Include="res\cursor1.cur" />
+    <CustomBuild Include="res\cursor2.cur" />
+    <CustomBuild Include="res\cursor3.cur" />
+    <CustomBuild Include="res\cursor4.cur" />
+    <CustomBuild Include="res\PAN_HAND.CUR" />
+    <CustomBuild Include="res\ZOOMDRAG.CUR" />
+    <CustomBuild Include="res\ZOOMIN.CUR" />
+    <CustomBuild Include="res\ZOOMOUT.CUR" />
+    <CustomBuild Include="res\ZOOMRECT.CUR" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+    <Text Include="ReadMore.txt" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="csda.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

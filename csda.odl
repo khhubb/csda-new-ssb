@@ -1,0 +1,41 @@
+// csda.odl : type library source for csda.exe
+
+// This file will be processed by the MIDL compiler to produce the
+// type library (csda.tlb).
+
+[ uuid(F60F1186-A60D-11D0-975C-0000C0C2484C), version(1.0) ]
+library Csda
+{
+	importlib("stdole32.tlb");
+	
+
+	//  Primary dispatch interface for CCsdaDoc
+	
+	[ uuid(F60F1187-A60D-11D0-975C-0000C0C2484C) ]
+	dispinterface ICsda
+	{
+		properties:
+			// NOTE - ClassWizard will maintain property information here.
+			//    Use extreme caution when editing this section.
+			//{{AFX_ODL_PROP(CCsdaDoc)
+			//}}AFX_ODL_PROP
+			
+		methods:
+			// NOTE - ClassWizard will maintain method information here.
+			//    Use extreme caution when editing this section.
+			//{{AFX_ODL_METHOD(CCsdaDoc)
+			//}}AFX_ODL_METHOD
+
+	};
+
+	//  Class information for CCsdaDoc
+	
+	[ uuid(F60F1185-A60D-11D0-975C-0000C0C2484C) ]
+	coclass Document
+	{
+		[default] dispinterface ICsda;
+	};
+
+	//{{AFX_APPEND_ODL}}
+	//}}AFX_APPEND_ODL}}
+};

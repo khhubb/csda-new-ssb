@@ -1,0 +1,1294 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{72dd5105-e0f1-498a-be13-2eb2b3f4de3f}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{30e3ac9d-2b5a-4b16-9e76-694580b0ce1c}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{4d644ead-9f64-4aae-b0d8-f910081e4138}</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;cnt;rtf;gif;jpg;jpeg;jpe</Extensions>
+    </Filter>
+    <Filter Include="Help Files">
+      <UniqueIdentifier>{2ba10380-46b5-4795-abe6-f3bf568bdada}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="_remotedl1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ArchiveQueue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AvailCasterScenId.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="bofspecmgr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CasterScen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CasterScenArchiver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CasterScenariosMaxIdSet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CasterScenariosSet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CasterScenInfoDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CasterStringHeatChemsSet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CasterStringHeatsSet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CasterStringOrdersSet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CasterStringsSet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CasterStringTemplateChemsSet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CasterStringTemplateSortsSet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CasterStringTemplateSpecsSet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CasterStringTemplatesSet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CastString.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CastStringEditorChildFrame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CastStringEditorDoc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CastStringEditorGanttBars.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CastStringEditorGanttView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CastStringEditorMvc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CastStringEditorScenMgrView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CastStringEditorStrandSummaryView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CastStringEditorTextView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CastStringEditorValidnView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CastStringHeat.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CastStringHeatValidnError.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CastStringId.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CastStringIdDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CastStringMiscProps.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CastStringSummaryRecord.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CastStringValidator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CheckStockApplicationRules.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Chem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ChemRange.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ChildFrm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CIBogieSet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CICode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CICodeGroupDefSet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CICodeGroupXrefSet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CICodeSet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="clipFormat.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="csda.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CsdaEventLogMaxId.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CsdaEventLogSet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CsdaEventLogSet2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CSOrder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CSOrderParmDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DailyPlanLastDownloadTimeSet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DailyPlanLineupsUploadSet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DailyPlanUploadSet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DalyPlanOrdersOnlySet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DalyPlanSet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DateTimeDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DBConn.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DocBase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DocMvcMixin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DragSourceButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EMailDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GanttColorChartDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GanttDisplay.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HeaderInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HeatChemsGrid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HeatDetailsDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HeatDetailsGrid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HeatLockDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HeatSpecCrossApp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HeatSpecCrossAppSet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HMLastLoadCountSet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HMLoadGraphBars.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HMLoadGraphChildFrame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HMLoadGraphDoc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HMLoadGraphMvc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HMLoadGraphScenSeqView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HMLoadGraphSheetView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HMLoadGraphView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HMStartTimeDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HMSupplyActual.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HMSupplyMgr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HMSupplyProjected.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="InitialScenLoaderDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ListCtrlEx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LoginDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LongOpn.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LongOpnFrameWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MainFrm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MaintainListCtrlPosn.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MessageBus.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MillOrderChemsSet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MiscConstants.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MruOneScenDlgBar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MruOneScenMVC.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MsgDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="msoutl85.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MultipleOrderInsertDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MultipleOrderInsertGrid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MultiSelectDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Notify.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NOutputWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NReport.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NStateBitmapButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="nTime.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="order.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OrderColor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OrderInquiryDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OrderNumDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OrderSelection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OutputControlBar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OutputWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PerUserDefaultValuesSet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PickCasterDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PlanWorksheetReport.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PpgCICodeSelect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PpgHeatSizes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PpgOrderChemRange.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PpgOrderRange.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ProdnScen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PSheetAvailOrders.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PSheetMiscConstants.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PstConformanceReport.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ReportDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sbdriver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenario.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ScenMasterChildFrame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ScenMasterCtrlView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ScenMasterDoc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ScenMasterGraphView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ScenMasterMvc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ScenMgr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ScenMgrChildFrame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ScenMgrDoc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ScenMgrMvc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ScenMgrView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ScenMru.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Select909sDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Snapshot.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Spec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SpecChemRangePreset.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SpecChemRangePresetSet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SpecCmp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SpecDPAChemsSet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SpecDPASet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SpecMgr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SpecSelectionDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StdAfx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SteelSpecCrossAppSet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stlUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StringBuilderDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StringBuilderInputSet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StringBuilderOutputSet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StringStatusDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StringStatusGrid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SuperScen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TabNumDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UnappOrderSet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UploadDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UploadMgr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UploadValidnErrorsDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UserInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UsersSet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="webbrowser2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Week.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WinUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UploadProcessMgr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Midl Include="csda.odl">
+      <Filter>Source Files</Filter>
+    </Midl>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="csda.rc">
+      <Filter>Source Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="_remotedl1.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ArchiveQueue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AvailCasterScenId.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="bofspecmgr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CasterScen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CasterScenArchiver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CasterScenariosMaxIdSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CasterScenariosSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CasterScenInfoDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CasterStringHeatChemsSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CasterStringHeatsSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CasterStringOrdersSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CasterStringsSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CasterStringTemplateChemsSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CasterStringTemplateSortsSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CasterStringTemplateSpecsSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CasterStringTemplatesSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CastString.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CastStringEditorChildFrame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CastStringEditorDoc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CastStringEditorGanttBars.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CastStringEditorGanttView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CastStringEditorMvc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CastStringEditorScenMgrView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CastStringEditorStrandSummaryView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CastStringEditorTextView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CastStringEditorValidnView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CastStringHeat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CastStringHeatValidnError.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CastStringId.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CastStringIdDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CastStringMiscProps.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CastStringSummaryRecord.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CastStringValidator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CheckStockApplicationRules.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Chem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ChemRange.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ChildFrm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CIBogieSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CICode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CICodeGroupDefSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CICodeGroupXrefSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CICodeSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="clipFormat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="csda.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CsdaEventLogMaxId.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CsdaEventLogSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CsdaEventLogSet2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CSOrder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CSOrderParmDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DailyPlanLastDownloadTimeSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DailyPlanLineupsUploadSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DailyPlanUploadSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DalyPlanOrdersOnlySet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DalyPlanSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DateTimeDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DBConn.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DocBase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DocMvcMixin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DragSourceButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EMailDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GanttColorChartDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GanttDisplay.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HeaderInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HeatChemsGrid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HeatDetailsDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HeatDetailsGrid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HeatLockDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HeatSpecCrossApp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HeatSpecCrossAppSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HMLastLoadCountSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HMLoadGraphBars.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HMLoadGraphChildFrame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HMLoadGraphDoc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HMLoadGraphMvc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HMLoadGraphScenSeqView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HMLoadGraphSheetView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HMLoadGraphView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HMStartTimeDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HMSupplyActual.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HMSupplyMgr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HMSupplyProjected.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InitialScenLoaderDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ListCtrlEx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LoginDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LongOpn.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LongOpnFrameWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MainFrm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MaintainListCtrlPosn.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageBus.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MillOrderChemsSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MiscConstants.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="modelTypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MruOneScenDlgBar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MruOneScenMVC.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MsgDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="msoutl85.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MultipleOrderInsertDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MultipleOrderInsertGrid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MultiSelectDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Notify.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NOutputWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NReport.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NStateBitmapButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="nTime.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Order.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OrderColor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OrderInquiryDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OrderNumDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OrderSelection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OutputControlBar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OutputWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PerUserDefaultValuesSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PickCasterDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlanWorksheetReport.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PpgCICodeSelect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PpgHeatSizes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PpgOrderChemRange.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PpgOrderRange.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ProdnScen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PSheetAvailOrders.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PSheetMiscConstants.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PstConformanceReport.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ReportDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sbdriver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenario.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ScenMasterChildFrame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ScenMasterCtrlView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ScenMasterDoc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ScenMasterGraphView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ScenMasterMvc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ScenMgr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ScenMgrChildFrame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ScenMgrDoc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ScenMgrMvc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ScenMgrView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ScenMru.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Select909sDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Snapshot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Spec.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SpecChemRangePreset.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SpecChemRangePresetSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SpecCmp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SpecDPAChemsSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SpecDPASet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SpecMgr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SpecSelectionDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StdAfx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SteelSpecCrossAppSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stlext.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stlUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StringBuilderDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StringBuilderInputSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StringBuilderOutputSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StringStatusDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StringStatusGrid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SuperScen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TabNumDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="toolbars.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UnappOrderSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UploadDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UploadMgr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UploadValidnErrorsDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UserInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UsersSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="webbrowser2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Week.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="winUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UploadProcessMgr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\aip_tagl.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\bitmap1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\bitmap_m.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\bitmap_o.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\bmp00001.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\bmp00002.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\bmp00003.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\bmp00004.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\bmp00005.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\bmp00006.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\bmp00007.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\calcbtn.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\cand_hap.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\cfolder.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\csda.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\csda.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\csdaDoc.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\end_of_o.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\ico00001.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\ico00002.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\icon_cal.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\icon_que.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\icon_was.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\inland_i.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\inland_s.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\insert_o.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\insert_s.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\ispat_logo.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\locked1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\locked_h.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\long_opn.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\mainfram.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\ofolder.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\order_im.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\order_li.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\scen_mas.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\semilock.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\small_do.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\splashwn.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Toolbar.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Toolbar1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\toolbar2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\unlocked.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\upload.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="hlp\AppExit.bmp">
+      <Filter>Help Files</Filter>
+    </Image>
+    <Image Include="hlp\Bullet.bmp">
+      <Filter>Help Files</Filter>
+    </Image>
+    <Image Include="hlp\CurArw2.bmp">
+      <Filter>Help Files</Filter>
+    </Image>
+    <Image Include="hlp\CurArw4.bmp">
+      <Filter>Help Files</Filter>
+    </Image>
+    <Image Include="hlp\CurHelp.bmp">
+      <Filter>Help Files</Filter>
+    </Image>
+    <Image Include="hlp\EditCopy.bmp">
+      <Filter>Help Files</Filter>
+    </Image>
+    <Image Include="hlp\EditCut.bmp">
+      <Filter>Help Files</Filter>
+    </Image>
+    <Image Include="hlp\EditPast.bmp">
+      <Filter>Help Files</Filter>
+    </Image>
+    <Image Include="hlp\EditUndo.bmp">
+      <Filter>Help Files</Filter>
+    </Image>
+    <Image Include="hlp\FileNew.bmp">
+      <Filter>Help Files</Filter>
+    </Image>
+    <Image Include="hlp\FileOpen.bmp">
+      <Filter>Help Files</Filter>
+    </Image>
+    <Image Include="hlp\FilePrnt.bmp">
+      <Filter>Help Files</Filter>
+    </Image>
+    <Image Include="hlp\FileSave.bmp">
+      <Filter>Help Files</Filter>
+    </Image>
+    <Image Include="hlp\HlpSBar.bmp">
+      <Filter>Help Files</Filter>
+    </Image>
+    <Image Include="hlp\HlpTBar.bmp">
+      <Filter>Help Files</Filter>
+    </Image>
+    <Image Include="hlp\RecFirst.bmp">
+      <Filter>Help Files</Filter>
+    </Image>
+    <Image Include="hlp\RecLast.bmp">
+      <Filter>Help Files</Filter>
+    </Image>
+    <Image Include="hlp\RecNext.bmp">
+      <Filter>Help Files</Filter>
+    </Image>
+    <Image Include="hlp\RecPrev.bmp">
+      <Filter>Help Files</Filter>
+    </Image>
+    <Image Include="hlp\Scmax.bmp">
+      <Filter>Help Files</Filter>
+    </Image>
+    <Image Include="hlp\ScMenu.bmp">
+      <Filter>Help Files</Filter>
+    </Image>
+    <Image Include="hlp\Scmin.bmp">
+      <Filter>Help Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+    <Text Include="ReadMore.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="res\csda.rc2">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="res\cursor1.cur">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="res\cursor2.cur">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="res\cursor3.cur">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="res\cursor4.cur">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="res\PAN_HAND.CUR">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="res\ZOOMDRAG.CUR">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="res\ZOOMIN.CUR">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="res\ZOOMOUT.CUR">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="res\ZOOMRECT.CUR">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="hlp\AfxCore.rtf">
+      <Filter>Help Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="hlp\AfxPrint.rtf">
+      <Filter>Help Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="hlp\csda.cnt">
+      <Filter>Help Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="MakeHelp.bat">
+      <Filter>Help Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="csda.reg" />
+  </ItemGroup>
+</Project>

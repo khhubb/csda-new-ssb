@@ -1,0 +1,13 @@
+REGEDIT
+; This file contains initializations for certain values
+;    used to initialize CSDA.
+; Two versions of all entries are given, one under AIP and one under AIPTEST
+; The command line can contain an entry of the /RegKey=AIP or /RegKey=AIPTest
+;    -- this determines which entry gets used.  Default is AIP.
+
+HKEY_CURRENT_USER\Software\AIP\csda\Database\DPA = DSN=DPATest1
+HKEY_CURRENT_USER\Software\AIP\csda\Database\CSDA = DSN=CSDATest1
+HKEY_CURRENT_USER\Software\AIP\csda\Database\HM = DSN=hotmetal1
+HKEY_CURRENT_USER\Software\AIPTest\csda\Database\DPA = DSN=DPATest2
+HKEY_CURRENT_USER\Software\AIPTest\csda\Database\CSDA = DSN=CSDATest2
+HKEY_CURRENT_USER\Software\AIPTest\csda\Database\HM = DSN=hotmetal2

@@ -1,0 +1,4 @@
+// Microsoft Developer Studio generated Help ID include file.
+// Used by csda.rc
+//
+#define HIDC_STATIC                     0x80b5ffff    // IDD_DLG_TAB_NUM

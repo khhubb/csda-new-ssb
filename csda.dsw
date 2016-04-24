@@ -1,0 +1,42 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "csda"=".\csda.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/Cast String Design/910Csd/csda_03-06-06", BXMDAAAA
+    .
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+}}}
+
+Package=<3>
+{{{
+    {987AEC3C-E6FC-11D1-9DE3-00609732B8E1}
+    {F3FB5E20-A837-11D2-9137-0060081AA7BC}
+    {987AECB5-E6FC-11D1-9DE3-00609732B8E1}
+    {95756C14-68C9-11D3-AA71-00105AE25435}
+    {88BF0B6F-693D-11D3-85F5-00104B2D39AC}
+    {F4ABF870-6947-11D3-85F5-00104B2D39AC}
+    {CA7EC1DF-6954-11D3-85F5-00104B2D39AC}
+    {1B401444-6A64-11D3-AA72-00105AE25435}
+    {8856F961-340A-11D0-A96B-00C04FD705A2}
+}}}
+
+###############################################################################
+
