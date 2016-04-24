@@ -516,6 +516,12 @@
     <ClCompile Include="UploadProcessMgr.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SSBInput.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SBoutput.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="csda.odl">
@@ -1039,6 +1045,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UploadProcessMgr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SSBInput.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SBoutput.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
