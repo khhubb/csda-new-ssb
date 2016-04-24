@@ -14,7 +14,7 @@
 
 class CCastString;
 class CDalyPlanSet;
-class CStringBuilderOutputSet;
+class CSSBOutput;
 class CSnapshot;
 class COrder;
 
@@ -126,8 +126,10 @@ private:
 public:
 
 	bool LoadFromDalyPlan(CDalyPlanSet& planSet);
-	bool LoadFromStringBuilderOutput(CStringBuilderOutputSet& sbSet,
-									 vector<CCastString*>& newStrings);
+	//bool LoadFromStringBuilderOutput(CStringBuilderOutputSet& sbSet,
+	//								 vector<CCastString*>& newStrings);
+	bool LoadFromNewStringBuilderOutput(CSSBOutput& sbSet,
+		vector<CCastString*>& newStrings);
 
 	CCastString* CreateNewString(CCastStringId& id,
  				     CCastStringMiscProps& props);

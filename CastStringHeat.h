@@ -14,7 +14,7 @@
 
 class CCSOrder;
 class CDalyPlanSet;
-class CStringBuilderOutputSet;
+class CSSBOutput;
 class CCasterStringHeatsSet;
 class CChemRange;
 
@@ -289,7 +289,7 @@ public:
 			  CDalyPlanSet& planSet);
 
 	void Init(int caster,
-			  CStringBuilderOutputSet& sbSet);
+			  CSSBOutput& sbSet);
 
 	void Init(CCasterStringHeatsSet& rHeatsSet,
 			  CCastString* pCastString);

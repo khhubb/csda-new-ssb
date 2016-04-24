@@ -22,7 +22,7 @@
 #include "RulesCheckLineupSet.h"
 
 class CDalyPlanSet;
-class CStringBuilderOutputSet;
+class CSSBOutput;
 class CSuperScen;
 
 class CCSOrder;
@@ -345,7 +345,7 @@ public:
 
 	CCastString(CCasterScen* pCScen_, CDalyPlanSet&);
 
-	CCastString(CCasterScen* pCScen_, CStringBuilderOutputSet&);
+	CCastString(CCasterScen* pCScen_, CSSBOutput&);
 
 
 	~CCastString();
@@ -454,7 +454,7 @@ private:
 
 
 	void Init(CDalyPlanSet&);
-	void Init(CStringBuilderOutputSet&);
+	void Init(CSSBOutput&);
 
 	void RegisterCSOrder(CCSOrder* pCSOrder);
 	void UnregisterCSOrder(CCSOrder* pCSOrder);

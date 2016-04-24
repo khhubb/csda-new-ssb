@@ -16,7 +16,7 @@ static char THIS_FILE[]=__FILE__;
 
 
 #include "DalyPlanSet.h"
-#include "StringBuilderOutputSet.h"
+#include "SSBOutput.h"
 #include "CasterStringHeatsSet.h"
 #include "Spec.h"
 #include "Snapshot.h"
@@ -182,7 +182,7 @@ void CCastStringHeat::Init(int caster,
 //
 
 void CCastStringHeat::Init(int caster,
-						   CStringBuilderOutputSet& sbSet)
+						   CSSBOutput& sbSet)
 {
 	m_caster = caster;
 

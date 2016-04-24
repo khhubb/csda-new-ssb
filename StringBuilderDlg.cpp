@@ -17,7 +17,7 @@ static char THIS_FILE[] = __FILE__;
 #include "CastStringIdDlg.h"
 #include "PSheetAvailOrders.h"
 #include "CastStringValidator.h"
-#include "StringBuilderOutputSet.h"
+#include "SSBOutput.h"
 #include "DBConn.h"
 #include "ScenMru.h"
 #include "UserInfo.h"
@@ -182,35 +182,35 @@ void CStringBuilderDlg::OnButtonCreateString()
 	CDBConn dbc(CDBConn::DB_DPA);
 	dbc.Connect();
 
-	CStringBuilderOutputSet sbSet(dbc.GetDB());
+	CSSBOutput sbSet(dbc.GetDB());
 
 	try
 	{
-//		sbSet.Open(CRecordset::forwardOnly,       Access original code comm out for SQL Conv. 3-7-03 k. hubbard 
-//				   LPCTSTR(OutputTableName()),  
-//						 CRecordset::readOnly);
+		//		sbSet.Open(CRecordset::forwardOnly,       Access original code comm out for SQL Conv. 3-7-03 k. hubbard 
+		//				   LPCTSTR(OutputTableName()),  
+		//						 CRecordset::readOnly);
 
 		//sbSet.Open(CRecordset::dynamic,
 
 		sbSet.Open(CRecordset::dynaset,
-				   LPCTSTR(OutputTableName()),
-						 CRecordset::none);
-		m_pScen->LoadFromStringBuilderOutput(sbSet,strings);
+			LPCTSTR(NewOutputTableName()),
+			CRecordset::none);
+		m_pScen->LoadFromNewStringBuilderOutput(sbSet, strings);
 	}
-	catch ( CDBException* e )
+	catch (CDBException* e)
 	{
-	   AfxMessageBox( e->m_strError,   
-                      MB_ICONEXCLAMATION );
-	   e->Delete();
+		AfxMessageBox(e->m_strError,
+			MB_ICONEXCLAMATION);
+		e->Delete();
 	}
 
 	// inform the user
 	{
 		ostrstream ostr;
 		ostr << "New string(s) created on caster # " << m_caster << ":\n";
-		for ( vector<CCastString*>::iterator is = strings.begin();
-		  	  is != strings.end();
-			  ++is ) 
+		for (vector<CCastString*>::iterator is = strings.begin();
+			is != strings.end();
+			++is)
 			ostr << "-- " << (*is)->Id().Year()
 			<< " - " << (*is)->Id().Week()
 			<< " - " << (*is)->Id().StringId()
@@ -220,21 +220,82 @@ void CStringBuilderDlg::OnButtonCreateString()
 		ostr.freeze(false);
 	}
 
-	
+
 	// give each new string a copy of the initiating COrderSelection
 	{
-		for ( vector<CCastString*>::iterator is = strings.begin();
-		  	  is != strings.end();
-			  ++is ) 
+		for (vector<CCastString*>::iterator is = strings.begin();
+			is != strings.end();
+			++is)
 			(*is)->OrderSelection() = *m_pOrderSelection;	// copy
 	}
 
 	// Maybe promote the new string?
-	if ( strings.size() > 0 )
-		CScenMru::GlobalScenMru.SetCurrentCastString(m_caster,strings.front());
+	if (strings.size() > 0)
+		CScenMru::GlobalScenMru.SetCurrentCastString(m_caster, strings.front());
 
-	
+
 	OnOK();
+
+	// Old VB version
+
+//	vector<CCastString*> strings;
+//
+//	CDBConn dbc(CDBConn::DB_DPA);
+//	dbc.Connect();
+//
+//	CStringBuilderOutputSet sbSet(dbc.GetDB());
+//
+//	try
+//	{
+////		sbSet.Open(CRecordset::forwardOnly,       Access original code comm out for SQL Conv. 3-7-03 k. hubbard 
+////				   LPCTSTR(OutputTableName()),  
+////						 CRecordset::readOnly);
+//
+//		//sbSet.Open(CRecordset::dynamic,
+//
+//		sbSet.Open(CRecordset::dynaset,
+//				   LPCTSTR(OutputTableName()),
+//						 CRecordset::none);
+//		m_pScen->LoadFromStringBuilderOutput(sbSet,strings);
+//	}
+//	catch ( CDBException* e )
+//	{
+//	   AfxMessageBox( e->m_strError,   
+//                      MB_ICONEXCLAMATION );
+//	   e->Delete();
+//	}
+//
+//	// inform the user
+//	{
+//		ostrstream ostr;
+//		ostr << "New string(s) created on caster # " << m_caster << ":\n";
+//		for ( vector<CCastString*>::iterator is = strings.begin();
+//		  	  is != strings.end();
+//			  ++is ) 
+//			ostr << "-- " << (*is)->Id().Year()
+//			<< " - " << (*is)->Id().Week()
+//			<< " - " << (*is)->Id().StringId()
+//			<< "\n";
+//		ostr << ends;
+//		MessageBox(ostr.str());
+//		ostr.freeze(false);
+//	}
+//
+//	
+//	// give each new string a copy of the initiating COrderSelection
+//	{
+//		for ( vector<CCastString*>::iterator is = strings.begin();
+//		  	  is != strings.end();
+//			  ++is ) 
+//			(*is)->OrderSelection() = *m_pOrderSelection;	// copy
+//	}
+//
+//	// Maybe promote the new string?
+//	if ( strings.size() > 0 )
+//		CScenMru::GlobalScenMru.SetCurrentCastString(m_caster,strings.front());
+//
+//	
+//	OnOK();
 }
 
 
@@ -314,55 +375,107 @@ void CStringBuilderDlg::OnButtonStartSb()
 {
 	{
 		CWaitCursor wc;
-		m_pOrderSelection->WriteOrdersForStringBuilder(m_pSuperScen);
+		m_pOrderSelection->WriteOrdersForNewStringBuilder(m_pSuperScen, atoi(CUserInfo::TheUser.SBId()));
 
 		CDBConn dbc(CDBConn::DB_DPA);
 		dbc.Connect();
 
-		CreateOutputTable(dbc.GetDB());
-		ClearOutputTable(dbc.GetDB());
+		ClearNewOutputTable(dbc.GetDB(), atoi(CUserInfo::TheUser.SBId()));
 	}
 
-	CStringBuilderDlg sbd;
+	//CStringBuilderDlg sbd;
 
-	m_sbDriver.SetAimHeatWeight( m_heatSizeAim );
-	m_sbDriver.SetDateformat("PST");
+	//m_sbDriver.SetAimHeatWeight( m_heatSizeAim );
+	//m_sbDriver.SetDateformat("PST");
 
-	{
-		ostrstream ostr;
-		ostr << m_id.Caster() << ends;
-		m_sbDriver.SetPlanCasterUnit( ostr.str() );
-		ostr.freeze(false);
-		ostr.seekp(0);
+	//{
+	//	ostrstream ostr;
+	//	ostr << m_id.Caster() << ends;
+	//	m_sbDriver.SetPlanCasterUnit( ostr.str() );
+	//	ostr.freeze(false);
+	//	ostr.seekp(0);
 
-		ostr << m_id.StringId() << ends;
-		m_sbDriver.SetStringID( ostr.str() );
-		ostr.freeze(false);
-		ostr.seekp(0);
+	//	ostr << m_id.StringId() << ends;
+	//	m_sbDriver.SetStringID( ostr.str() );
+	//	ostr.freeze(false);
+	//	ostr.seekp(0);
 
-		ostr << m_id.Year()*100 + m_id.Week() << ends;
-		m_sbDriver.SetPlanningWeek( ostr.str() );
-		ostr.freeze(false);
-	}
+	//	ostr << m_id.Year()*100 + m_id.Week() << ends;
+	//	m_sbDriver.SetPlanningWeek( ostr.str() );
+	//	ostr.freeze(false);
+	//}
 
-	CString dummy;
+	//CString dummy;
 
-	if ( m_pOrderSelection->Orders().size() == 0 )
-		dummy = "";
-	else {
-		dummy = m_pOrderSelection->Orders().front()->OrderedSpec();
-	}
-	 
-	m_sbDriver.SetStartingSpec(dummy);
+	//if ( m_pOrderSelection->Orders().size() == 0 )
+	//	dummy = "";
+	//else {
+	//	dummy = m_pOrderSelection->Orders().front()->OrderedSpec();
+	//}
+	// 
+	//m_sbDriver.SetStartingSpec(dummy);
 
-	m_sbDriver.SetMaxNumberOfTries( 10 );
-	m_sbDriver.SetDNSdata( "dpaTest" );
-	m_sbDriver.SetDNSrules( "rules" );
-	m_sbDriver.SetDsnforBOFSpeedCalc( "DSN=csdaTest" );
-	m_sbDriver.SetOrderSource( LPCTSTR(InputTableName()) );
-	m_sbDriver.SetOutputTable( LPCTSTR(OutputTableName()) );
-	
-	m_sbDriver.MakeString();
+	//m_sbDriver.SetMaxNumberOfTries( 10 );
+	//m_sbDriver.SetDNSdata( "dpaTest" );
+	//m_sbDriver.SetDNSrules( "rules" );
+	//m_sbDriver.SetDsnforBOFSpeedCalc( "DSN=csdaTest" );
+	//m_sbDriver.SetOrderSource( LPCTSTR(InputTableName()) );
+	//m_sbDriver.SetOutputTable( LPCTSTR(OutputTableName()) );
+	//
+	//m_sbDriver.MakeString();
+
+	// Code from the original VB version.
+	//{
+	//	CWaitCursor wc;
+	//	m_pOrderSelection->WriteOrdersForStringBuilder(m_pSuperScen);
+
+	//	CDBConn dbc(CDBConn::DB_DPA);
+	//	dbc.Connect();
+
+	//	CreateOutputTable(dbc.GetDB());
+	//	ClearOutputTable(dbc.GetDB());
+	//}
+
+	//CStringBuilderDlg sbd;
+
+	//m_sbDriver.SetAimHeatWeight( m_heatSizeAim );
+	//m_sbDriver.SetDateformat("PST");
+
+	//{
+	//	ostrstream ostr;
+	//	ostr << m_id.Caster() << ends;
+	//	m_sbDriver.SetPlanCasterUnit( ostr.str() );
+	//	ostr.freeze(false);
+	//	ostr.seekp(0);
+
+	//	ostr << m_id.StringId() << ends;
+	//	m_sbDriver.SetStringID( ostr.str() );
+	//	ostr.freeze(false);
+	//	ostr.seekp(0);
+
+	//	ostr << m_id.Year()*100 + m_id.Week() << ends;
+	//	m_sbDriver.SetPlanningWeek( ostr.str() );
+	//	ostr.freeze(false);
+	//}
+
+	//CString dummy;
+
+	//if ( m_pOrderSelection->Orders().size() == 0 )
+	//	dummy = "";
+	//else {
+	//	dummy = m_pOrderSelection->Orders().front()->OrderedSpec();
+	//}
+	// 
+	//m_sbDriver.SetStartingSpec(dummy);
+
+	//m_sbDriver.SetMaxNumberOfTries( 10 );
+	//m_sbDriver.SetDNSdata( "dpaTest" );
+	//m_sbDriver.SetDNSrules( "rules" );
+	//m_sbDriver.SetDsnforBOFSpeedCalc( "DSN=csdaTest" );
+	//m_sbDriver.SetOrderSource( LPCTSTR(InputTableName()) );
+	//m_sbDriver.SetOutputTable( LPCTSTR(OutputTableName()) );
+	//
+	//m_sbDriver.MakeString();
 }
 
 
@@ -379,31 +492,58 @@ void CStringBuilderDlg::OnButtonStartSb()
 //   the stringbuilder at the same time.
 //
 
+//// static
+//const CString& CStringBuilderDlg::BaseInputTableName()
+//{
+//	static const CString name("StringBuilderInput");
+//	return name;
+//}
+//
+//// static
+//const CString& CStringBuilderDlg::BaseOutputTableName()
+//{
+//	static const CString name("StringBuilderOutput");
+//	return name;
+//}
+
 // static
-const CString& CStringBuilderDlg::BaseInputTableName()
+const CString& CStringBuilderDlg::BaseNewInputTableName()
 {
-	static const CString name("StringBuilderInput");
+	static const CString name("SSBInput");
 	return name;
 }
 
 // static
-const CString& CStringBuilderDlg::BaseOutputTableName()
+const CString& CStringBuilderDlg::BaseNewOutputTableName()
 {
-	static const CString name("StringBuilderOutput");
+	static const CString name("SSBOutput");
 	return name;
 }
 
+////	static 
+//CString CStringBuilderDlg::InputTableName()
+//{
+//	return BaseInputTableName() + CUserInfo::TheUser.SBId();
+//}
+//
+//
+////	static 
+//CString CStringBuilderDlg::OutputTableName()
+//{
+//	return BaseOutputTableName() + CUserInfo::TheUser.SBId();
+//}
+
 //	static 
-CString CStringBuilderDlg::InputTableName()
+CString CStringBuilderDlg::NewInputTableName()
 {
-	return BaseInputTableName() + CUserInfo::TheUser.SBId();
+	return BaseNewInputTableName();
 }
 
 
 //	static 
-CString CStringBuilderDlg::OutputTableName()
+CString CStringBuilderDlg::NewOutputTableName()
 {
-	return BaseOutputTableName() + CUserInfo::TheUser.SBId();
+	return BaseNewOutputTableName();
 }
 
 
@@ -415,98 +555,129 @@ CString CStringBuilderDlg::OutputTableName()
 //    which are known to exist.
 //
 
-//	static 
-void CStringBuilderDlg::CreateInputTable(CDatabase* pDB)
-{
-	CreateCopyTable(pDB,InputTableName(),BaseInputTableName());
-}
-
-//	static 
-void CStringBuilderDlg::ClearInputTable(CDatabase* pDB)
-{
-	ClearTable(pDB,InputTableName());
-}
-
-//	static 
-void CStringBuilderDlg::CreateOutputTable(CDatabase* pDB)
-{
-	CreateCopyTable(pDB,OutputTableName(),BaseOutputTableName());
-}
-
-
-// static 
-void CStringBuilderDlg::ClearOutputTable(CDatabase* pDB)
-{
-	ClearTable(pDB,OutputTableName());
-}
-
-
-// static 
-void CStringBuilderDlg::CreateCopyTable(CDatabase* pDB,
-										const CString& copyName,
-										const CString& srcName)
-{
-
-
-
-	try {
-		CString sql = "DROP TABLE [";
-		sql += copyName;
-		sql += "]";
-
-		pDB->ExecuteSQL(sql);
-
-	} catch ( CDBException* e )	{
-		// usually the table already exists, show error message only if not
-		if ( e->m_strError.Find("already exists") == -1 )
-			AfxMessageBox( e->m_strError,   
-					       MB_ICONEXCLAMATION );
-	   e->Delete();
-	}
-
-	try {
-		CString sql = "SELECT * INTO [";
-		sql += copyName;
-		sql += "] FROM [";
-		sql += srcName;
-		sql += "]";
-//if ("StringBuilderOutput") 
+////	static 
+//void CStringBuilderDlg::CreateInputTable(CDatabase* pDB)
 //{
-//	sql += " ORDER BY [";
-//	sql +=	srcName;
-//	sql	+= ".PLAN_HEAT_SEQUENCE_NO]";
+//	CreateCopyTable(pDB,InputTableName(),BaseInputTableName());
 //}
 
-//  sql += srcName ".PLAN_HEAT_SEQUENCE_NO]";  //;
-//  sql += ".PLAN_HEAT_SEQUENCE_NO]";
+////	static 
+//void CStringBuilderDlg::ClearInputTable(CDatabase* pDB)
+//{
+//	ClearTable(pDB,InputTableName());
+//}
 
-		pDB->ExecuteSQL(sql);
-
-	} catch ( CDBException* e )	{
-		// usually the table already exists, show error message only if not
-		if ( e->m_strError.Find("already exists") == -1 )
-			AfxMessageBox( e->m_strError,   
-					       MB_ICONEXCLAMATION );
-	   e->Delete();
-	}
+//	static 
+void CStringBuilderDlg::ClearNewInputTable(CDatabase* pDB, int userId)
+{
+	ClearNewTable(pDB, NewInputTableName(), userId);
 }
+
+////	static 
+//void CStringBuilderDlg::CreateOutputTable(CDatabase* pDB)
+//{
+//	CreateCopyTable(pDB,OutputTableName(),BaseOutputTableName());
+//}
+
+
+//// static 
+//void CStringBuilderDlg::ClearOutputTable(CDatabase* pDB)
+//{
+//	ClearTable(pDB,OutputTableName());
+//}
 
 
 // static 
-void CStringBuilderDlg::ClearTable(CDatabase* pDB ,const CString& tableName)
+void CStringBuilderDlg::ClearNewOutputTable(CDatabase* pDB, int userId)
+{
+	ClearNewTable(pDB, NewOutputTableName(), userId);
+}
+
+//// static 
+//void CStringBuilderDlg::CreateCopyTable(CDatabase* pDB,
+//										const CString& copyName,
+//										const CString& srcName)
+//{
+//
+//
+//
+//	try {
+//		CString sql = "DROP TABLE [";
+//		sql += copyName;
+//		sql += "]";
+//
+//		pDB->ExecuteSQL(sql);
+//
+//	} catch ( CDBException* e )	{
+//		// usually the table already exists, show error message only if not
+//		if ( e->m_strError.Find("already exists") == -1 )
+//			AfxMessageBox( e->m_strError,   
+//					       MB_ICONEXCLAMATION );
+//	   e->Delete();
+//	}
+//
+//	try {
+//		CString sql = "SELECT * INTO [";
+//		sql += copyName;
+//		sql += "] FROM [";
+//		sql += srcName;
+//		sql += "]";
+////if ("StringBuilderOutput") 
+////{
+////	sql += " ORDER BY [";
+////	sql +=	srcName;
+////	sql	+= ".PLAN_HEAT_SEQUENCE_NO]";
+////}
+//
+////  sql += srcName ".PLAN_HEAT_SEQUENCE_NO]";  //;
+////  sql += ".PLAN_HEAT_SEQUENCE_NO]";
+//
+//		pDB->ExecuteSQL(sql);
+//
+//	} catch ( CDBException* e )	{
+//		// usually the table already exists, show error message only if not
+//		if ( e->m_strError.Find("already exists") == -1 )
+//			AfxMessageBox( e->m_strError,   
+//					       MB_ICONEXCLAMATION );
+//	   e->Delete();
+//	}
+//}
+//
+
+//// static 
+//void CStringBuilderDlg::ClearTable(CDatabase* pDB ,const CString& tableName)
+//{
+//	CString sql = "DELETE FROM [";
+//	sql += tableName;
+//	sql += "]";
+//
+//	try {
+//
+//		pDB->ExecuteSQL(sql);
+//
+//	} catch ( CDBException* e )	{
+//	   AfxMessageBox( e->m_strError,   
+//                    MB_ICONEXCLAMATION );
+//	   e->Delete();
+//	}
+//}
+
+// static 
+void CStringBuilderDlg::ClearNewTable(CDatabase* pDB, const CString& tableName, int userId)
 {
 	CString sql = "DELETE FROM [";
 	sql += tableName;
 	sql += "]";
+	sql += "WHERE USER_ID = " + userId;
 
 	try {
 
 		pDB->ExecuteSQL(sql);
 
-	} catch ( CDBException* e )	{
-	   AfxMessageBox( e->m_strError,   
-                    MB_ICONEXCLAMATION );
-	   e->Delete();
+	}
+	catch (CDBException* e)	{
+		AfxMessageBox(e->m_strError,
+			MB_ICONEXCLAMATION);
+		e->Delete();
 	}
 }
-

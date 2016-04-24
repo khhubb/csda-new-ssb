@@ -21,7 +21,7 @@ class COrder;
 class CCastString;
 class CSpec;
 class CCasterStringOrdersSet;
-class CStringBuilderOutputSet;
+class CSSBOutput;
 
 class CCheckStockApplicationRules;   // added k. hubbard 4-4-08
 
@@ -494,7 +494,7 @@ public:
 
 	CCSOrder(const CCasterStringOrdersSet& ordersSet);
 
-	CCSOrder(const CStringBuilderOutputSet& sbSet,
+	CCSOrder(const CSSBOutput& sbSet,
 			int caster);
 
 	CCSOrder(const CCheckStockApplicationRules& x);  // added 4-4-08 k. hubbard
@@ -604,7 +604,7 @@ private:
 			  int caster);
 	void Init(const CCSOrder&);
 	void Init(const CCasterStringOrdersSet&);
-	void Init(const CStringBuilderOutputSet&,
+	void Init(const CSSBOutput&,
 			  int caster);
 
 	void Init(const CCheckStockApplicationRules& x);  // added 4-4-08 k. hubbard

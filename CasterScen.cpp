@@ -16,7 +16,7 @@ static char THIS_FILE[]=__FILE__;
 
 
 #include "DalyPlanSet.h"
-#include "StringBuilderOutputSet.h"
+#include "SSBOutput.h"
 #include "Order.h"
 #include "CSOrder.h"
 #include "CastString.h"
@@ -243,8 +243,7 @@ bool CCasterScen::OpenDalyPlanSet(CDalyPlanSet& planSet)
 	return true;
 }
 
-
-bool CCasterScen::LoadFromStringBuilderOutput(CStringBuilderOutputSet& sbSet,vector<CCastString*>& newStrings)
+bool CCasterScen::LoadFromNewStringBuilderOutput(CSSBOutput& sbSet, vector<CCastString*>& newStrings)
 {
 	// This will always add new records
 	// Do NOT Cleanup();
@@ -261,66 +260,144 @@ bool CCasterScen::LoadFromStringBuilderOutput(CStringBuilderOutputSet& sbSet,vec
 
 	//  Query set iteration
 
-	while ( ! sbSet.IsEOF() )	{
+	while (!sbSet.IsEOF())	{
 
-		CCastString* pString = new CCastString(this,sbSet);
-		m_castStrings.push_back( pString );
+		CCastString* pString = new CCastString(this, sbSet);
+		m_castStrings.push_back(pString);
 		newStrings.push_back(pString);
 	}
 
-		
+
 	//  Set exposure codes for stock orders, to either preceding or following
 
 	{
-		for ( TCastStringVec::iterator is = m_castStrings.begin();
-			  is != m_castStrings.end();
-			  ++is ) {
-			for ( vector<CCSOrder*>::iterator io = (*is)->StrandBegin(1);
-				  io != (*is)->StrandEnd(1);
-				  ++io ) {
+		for (TCastStringVec::iterator is = m_castStrings.begin();
+			is != m_castStrings.end();
+			++is) {
+			for (vector<CCSOrder*>::iterator io = (*is)->StrandBegin(1);
+				io != (*is)->StrandEnd(1);
+				++io) {
 				// FP change
-				if ( (*io)->FpOrderNum().Left(7) == "9999999" ) {
+				if ((*io)->FpOrderNum().Left(7) == "9999999") {
 					// stock order
-					if ( io != (*is)->StrandBegin(1) ) 
-						(*io)->ExposureCode( (*(io-1))->ExposureCode() );
-					else if ( io != (*is)->StrandEnd(1) )
-			//			(*io)->ExposureCode( (*(io+1))->ExposureCode() );
-			//		else 
-						(*io)->ExposureCode( 'E' );
-				}
-			}
-				
-			for ( vector<CCSOrder*>::iterator io = (*is)->StrandBegin(2);
-				  io != (*is)->StrandEnd(2);
-				  ++io ) {
-				// FP change
-				if ( (*io)->FpOrderNum().Left(7) == "9999999" ) {
-					// stock order
-					if ( io != (*is)->StrandBegin(2) ) 
-						(*io)->ExposureCode( (*(io-1))->ExposureCode() );
-					else if ( io != (*is)->StrandEnd(2) )
-				//		(*io)->ExposureCode( (*(io+1))->ExposureCode() );
-				//	else 
-						(*io)->ExposureCode( 'E' );
+					if (io != (*is)->StrandBegin(1))
+						(*io)->ExposureCode((*(io - 1))->ExposureCode());
+					else if (io != (*is)->StrandEnd(1))
+						//			(*io)->ExposureCode( (*(io+1))->ExposureCode() );
+						//		else 
+						(*io)->ExposureCode('E');
 				}
 			}
 
-				
+			for (vector<CCSOrder*>::iterator io = (*is)->StrandBegin(2);
+				io != (*is)->StrandEnd(2);
+				++io) {
+				// FP change
+				if ((*io)->FpOrderNum().Left(7) == "9999999") {
+					// stock order
+					if (io != (*is)->StrandBegin(2))
+						(*io)->ExposureCode((*(io - 1))->ExposureCode());
+					else if (io != (*is)->StrandEnd(2))
+						//		(*io)->ExposureCode( (*(io+1))->ExposureCode() );
+						//	else 
+						(*io)->ExposureCode('E');
+				}
+			}
+
+
 		}
 	}
 
 
 	//  Calculate heats for all strings.
 
-	for ( TCastStringVec::iterator is = m_castStrings.begin();
-		  is != m_castStrings.end();
-		  ++is ) {
+	for (TCastStringVec::iterator is = m_castStrings.begin();
+		is != m_castStrings.end();
+		++is) {
 		(*is)->CalculateHeats();
 		(*is)->CalculateSummary();
 	}
 
 	return true;
 }
+
+//bool CCasterScen::LoadFromStringBuilderOutput(CStringBuilderOutputSet& sbSet,vector<CCastString*>& newStrings)
+//{
+//	// This will always add new records
+//	// Do NOT Cleanup();
+//
+//	newStrings.clear();
+//
+//	//  The records are sorted in string order 
+//	//		and by lot# within a string.
+//	//  Create strings and the orders within each string.
+//	//  The c-tor for CCastString will read records to fill in its lots
+//	//     and leave the recordset either at the beginning of the next
+//	//     string or at EOF.
+//
+//
+//	//  Query set iteration
+//
+//	while ( ! sbSet.IsEOF() )	{
+//
+//		CCastString* pString = new CCastString(this,sbSet);
+//		m_castStrings.push_back( pString );
+//		newStrings.push_back(pString);
+//	}
+//
+//		
+//	//  Set exposure codes for stock orders, to either preceding or following
+//
+//	{
+//		for ( TCastStringVec::iterator is = m_castStrings.begin();
+//			  is != m_castStrings.end();
+//			  ++is ) {
+//			for ( vector<CCSOrder*>::iterator io = (*is)->StrandBegin(1);
+//				  io != (*is)->StrandEnd(1);
+//				  ++io ) {
+//				// FP change
+//				if ( (*io)->FpOrderNum().Left(7) == "9999999" ) {
+//					// stock order
+//					if ( io != (*is)->StrandBegin(1) ) 
+//						(*io)->ExposureCode( (*(io-1))->ExposureCode() );
+//					else if ( io != (*is)->StrandEnd(1) )
+//			//			(*io)->ExposureCode( (*(io+1))->ExposureCode() );
+//			//		else 
+//						(*io)->ExposureCode( 'E' );
+//				}
+//			}
+//				
+//			for ( vector<CCSOrder*>::iterator io = (*is)->StrandBegin(2);
+//				  io != (*is)->StrandEnd(2);
+//				  ++io ) {
+//				// FP change
+//				if ( (*io)->FpOrderNum().Left(7) == "9999999" ) {
+//					// stock order
+//					if ( io != (*is)->StrandBegin(2) ) 
+//						(*io)->ExposureCode( (*(io-1))->ExposureCode() );
+//					else if ( io != (*is)->StrandEnd(2) )
+//				//		(*io)->ExposureCode( (*(io+1))->ExposureCode() );
+//				//	else 
+//						(*io)->ExposureCode( 'E' );
+//				}
+//			}
+//
+//				
+//		}
+//	}
+//
+//
+//	//  Calculate heats for all strings.
+//
+//	for ( TCastStringVec::iterator is = m_castStrings.begin();
+//		  is != m_castStrings.end();
+//		  ++is ) {
+//		(*is)->CalculateHeats();
+//		(*is)->CalculateSummary();
+//	}
+//
+//	return true;
+//}
 
 
 

@@ -1,16 +1,16 @@
-// SBoutput.h : Implementation of the CSBoutput class
+// SSBOutput.h : Implementation of the CSSBOutput class
 
 
 
-// CSBoutput implementation
+// CSSBOutput implementation
 
-// code generated on Sunday, April 24, 2016, 7:33 AM
+// code generated on Sunday, April 24, 2016, 1:26 PM
 
 #include "stdafx.h"
-#include "SBoutput.h"
-IMPLEMENT_DYNAMIC(CSBoutput, CRecordset)
+#include "SSBOutput.h"
+IMPLEMENT_DYNAMIC(CSSBOutput, CRecordset)
 
-CSBoutput::CSBoutput(CDatabase* pdb)
+CSSBOutput::CSSBOutput(CDatabase* pdb)
 	: CRecordset(pdb)
 {
 	m_PLAN_WEEK = 0;
@@ -65,25 +65,40 @@ CSBoutput::CSBoutput(CDatabase* pdb)
 	m_PLAN_STEEL_LENGTH_MIN = 0.0;
 	m_PLAN_STEEL_LENGTH_MAX = 0.0;
 	m_FILLER0 = L"";
-	m_nFields = 52;
+	m_FP_M_ORDER_NO = L"";
+	m_USER_ID = 0;
+	m_nFields = 54;
 	m_nDefaultType = snapshot;
-}
-#error Security Issue: The connection string may contain a password
-// The connection string below may contain plain text passwords and/or
-// other sensitive information. Please remove the #error after reviewing
-// the connection string for any security related issues. You may want to
-// store the password in some other form or use a different user authentication.
-CString CSBoutput::GetDefaultConnect()
-{
-	return _T("DSN=csdatest2;Trusted_Connection=Yes;APP=Microsoft\x00ae Visual Studio\x00ae 2013;WSID=DM;DATABASE=csd_newinl");
+
+	/////////////////////////////BEGIN///////////////////////////////////
+	//  SQL Order By : m_strSort added 6-13-03 K. Hubbard to keep heats returned to Editor for Singl String Builder
+	//                 properly sequenced when displayed in editor. Traced (searched) executeSQL statement definition into 
+	//                 MFC\Include\AFXDB.h file to find Order By C++ Wizard syntax statement to use.  	
+
+	//	m_strFilter = "[PLAN_CAST_UNIT_CODE] = ? AND [PLAN_NUMBER_OF_PIECES] > 0";
+	m_strSort = "[PLAN_CAST_UNIT_CODE], "
+		"[PLAN_WEEK], "
+		"[PLAN_STRING_ID], "
+		"[PLAN_HEAT_SEQUENCE_NO], "
+		"[PLAN_LOT_NUMBER]";
+
+	//	m_nParams = 1;
+
+	//
+	//////////////////////////////END////////////////////////////////////
 }
 
-CString CSBoutput::GetDefaultSQL()
+CString CSSBOutput::GetDefaultConnect()
 {
-	return _T("[dbo].[SBoutput]");
+	return _T("ODBC;DSN=dpaTest");
 }
 
-void CSBoutput::DoFieldExchange(CFieldExchange* pFX)
+CString CSSBOutput::GetDefaultSQL()
+{
+	return _T("[dbo].[SSBOutput]");
+}
+
+void CSSBOutput::DoFieldExchange(CFieldExchange* pFX)
 {
 	pFX->SetFieldType(CFieldExchange::outputColumn);
 // Macros such as RFX_Text() and RFX_Int() are dependent on the
@@ -141,18 +156,20 @@ void CSBoutput::DoFieldExchange(CFieldExchange* pFX)
 	RFX_Single(pFX, _T("[PLAN_STEEL_LENGTH_MIN]"), m_PLAN_STEEL_LENGTH_MIN);
 	RFX_Single(pFX, _T("[PLAN_STEEL_LENGTH_MAX]"), m_PLAN_STEEL_LENGTH_MAX);
 	RFX_Text(pFX, _T("[FILLER0]"), m_FILLER0);
+	RFX_Text(pFX, _T("[FP_M_ORDER_NO]"), m_FP_M_ORDER_NO);
+	RFX_Long(pFX, _T("[USER_ID]"), m_USER_ID);
 
 }
 /////////////////////////////////////////////////////////////////////////////
-// CSBoutput diagnostics
+// CSSBOutput diagnostics
 
 #ifdef _DEBUG
-void CSBoutput::AssertValid() const
+void CSSBOutput::AssertValid() const
 {
 	CRecordset::AssertValid();
 }
 
-void CSBoutput::Dump(CDumpContext& dc) const
+void CSSBOutput::Dump(CDumpContext& dc) const
 {
 	CRecordset::Dump(dc);
 }

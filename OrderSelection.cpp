@@ -19,7 +19,7 @@ static char THIS_FILE[]=__FILE__;
 #include "DBConn.h"
 #include "CICode.h"
 #include "UnappOrderSet.h"
-#include "StringBuilderInputSet.h"
+#include "SSBInput.h"
 #include "StringBuilderDlg.h"
 #include "Snapshot.h"
 #include "SuperScen.h"
@@ -1713,16 +1713,14 @@ void COrderSelection::Init(CSuperScen* pSS)
 //
 /////////////////////////////////////////////////////////////////////
 
-
-bool COrderSelection::WriteOrdersForStringBuilder(CSuperScen* pSS)
+bool COrderSelection::WriteOrdersForNewStringBuilder(CSuperScen* pSS, int userId)
 {
 	CDBConn dbc(CDBConn::DB_DPA);
 	dbc.Connect();
 
-	CStringBuilderDlg::CreateInputTable(dbc.GetDB());
-	CStringBuilderDlg::ClearInputTable(dbc.GetDB());
+	CStringBuilderDlg::ClearNewInputTable(dbc.GetDB(),userId);
 
-	CStringBuilderInputSet rs(dbc.GetDB());
+	CSSBInput rs(dbc.GetDB());
 
 	bool retval = true;
 
@@ -1731,12 +1729,12 @@ bool COrderSelection::WriteOrdersForStringBuilder(CSuperScen* pSS)
 		dbc.GetDB()->BeginTrans();
 		// rs.Open(CRecordset::dynaset,LPCTSTR(CStringBuilderDlg::InputTableName()),CRecordset::appendOnly); k. hubbard 3-7-03
 
-		rs.Open(CRecordset::dynamic,LPCTSTR(CStringBuilderDlg::InputTableName()),CRecordset::none);
+		rs.Open(CRecordset::dynamic,LPCTSTR(CStringBuilderDlg::NewInputTableName()),CRecordset::none);
 
 		for ( vector<COrder*>::const_iterator io = Orders().begin();
 			  io != Orders().end();
 			  ++io ) 
-			(*io)->WriteStringBuilderRecord(rs,pSS);
+			(*io)->WriteNewStringBuilderRecord(rs,pSS,userId);
 
 		dbc.GetDB()->CommitTrans();
 	}
@@ -1754,6 +1752,48 @@ bool COrderSelection::WriteOrdersForStringBuilder(CSuperScen* pSS)
 
 	return retval;
 }
+
+
+//bool COrderSelection::WriteOrdersForStringBuilder(CSuperScen* pSS)
+//{
+//	CDBConn dbc(CDBConn::DB_DPA);
+//	dbc.Connect();
+//
+//	CStringBuilderDlg::CreateInputTable(dbc.GetDB());
+//	CStringBuilderDlg::ClearInputTable(dbc.GetDB());
+//
+//	CStringBuilderInputSet rs(dbc.GetDB());
+//
+//	bool retval = true;
+//
+//	try {
+//		
+//		dbc.GetDB()->BeginTrans();
+//		// rs.Open(CRecordset::dynaset,LPCTSTR(CStringBuilderDlg::InputTableName()),CRecordset::appendOnly); k. hubbard 3-7-03
+//
+//		rs.Open(CRecordset::dynamic,LPCTSTR(CStringBuilderDlg::InputTableName()),CRecordset::none);
+//
+//		for ( vector<COrder*>::const_iterator io = Orders().begin();
+//			  io != Orders().end();
+//			  ++io ) 
+//			(*io)->WriteStringBuilderRecord(rs,pSS);
+//
+//		dbc.GetDB()->CommitTrans();
+//	}
+//	catch ( CDBException* e )
+//	{
+//	   AfxMessageBox( e->m_strError,   
+//                      MB_ICONEXCLAMATION );
+//	   e->Delete();
+//		retval = false;
+//		dbc.GetDB()->Rollback();
+//	}
+//
+//	if ( rs.IsOpen() )
+//		rs.Close();
+//
+//	return retval;
+//}
 
 
 

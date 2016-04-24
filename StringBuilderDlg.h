@@ -63,18 +63,29 @@ public:
 	int m_heatSizeAim;
 		// the aim heat size selected by the user.
 
-	static const CString& BaseInputTableName();
-	static const CString& BaseOutputTableName();
-	static CString InputTableName();
-	static CString OutputTableName();
-	static void CreateInputTable(CDatabase*);
-	static void ClearInputTable(CDatabase*);
-	static void CreateOutputTable(CDatabase*);
-	static void ClearOutputTable(CDatabase*);
-	static void CreateCopyTable(CDatabase*,
-								const CString& copyName,
-								const CString& srcName);
-	static void ClearTable(CDatabase*,const CString& tableName);
+	//static const CString& BaseInputTableName();
+	//static const CString& BaseOutputTableName();
+	//static CString InputTableName();
+	//static CString OutputTableName();
+
+	static const CString& BaseNewInputTableName();
+	static const CString& BaseNewOutputTableName();
+	static CString NewInputTableName();
+	static CString NewOutputTableName();
+
+	//static void CreateInputTable(CDatabase*);
+	//static void ClearInputTable(CDatabase*);
+	//static void CreateOutputTable(CDatabase*);
+	//static void ClearOutputTable(CDatabase*);
+
+	static void ClearNewInputTable(CDatabase*,int);
+	static void ClearNewOutputTable(CDatabase*,int);
+	static void ClearNewTable(CDatabase*,const CString& tableName, int userId);
+
+	//static void CreateCopyTable(CDatabase*,
+	//							const CString& copyName,
+	//							const CString& srcName);
+	//static void ClearTable(CDatabase*,const CString& tableName);
 
 // Overrides
 	// ClassWizard generated virtual function overrides

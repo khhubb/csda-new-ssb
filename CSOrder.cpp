@@ -94,7 +94,7 @@ static char THIS_FILE[]=__FILE__;
 #include "SpecMgr.h"
 #include "MiscConstants.h"
 #include "CastStringValidator.h"
-#include "StringBuilderOutputSet.h"
+#include "SSBOutput.h"
 
 #include "CheckStockApplicationRules.h"   // added k. hubbard 4-4-08
 
@@ -149,7 +149,7 @@ CCSOrder::CCSOrder(const CCheckStockApplicationRules& x)  // added 4-4-08 k. hub
     Init(x);
 }
 
-CCSOrder::CCSOrder(const CStringBuilderOutputSet& sbSet,
+CCSOrder::CCSOrder(const CSSBOutput& sbSet,
 				   int caster)
 {
 	Init(sbSet,caster);
@@ -500,7 +500,7 @@ void CCSOrder::Init(const CCSOrder& x)
 
 
 
-void CCSOrder::Init(const CStringBuilderOutputSet& sbSet,
+void CCSOrder::Init(const CSSBOutput& sbSet,
 					int caster)
 {
 	

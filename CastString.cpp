@@ -33,7 +33,7 @@ static char THIS_FILE[]=__FILE__;
 
 
 #include "DalyPlanSet.h"
-#include "StringBuilderOutputSet.h"
+#include "SSBOutput.h"
 
 
 #include "Order.h"
@@ -276,7 +276,7 @@ CCastString::CCastString(CCasterScen* pCScen,
 
 
 CCastString::CCastString(CCasterScen* pCScen,
-						 CStringBuilderOutputSet& sbSet)
+						 CSSBOutput& sbSet)
  : m_pCScen				( pCScen					),
    m_pOrigString		( 0							),
    m_orderSelection		( pCScen->Caster()			),
@@ -365,7 +365,7 @@ void CCastString::Init(CDalyPlanSet& planSet)
 
 
 
-void CCastString::Init(CStringBuilderOutputSet& sbSet)
+void CCastString::Init(CSSBOutput& sbSet)
 {
 	{
 		CCastStringId firstId(sbSet);

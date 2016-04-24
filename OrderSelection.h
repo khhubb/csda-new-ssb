@@ -621,7 +621,8 @@ public:
 	void AddSpecialSelectedOrder(COrder* pOrder) 
 	{	m_specialSelectedOrders.insert(pOrder);	}
 
-	bool WriteOrdersForStringBuilder(CSuperScen* pSS);
+	//bool WriteOrdersForStringBuilder(CSuperScen* pSS);
+	bool WriteOrdersForNewStringBuilder(CSuperScen* pSS, int userId);
 
 	////////////////////////////////////////////////////////////////
 	//	

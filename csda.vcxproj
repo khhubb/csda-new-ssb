@@ -371,7 +371,6 @@
     <ClCompile Include="PstConformanceReport.cpp" />
     <ClCompile Include="ReportDlg.cpp" />
     <ClCompile Include="sbdriver.cpp" />
-    <ClCompile Include="SBoutput.cpp" />
     <ClCompile Include="Scenario.cpp" />
     <ClCompile Include="ScenMasterChildFrame.cpp" />
     <ClCompile Include="ScenMasterCtrlView.cpp" />
@@ -395,6 +394,7 @@
     <ClCompile Include="SpecMgr.cpp" />
     <ClCompile Include="SpecSelectionDlg.cpp" />
     <ClCompile Include="SSBInput.cpp" />
+    <ClCompile Include="SSBOutput.cpp" />
     <ClCompile Include="StdAfx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -564,7 +564,6 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="resource2.h" />
     <ClInclude Include="sbdriver.h" />
-    <ClInclude Include="SBoutput.h" />
     <ClInclude Include="Scenario.h" />
     <ClInclude Include="ScenMasterChildFrame.h" />
     <ClInclude Include="ScenMasterCtrlView.h" />
@@ -588,6 +587,7 @@
     <ClInclude Include="SpecMgr.h" />
     <ClInclude Include="SpecSelectionDlg.h" />
     <ClInclude Include="SSBInput.h" />
+    <ClInclude Include="SSBOutput.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="SteelSpecCrossAppSet.h" />
     <ClInclude Include="stlext.h" />

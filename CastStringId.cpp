@@ -11,7 +11,7 @@
 #include "CastStringId.h"
 
 #include "DalyPlanSet.h"
-#include "StringBuilderOutputSet.h"
+#include "SSBOutput.h"
 
 
 CCastStringId::CCastStringId()
@@ -45,7 +45,7 @@ CCastStringId::CCastStringId(const CDalyPlanSet& planSet)
 	m_stringId	= planSet.m_PLAN_STRING_ID;  
 }
 
-CCastStringId::CCastStringId(const CStringBuilderOutputSet& sbSet)
+CCastStringId::CCastStringId(const CSSBOutput& sbSet)
 {
 	// m_PLAN_WEEK is YYYYWW
 	m_year		= sbSet.m_PLAN_WEEK/100%10000;	// YYYYww

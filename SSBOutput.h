@@ -1,14 +1,14 @@
-// SBoutput.h : Declaration of the CSBoutput
+// SSBOutput.h : Declaration of the CSSBOutput
 
 #pragma once
 
-// code generated on Sunday, April 24, 2016, 7:33 AM
+// code generated on Sunday, April 24, 2016, 1:26 PM
 
-class CSBoutput : public CRecordset
+class CSSBOutput : public CRecordset
 {
 public:
-	CSBoutput(CDatabase* pDatabase = NULL);
-	DECLARE_DYNAMIC(CSBoutput)
+	CSSBOutput(CDatabase* pDatabase = NULL);
+	DECLARE_DYNAMIC(CSSBOutput)
 
 // Field/Param Data
 
@@ -72,6 +72,8 @@ public:
 	float	m_PLAN_STEEL_LENGTH_MIN;
 	float	m_PLAN_STEEL_LENGTH_MAX;
 	CString	m_FILLER0;
+	CString	m_FP_M_ORDER_NO;
+	long	m_USER_ID;
 
 // Overrides
 	// Wizard generated virtual function overrides

@@ -519,7 +519,7 @@
     <ClCompile Include="SSBInput.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SBoutput.cpp">
+    <ClCompile Include="SSBOutput.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1050,7 +1050,7 @@
     <ClInclude Include="SSBInput.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SBoutput.h">
+    <ClInclude Include="SSBOutput.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

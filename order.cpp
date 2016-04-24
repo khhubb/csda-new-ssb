@@ -47,7 +47,7 @@ static char THIS_FILE[]=__FILE__;
 #include "UnappOrderSet.h"
 #include "DalyPlanOrdersOnlySet.h"
 #include "MiscConstants.h"
-#include "StringBuilderInputSet.h"
+#include "SSBInput.h"
 #include "SuperScen.h"
 #include "Snapshot.h"
 
@@ -778,8 +778,9 @@ bool COrder::IsCMSSpec(const CString& spec)
 //  The superScen is needed in order to compute slabs due
 //
 
-void COrder::WriteStringBuilderRecord(CStringBuilderInputSet& rs,
-									  CSuperScen* pSS) const
+void COrder::WriteNewStringBuilderRecord(CSSBInput& rs,
+									  CSuperScen* pSS,
+									  int userId) const
 {
 	rs.AddNew();
 	
@@ -833,6 +834,7 @@ void COrder::WriteStringBuilderRecord(CStringBuilderInputSet& rs,
 	rs.m_SM_PLAN_CAST_SPEC			= m_smPlanCastSpec;
 	rs.m_SM_PLAN_FP_PST_DATE		= m_plannedLatestStartDate;
 	rs.m_SM_PLAN_FP_PST_TIME		= m_plannedLatestStartTime;
+	rs.m_USER_ID = userId;
 
 	rs.Update();
 }

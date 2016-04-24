@@ -65,14 +65,10 @@ CSSBInput::CSSBInput(CDatabase* pdb)
 	m_nFields = 49;
 	m_nDefaultType = snapshot;
 }
-#error Security Issue: The connection string may contain a password
-// The connection string below may contain plain text passwords and/or
-// other sensitive information. Please remove the #error after reviewing
-// the connection string for any security related issues. You may want to
-// store the password in some other form or use a different user authentication.
+
 CString CSSBInput::GetDefaultConnect()
 {
-	return _T("DSN=csdatest2;Trusted_Connection=Yes;APP=Microsoft\x00ae Visual Studio\x00ae 2013;WSID=DM;DATABASE=csd_newinl");
+	return _T("ODBC;DSN=dpaTest");
 }
 
 CString CSSBInput::GetDefaultSQL()

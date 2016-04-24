@@ -3,7 +3,7 @@
 
  
 class CDalyPlanSet;
-class CStringBuilderOutputSet;
+class CSSBOutput;
 
 
 class CCastStringId
@@ -68,7 +68,7 @@ public:
 				 int stringId_);
 
 	CCastStringId(const CDalyPlanSet&);
-	CCastStringId(const CStringBuilderOutputSet&);
+	CCastStringId(const CSSBOutput&);
 
 	// default copy c-tor, op=  okay.
 

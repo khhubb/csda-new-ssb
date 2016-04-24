@@ -19,7 +19,7 @@
 
 class CUnappOrderSet;
 class CDalyPlanOrdersOnlySet;
-class CStringBuilderInputSet;
+class CSSBInput;
 class COrder;
 class CSuperScen;
 
@@ -462,7 +462,7 @@ public:
 	static bool IsCMSSpec(const CString& spec);
 
 
-	void WriteStringBuilderRecord(CStringBuilderInputSet& rs,CSuperScen* pScen) const;
+	void WriteNewStringBuilderRecord(CSSBInput& rs,CSuperScen* pScen, int userId) const;
 
 
 	////////////////////////////////////////////////////////////////
