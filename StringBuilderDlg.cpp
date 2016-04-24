@@ -84,7 +84,7 @@ void CStringBuilderDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_BUTTON_CREATE_STRING, m_btnCreateString);
 	DDX_Text(pDX, IDC_EDIT_ID, m_strId);
 	DDX_Text(pDX, IDC_EDIT_NUM_ORDERS, m_numOrders);
-	DDX_Control(pDX, IDC_SBDRIVER1, m_sbDriver);
+	//  DDX_Control(pDX, IDC_SBDRIVER1, m_sbDriver);
 	//}}AFX_DATA_MAP
 }
 
@@ -103,8 +103,8 @@ END_MESSAGE_MAP()
 
 BEGIN_EVENTSINK_MAP(CStringBuilderDlg, CDialog)
     //{{AFX_EVENTSINK_MAP(CStringBuilderDlg)
-	ON_EVENT(CStringBuilderDlg, IDC_SBDRIVER1, 1 /* Cancel */, OnCancelSbdriver1, VTS_NONE)
-	ON_EVENT(CStringBuilderDlg, IDC_SBDRIVER1, 2 /* Done */, OnDoneSbdriver1, VTS_NONE)
+//	ON_EVENT(CStringBuilderDlg, IDC_SBDRIVER1, 1 /* Cancel */, OnCancelSbdriver1, VTS_NONE)
+//	ON_EVENT(CStringBuilderDlg, IDC_SBDRIVER1, 2 /* Done */, OnDoneSbdriver1, VTS_NONE)
 	//}}AFX_EVENTSINK_MAP
 END_EVENTSINK_MAP()
 
@@ -151,10 +151,10 @@ void CStringBuilderDlg::SetControls()
 //  If the stringbuilder is cancelled, we exit.
 //
 
-void CStringBuilderDlg::OnCancelSbdriver1() 
-{
-	OnOK();	
-}
+//void CStringBuilderDlg::OnCancelSbdriver1() 
+//{
+//	OnOK();	
+//}
 
 
 //
@@ -163,10 +163,10 @@ void CStringBuilderDlg::OnCancelSbdriver1()
 //    the createString button
 //
 
-void CStringBuilderDlg::OnDoneSbdriver1() 
-{
-	m_btnCreateString.ShowWindow(SW_SHOW);
-}
+//void CStringBuilderDlg::OnDoneSbdriver1() 
+//{
+//	m_btnCreateString.ShowWindow(SW_SHOW);
+//}
 
 
 //
@@ -191,6 +191,8 @@ void CStringBuilderDlg::OnButtonCreateString()
 		//						 CRecordset::readOnly);
 
 		//sbSet.Open(CRecordset::dynamic,
+
+		sbSet.m_userIdParam = atol(CUserInfo::TheUser.SBId());
 
 		sbSet.Open(CRecordset::dynaset,
 			LPCTSTR(NewOutputTableName()),
@@ -383,46 +385,21 @@ void CStringBuilderDlg::OnButtonStartSb()
 		ClearNewOutputTable(dbc.GetDB(), atoi(CUserInfo::TheUser.SBId()));
 	}
 
-	//CStringBuilderDlg sbd;
+	ostrstream ostr;
+	ostr << "StringBuilder\\StringBuilder.exe ";
+	ostr << " aimheatsize " << m_heatSizeAim;
+	ostr << " dateformat PST";
+	ostr << " caster " << m_id.Caster();
+	ostr << " strinstringidgId " << m_id.StringId();
+	ostr << " planwk " << m_id.Year() * 100 + m_id.Week();
+	ostr << " userid " << atoi(CUserInfo::TheUser.SBId());
+	if (m_pOrderSelection->Orders().size() > 0)
+		ostr << " startspec " << m_pOrderSelection->Orders().front()->OrderedSpec();
+	ostr << " maxnumtries 10"; 
+	ostr << " dbname  ihe-SQL03p"; // TODO: This should be detected or come from a config file
+	ostr << ends;
 
-	//m_sbDriver.SetAimHeatWeight( m_heatSizeAim );
-	//m_sbDriver.SetDateformat("PST");
-
-	//{
-	//	ostrstream ostr;
-	//	ostr << m_id.Caster() << ends;
-	//	m_sbDriver.SetPlanCasterUnit( ostr.str() );
-	//	ostr.freeze(false);
-	//	ostr.seekp(0);
-
-	//	ostr << m_id.StringId() << ends;
-	//	m_sbDriver.SetStringID( ostr.str() );
-	//	ostr.freeze(false);
-	//	ostr.seekp(0);
-
-	//	ostr << m_id.Year()*100 + m_id.Week() << ends;
-	//	m_sbDriver.SetPlanningWeek( ostr.str() );
-	//	ostr.freeze(false);
-	//}
-
-	//CString dummy;
-
-	//if ( m_pOrderSelection->Orders().size() == 0 )
-	//	dummy = "";
-	//else {
-	//	dummy = m_pOrderSelection->Orders().front()->OrderedSpec();
-	//}
-	// 
-	//m_sbDriver.SetStartingSpec(dummy);
-
-	//m_sbDriver.SetMaxNumberOfTries( 10 );
-	//m_sbDriver.SetDNSdata( "dpaTest" );
-	//m_sbDriver.SetDNSrules( "rules" );
-	//m_sbDriver.SetDsnforBOFSpeedCalc( "DSN=csdaTest" );
-	//m_sbDriver.SetOrderSource( LPCTSTR(InputTableName()) );
-	//m_sbDriver.SetOutputTable( LPCTSTR(OutputTableName()) );
-	//
-	//m_sbDriver.MakeString();
+	system(ostr.str());
 
 	// Code from the original VB version.
 	//{

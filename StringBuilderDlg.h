@@ -1,5 +1,4 @@
 //{{AFX_INCLUDES()
-#include "sbdriver.h"
 //}}AFX_INCLUDES
 #if !defined(AFX_STRINGBUILDERDLG_H__B686D113_68CC_11D3_85F4_00104B2D39AC__INCLUDED_)
 #define AFX_STRINGBUILDERDLG_H__B686D113_68CC_11D3_85F4_00104B2D39AC__INCLUDED_
@@ -35,7 +34,7 @@ public:
 	CButton	m_btnCreateString;
 	CString	m_strId;
 	int		m_numOrders;
-	CSBDriver	m_sbDriver;
+//	CSBDriver	m_sbDriver;
 	//}}AFX_DATA
 
 	CCasterScen* m_casterScen[4];
@@ -99,8 +98,8 @@ protected:
 
 	// Generated message map functions
 	//{{AFX_MSG(CStringBuilderDlg)
-	afx_msg void OnCancelSbdriver1();
-	afx_msg void OnDoneSbdriver1();
+//	afx_msg void OnCancelSbdriver1();
+//	afx_msg void OnDoneSbdriver1();
 	afx_msg void OnButtonCreateString();
 	afx_msg void OnButtonId();
 	afx_msg void OnButtonSelect();

@@ -387,9 +387,6 @@
     <ClCompile Include="ReportDlg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sbdriver.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Scenario.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -466,12 +463,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="StringBuilderDlg.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="StringBuilderInputSet.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="StringBuilderOutputSet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="StringStatusDlg.cpp">
@@ -912,9 +903,6 @@
     <ClInclude Include="resource2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sbdriver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Scenario.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -994,12 +982,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="StringBuilderDlg.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="StringBuilderInputSet.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="StringBuilderOutputSet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="StringStatusDlg.h">

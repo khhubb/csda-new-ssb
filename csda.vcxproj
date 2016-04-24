@@ -370,7 +370,6 @@
     <ClCompile Include="PSheetMiscConstants.cpp" />
     <ClCompile Include="PstConformanceReport.cpp" />
     <ClCompile Include="ReportDlg.cpp" />
-    <ClCompile Include="sbdriver.cpp" />
     <ClCompile Include="Scenario.cpp" />
     <ClCompile Include="ScenMasterChildFrame.cpp" />
     <ClCompile Include="ScenMasterCtrlView.cpp" />
@@ -408,8 +407,6 @@
     <ClCompile Include="SteelSpecCrossAppSet.cpp" />
     <ClCompile Include="stlUtils.cpp" />
     <ClCompile Include="StringBuilderDlg.cpp" />
-    <ClCompile Include="StringBuilderInputSet.cpp" />
-    <ClCompile Include="StringBuilderOutputSet.cpp" />
     <ClCompile Include="StringStatusDlg.cpp" />
     <ClCompile Include="StringStatusGrid.cpp" />
     <ClCompile Include="SuperScen.cpp" />
@@ -563,7 +560,6 @@
     <ClInclude Include="ReportDlg.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="resource2.h" />
-    <ClInclude Include="sbdriver.h" />
     <ClInclude Include="Scenario.h" />
     <ClInclude Include="ScenMasterChildFrame.h" />
     <ClInclude Include="ScenMasterCtrlView.h" />
@@ -593,8 +589,6 @@
     <ClInclude Include="stlext.h" />
     <ClInclude Include="stlUtils.h" />
     <ClInclude Include="StringBuilderDlg.h" />
-    <ClInclude Include="StringBuilderInputSet.h" />
-    <ClInclude Include="StringBuilderOutputSet.h" />
     <ClInclude Include="StringStatusDlg.h" />
     <ClInclude Include="StringStatusGrid.h" />
     <ClInclude Include="SuperScen.h" />

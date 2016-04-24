@@ -75,6 +75,14 @@ public:
 	CString	m_FP_M_ORDER_NO;
 	long	m_USER_ID;
 
+	/////////////////////////BEGIN////////////////////////////////
+	//
+
+	long m_userIdParam;		// Used to parametrize fetch on userId
+
+	//
+	//////////////////////////END/////////////////////////////////
+
 // Overrides
 	// Wizard generated virtual function overrides
 	public:

@@ -75,14 +75,14 @@ CSSBOutput::CSSBOutput(CDatabase* pdb)
 	//                 properly sequenced when displayed in editor. Traced (searched) executeSQL statement definition into 
 	//                 MFC\Include\AFXDB.h file to find Order By C++ Wizard syntax statement to use.  	
 
-	//	m_strFilter = "[PLAN_CAST_UNIT_CODE] = ? AND [PLAN_NUMBER_OF_PIECES] > 0";
+	m_strFilter = "[USER_ID] = ?";
 	m_strSort = "[PLAN_CAST_UNIT_CODE], "
 		"[PLAN_WEEK], "
 		"[PLAN_STRING_ID], "
 		"[PLAN_HEAT_SEQUENCE_NO], "
 		"[PLAN_LOT_NUMBER]";
 
-	//	m_nParams = 1;
+	m_nParams = 1;
 
 	//
 	//////////////////////////////END////////////////////////////////////
@@ -158,6 +158,15 @@ void CSSBOutput::DoFieldExchange(CFieldExchange* pFX)
 	RFX_Text(pFX, _T("[FILLER0]"), m_FILLER0);
 	RFX_Text(pFX, _T("[FP_M_ORDER_NO]"), m_FP_M_ORDER_NO);
 	RFX_Long(pFX, _T("[USER_ID]"), m_USER_ID);
+
+	/////////////////////////////BEGIN//////////////////////////////
+	//
+
+	pFX->SetFieldType(CFieldExchange::param);
+	RFX_Long(pFX, "Whatever", m_userIdParam);
+
+	//
+	//////////////////////////////END///////////////////////////////
 
 }
 /////////////////////////////////////////////////////////////////////////////
