@@ -642,10 +642,29 @@ void CStringBuilderDlg::ClearNewOutputTable(CDatabase* pDB, int userId)
 // static 
 void CStringBuilderDlg::ClearNewTable(CDatabase* pDB, const CString& tableName, int userId)
 {
+	//CString sql = "DELETE FROM [";
+	//sql += tableName;
+	//sql += "]";
+	//sql += " WHERE [USER_ID] = ";
+	//sql += itoa(userId);
+
+	//CString sql;
+	//sql.Format(_T("DELETE FROM [%s] where [USER_ID] = %d", tableName, userId));
+
 	CString sql = "DELETE FROM [";
 	sql += tableName;
 	sql += "]";
-	sql += "WHERE USER_ID = " + userId;
+
+	CString strUserId;
+	strUserId.Format(_T("%d"), userId);
+	sql += " WHERE [USER_ID] = ";
+	sql += strUserId;
+
+	OutputDebugString("************************************");
+	OutputDebugString("************************************");
+	OutputDebugString(sql);
+	OutputDebugString("************************************");
+	OutputDebugString("************************************");
 
 	try {
 
