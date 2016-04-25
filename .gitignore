@@ -22,6 +22,9 @@ bld/
 [Oo]bj/
 [Ll]og/
 
+# I'm parking the stringbuilder binaries here
+StringBuilder/
+
 # Visual Studio 2015 cache/options directory
 .vs/
 # Uncomment if you have tasks that create the project's static files in wwwroot

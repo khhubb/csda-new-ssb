@@ -386,7 +386,7 @@ void CStringBuilderDlg::OnButtonStartSb()
 	}
 
 	ostrstream ostr;
-	ostr << "StringBuilder\\StringBuilder.exe ";
+	ostr << ".\\StringBuilder\\StringBuilder.exe ";
 	ostr << " aimheatsize " << m_heatSizeAim;
 	ostr << " dateformat PST";
 	ostr << " caster " << m_id.Caster();
@@ -399,7 +399,27 @@ void CStringBuilderDlg::OnButtonStartSb()
 	ostr << " dbname  ihe-SQL03p"; // TODO: This should be detected or come from a config file
 	ostr << ends;
 
-	system(ostr.str());
+	//CString curDir; 
+	//GetCurrentDirectory(MAX_PATH, curDir.GetBufferSetLength(MAX_PATH)); 
+	//curDir.ReleaseBuffer();
+
+	//OutputDebugString("*******************************");
+	//OutputDebugString("*******************************");
+	//OutputDebugString(ostr.str());
+	//OutputDebugString(curDir);
+	//OutputDebugString("*******************************");
+	//OutputDebugString("*******************************");
+
+	try {
+		int val = system(ostr.str());
+		CString strVal;
+		strVal.Format(_T("VAL = %d"), val);
+		OutputDebugString(strVal);
+	}
+	catch (...)
+	{
+		OutputDebugString("Got an error");
+	}
 
 	// Code from the original VB version.
 	//{
@@ -659,12 +679,6 @@ void CStringBuilderDlg::ClearNewTable(CDatabase* pDB, const CString& tableName, 
 	strUserId.Format(_T("%d"), userId);
 	sql += " WHERE [USER_ID] = ";
 	sql += strUserId;
-
-	OutputDebugString("************************************");
-	OutputDebugString("************************************");
-	OutputDebugString(sql);
-	OutputDebugString("************************************");
-	OutputDebugString("************************************");
 
 	try {
 
