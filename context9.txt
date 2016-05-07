@@ -1,0 +1,124 @@
+PlanCasterUnit: 1
+StartWidth1: 43
+MidWdith1: 38
+EndWidth1: 41
+StartWidth2: 42
+MidWdith2: 39
+EndWidth2: 43
+StartingSpec: 5232600
+SelectedSpecs: 52
+ - : 5232600
+ - : 5244040
+ - : 5244042
+ - : 5250000
+ - : 5260400
+ - : 5260402
+ - : 5260700
+ - : 5260702
+ - : 5270300
+ - : 5280300
+ - : 5280500
+ - : 5492100
+ - : 5550702
+ - : 5562402
+ - : 5600502
+ - : 5640100
+ - : 5702400
+ - : 5702502
+ - : 5702600
+ - : 5702602
+ - : 5702702
+ - : 5712290
+ - : 5712292
+ - : 5732590
+ - : 5992180
+ - : 5992280
+ - : 5992390
+ - : 5992392
+ - : 5992490
+ - : 5992495
+ - : 7240700
+ - : 7264140
+ - : 7264142
+ - : 8114642
+ - : 8204340
+ - : 8204342
+ - : 8224140
+ - : 8224142
+ - : 8532602
+ - : 8532700
+ - : 8532902
+ - : 8542402
+ - : 8562500
+ - : 8562700
+ - : 8562800
+ - : 8702600
+ - : 8702690
+ - : 9292300
+ - : 9402290
+ - : 9402292
+ - : 9772300
+ - : 9922300
+PlanningWeek: 201618
+StringId: 10
+Aim # Heats: 6
+Min Heat Wgt: 245
+Shroud change 1: 0
+Shroud change 2: 0
+Min combined width: 80
+Min slab width: 30
+Max slab width: 66
+Min slab length: 223
+Max slab length: 390
+Max outward change: 8
+FromPST: 20150213
+StockOk: False
+MaxNumStock: 20
+RadicalOk: True
+RadicalOutMax: 6
+RadicalInMax: 4
+MaxNumRad: 20
+SideSlitOk: True
+SideSlitYieldPct: 85
+EvenSlitOk: True
+MaxNumEvenSlit: 15
+NumReprovidesAtWidth: 2
+NumSideSlitsAtWidth: 2
+Allow spread/squeeze in radicals: False
+Allow spread/sqeeze in side slits: False
+Ignore LQ req: UseStock
+DoSmallOrders: True
+NumSmallOrders: 5
+PSTMustDo: 20150219
+MustMakeFinalWidths: True
+NoWidthChangeForHeat1: 
+NoWidthChangeForHeat2: 
+CenterSlitsForWidth1: 
+CenterSlitsForWidth2: 
+MaxPercPriorityNotUsed: 20
+XappOk: True
+Heat 0 start spec: 
+Heat 0       spec: 
+Heat 0 end   spec: 
+Heat 1 start spec: 
+Heat 1       spec: 
+Heat 1 end   spec: 
+Heat 2 start spec: 
+Heat 2       spec: 
+Heat 2 end   spec: 
+Heat 3 start spec: 
+Heat 3       spec: 
+Heat 3 end   spec: 
+Heat 4 start spec: 
+Heat 4       spec: 
+Heat 4 end   spec: 
+Heat 5 start spec: 
+Heat 5       spec: 
+Heat 5 end   spec: 
+NumCriticalOrders: 0
+Strategy: UseEvenSlits
+Strategy: UseProvSlabWidth
+Strategy: UseSpreadSqueeze
+Strategy: UseRadicals
+Strategy: UseSideSlits
+TotalStringWeight: 1470

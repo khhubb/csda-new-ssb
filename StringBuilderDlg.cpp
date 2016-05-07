@@ -399,26 +399,22 @@ void CStringBuilderDlg::OnButtonStartSb()
 	ostr << " dbname  ihe-SQL03p"; // TODO: This should be detected or come from a config file
 	ostr << ends;
 
-	//CString curDir; 
-	//GetCurrentDirectory(MAX_PATH, curDir.GetBufferSetLength(MAX_PATH)); 
-	//curDir.ReleaseBuffer();
-
-	//OutputDebugString("*******************************");
-	//OutputDebugString("*******************************");
-	//OutputDebugString(ostr.str());
-	//OutputDebugString(curDir);
-	//OutputDebugString("*******************************");
-	//OutputDebugString("*******************************");
-
 	try {
 		int val = system(ostr.str());
-		CString strVal;
-		strVal.Format(_T("VAL = %d"), val);
-		OutputDebugString(strVal);
+
+		//CString strVal;
+		//strVal.Format(_T("VAL = %d"), val);
+		//OutputDebugString(strVal);
+
+		// TODO: Meaningful return value - cancel vs string built?
+		if ( val == 0)
+			m_btnCreateString.ShowWindow(SW_SHOW);
+		else
+			m_btnCreateString.ShowWindow(SW_HIDE);
 	}
 	catch (...)
 	{
-		OutputDebugString("Got an error");
+		MessageBox("Got an error from the StringBuilder call");
 	}
 
 	// Code from the original VB version.
