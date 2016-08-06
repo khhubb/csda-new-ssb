@@ -251,6 +251,7 @@
     <ClCompile Include="ArchiveQueue.cpp" />
     <ClCompile Include="AvailCasterScenId.cpp" />
     <ClCompile Include="bofspecmgr.cpp" />
+    <ClCompile Include="Caster.cpp" />
     <ClCompile Include="CasterScen.cpp" />
     <ClCompile Include="CasterScenArchiver.cpp" />
     <ClCompile Include="CasterScenariosMaxIdSet.cpp" />
@@ -438,6 +439,7 @@
     <ClInclude Include="ArchiveQueue.h" />
     <ClInclude Include="AvailCasterScenId.h" />
     <ClInclude Include="bofspecmgr.h" />
+    <ClInclude Include="Caster.h" />
     <ClInclude Include="CasterScen.h" />
     <ClInclude Include="CasterScenArchiver.h" />
     <ClInclude Include="CasterScenariosMaxIdSet.h" />

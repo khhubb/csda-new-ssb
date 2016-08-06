@@ -513,6 +513,9 @@
     <ClCompile Include="SSBOutput.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Caster.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="csda.odl">
@@ -1033,6 +1036,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SSBOutput.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Caster.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
