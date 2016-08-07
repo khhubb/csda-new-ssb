@@ -10,6 +10,7 @@
 #endif // _MSC_VER >= 1000
 
 #include "modelTypes.h"
+#include "Caster.h"
  
 class CMiscConstants  
 {
@@ -32,15 +33,15 @@ class CMiscConstants
 
 private:
 
-	int m_minHeatSizes[4];  
-	int m_aimHeatSizes[4];
-	int m_maxHeatSizes[4];
+	int m_minHeatSizes[Caster::CasterArrayLen];  
+	int m_aimHeatSizes[Caster::CasterArrayLen];
+	int m_maxHeatSizes[Caster::CasterArrayLen];
 		//  The size of a heat, in tons. min/aim/max
-		//  on a per-caster basis, so index = 1,2,3
+		//  on a per-caster basis, so index = 1,2,3,4,5
 
-	CTimeSpan m_turnaroundTimes[4];
+	CTimeSpan m_turnaroundTimes[Caster::CasterArrayLen];
 		//  Standard time between strings
-		//  on a per-caster basis, so index = 1,2,3
+		//  on a per-caster basis, so index = 1,2,3,4,5
 
 	bool m_initialized;
 		// Shouldn't try to access the data unless initialized
@@ -55,7 +56,7 @@ private:
 		// don't create more than one of these.
 
 	static double m_steelDensity;
-	static Length m_casterSlabLengthMaxes[4];
+	static Length m_casterSlabLengthMaxes[Caster::CasterArrayLen];
 	static Length m_max80HsmRunoutLength;
 	static Length m_minCastableSlabLength;
 
@@ -128,7 +129,7 @@ public:
 	////////////////////////////////////////////////////////////////
 
 	void ValidateCaster(int caster) const 
-	{  	assert( caster == 1 || caster == 2 || caster == 3 ); }
+	{  	assert( Caster::FirstCaster <= caster && caster <=  Caster::LastCaster ); }
 
 };
 

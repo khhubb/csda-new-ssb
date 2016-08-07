@@ -1,0 +1,40 @@
+/* Need new columns in PerUserDefaultValues:  */
+
+USE [csd_csdatest]
+GO
+
+/****** Object:  Table [dbo].[PerUserDefaultValues]    Script Date: 8/6/2016 6:03:28 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[PerUserDefaultValues](
+	[LoginName] [nvarchar](50) NOT NULL,
+	[Caster1HeatSizeMin] [smallint] NULL DEFAULT (0),
+	[Caster1HeatSizeAim] [smallint] NULL DEFAULT (0),
+	[Caster1HeatSizeMax] [smallint] NULL DEFAULT (0),
+	[Caster2HeatSizeMin] [smallint] NULL DEFAULT (0),
+	[Caster2HeatSizeAim] [smallint] NULL DEFAULT (0),
+	[Caster2HeatSizeMax] [smallint] NULL DEFAULT (0),
+	[Caster3HeatSizeMin] [smallint] NULL DEFAULT (0),
+	[Caster3HeatSizeAim] [smallint] NULL DEFAULT (0),
+	[Caster3HeatSizeMax] [smallint] NULL DEFAULT (0),
+	[Caster4HeatSizeMin] [smallint] NULL DEFAULT (0),
+	[Caster4HeatSizeAim] [smallint] NULL DEFAULT (0),
+	[Caster4HeatSizeMax] [smallint] NULL DEFAULT (0),
+	[Caster5HeatSizeMin] [smallint] NULL DEFAULT (0),
+	[Caster5HeatSizeAim] [smallint] NULL DEFAULT (0),
+	[Caster5HeatSizeMax] [smallint] NULL DEFAULT (0),
+ CONSTRAINT [aaaaaPerUserDefaultValues_PK] PRIMARY KEY NONCLUSTERED 
+(
+	[LoginName] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+
+
+

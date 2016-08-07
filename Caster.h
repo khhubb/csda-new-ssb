@@ -9,9 +9,12 @@ namespace Caster
 		C5
 	};
 
-	int First = C1;
-	int Last = C5;
 
-	int CasterArrayLen = Last + 1;
+
+	enum {
+		FirstCaster = C1,
+		LastCaster = C5,
+		CasterArrayLen = LastCaster + 1
+	};
 }
 

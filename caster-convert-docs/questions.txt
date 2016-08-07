@@ -1,0 +1,16 @@
+Questions:
+
+MiscConstants:
+We have turnaround times of 75 and 90 minutes on Casters 2 and 3.
+And 0 on Caster 1.
+What are values of turnaround time for Casters 4 5?
+
+PerUserDefaultValues:
+Need values for
+Caster4HeatSizeMin
+Caster4HeatSizeAim
+Caster4HeatSizeMax
+Caster5HeatSizeMin
+Caster5HeatSizeAim
+Caster5HeatSizeMax
+

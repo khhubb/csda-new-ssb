@@ -28,6 +28,12 @@ public:
 	int		m_Caster3HeatSizeMin;
 	int		m_Caster3HeatSizeAim;
 	int		m_Caster3HeatSizeMax;
+	int m_Caster4HeatSizeMin;
+	int m_Caster4HeatSizeAim;
+	int m_Caster4HeatSizeMax;
+	int m_Caster5HeatSizeMin;
+	int m_Caster5HeatSizeAim;
+	int m_Caster5HeatSizeMax;
 	//}}AFX_FIELD
 
 

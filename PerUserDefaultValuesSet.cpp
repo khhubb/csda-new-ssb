@@ -32,7 +32,13 @@ CPerUserDefaultValuesSet::CPerUserDefaultValuesSet(CDatabase* pdb)
 	m_Caster3HeatSizeMin = 0;
 	m_Caster3HeatSizeAim = 0;
 	m_Caster3HeatSizeMax = 0;
-	m_nFields = 10;
+	m_Caster4HeatSizeMin = 0;
+	m_Caster4HeatSizeAim = 0;
+	m_Caster4HeatSizeMax = 0;
+	m_Caster5HeatSizeMin = 0;
+	m_Caster5HeatSizeAim = 0;
+	m_Caster5HeatSizeMax = 0;
+	m_nFields = 16;
 	//}}AFX_FIELD_INIT
 	m_nDefaultType = dynaset;
 
@@ -68,6 +74,12 @@ void CPerUserDefaultValuesSet::DoFieldExchange(CFieldExchange* pFX)
 	RFX_Int(pFX, _T("[Caster3HeatSizeMin]"), m_Caster3HeatSizeMin);
 	RFX_Int(pFX, _T("[Caster3HeatSizeAim]"), m_Caster3HeatSizeAim);
 	RFX_Int(pFX, _T("[Caster3HeatSizeMax]"), m_Caster3HeatSizeMax);
+	RFX_Int(pFX, _T("[Caster4HeatSizeMin]"), m_Caster4HeatSizeMin);
+	RFX_Int(pFX, _T("[Caster4HeatSizeAim]"), m_Caster4HeatSizeAim);
+	RFX_Int(pFX, _T("[Caster4HeatSizeMax]"), m_Caster4HeatSizeMax);
+	RFX_Int(pFX, _T("[Caster5HeatSizeMin]"), m_Caster5HeatSizeMin);
+	RFX_Int(pFX, _T("[Caster5HeatSizeAim]"), m_Caster5HeatSizeAim);
+	RFX_Int(pFX, _T("[Caster5HeatSizeMax]"), m_Caster5HeatSizeMax);
 	//}}AFX_FIELD_MAP
 
 	pFX->SetFieldType(CFieldExchange::inputParam);
