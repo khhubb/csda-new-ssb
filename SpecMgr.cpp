@@ -159,6 +159,7 @@ CSpec* CSpecMgr::FindSpecMaybe(CString& specName, int caster)
 
 		}
 
+		// CASTER TODO: is this for just caster 1 or also 4,5?
 		else { // caster == 1
 			
 			// TODO -- when we have the list of RHOB specs, we can choose 4 vs 7.
@@ -303,6 +304,7 @@ void CSpecMgr::InitializeDPAChems(CSpecDPAChemsSet& chemSet)
 					LPCTSTR(chemSet.m_SIXTH_DIGIT_OF_SPEC),
 					chemSet.m_SEVENTH_DIGIT_OF_SPEC);
 
+		// CASTER TODO: What is correct here with the new casters?
 		//at the moment, having only caster == 2 or not has the desired effect.
 		int caster;
 		if ( chemSet.m_CASTER_INDICATOR.Find('1') != -1 )

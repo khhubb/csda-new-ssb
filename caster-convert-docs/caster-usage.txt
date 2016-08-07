@@ -233,21 +233,25 @@ Y      1,705 PerUserDefaultValuesSet.h
 X      1,713 SpecChemRangePresetSet.cpp
 X      1,496 SpecChemRangePresetSet.h
 	   
-       2,230 SpecDPAChemsSet.cpp
-       1,627 SpecDPAChemsSet.h
+Y      2,230 SpecDPAChemsSet.cpp
+Y      1,627 SpecDPAChemsSet.h
 				CString	m_CASTER_INDICATOR;
+				Nothing to change. but check use in Spec.cpp
 	   
-       1,340 SpecDPASet.cpp
-       1,315 SpecDPASet.h
+Y      1,340 SpecDPASet.cpp
+Y      1,315 SpecDPASet.h
 				CString	m_CASTER_INDICATOR;
+				Nothing to change. but check use in Spec.cpp
 
-       6,014 SSBInput.cpp
-       2,705 SSBInput.h
+Y      6,014 SSBInput.cpp
+Y      2,705 SSBInput.h
 			CString	m_PLAN_CAST_UNIT_CODE
+			Just a pass-through
 	   
-       7,534 SSBOutput.cpp
-       3,115 SSBOutput.h
+Y      7,534 SSBOutput.cpp
+Y      3,115 SSBOutput.h
 			CString	m_PLAN_CAST_UNIT_CODE
+			Just a pass-through
 
 X	   1,509 SteelSpecCrossAppSet.cpp
 X      1,428 SteelSpecCrossAppSet.h
@@ -305,8 +309,8 @@ X      2,013 Week.h
 Specs
 =====
 
-       1,899 Spec.cpp
-       3,021 Spec.h
+Y      1,899 Spec.cpp
+Y      3,021 Spec.h
 			capture bool for_caster, etc. as array[4], indexed by caster=1,2,3
 			dpaSpec.m_CASTER_INDICATOR.Find('1')
 	   

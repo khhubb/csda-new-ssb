@@ -22,3 +22,64 @@ PPGHeatSizes:
 There is an editing screen for the caster 1,2,3 heat size min/aim/max that I will add to.
 On that dialog, the values for casters 2,3 are tied to be identical.
 Is there any similar tying of values for 4 and 5?
+
+
+What are the formulas for calculating cast times on casters 4,5?
+
+How are specs associated with casters?
+Specs are in the following tables:
+
+	HeatSpecCrossApp -- 
+		maps specs to specs, caster not involved in the table.
+		However, caster is involved in the lookup ti check certain characters in the spec:
+		
+				// filter for specs suitable for this caster
+			  
+				if ( dig4 == '0'
+					 ||
+					 ( caster == 1 && ( dig4 == '4' || dig4 == '7' ) )
+					 ||
+					 ( caster != 1 && ( dig4 == '2' ) ) )			
+		
+		Is this correct for casters 4,5?
+		
+	SteelSpecCrossAppSet
+		caster not involved
+		
+	SpecChemRangePreset
+		caster not involved
+		
+	SpecDPAChemsSet
+	SpecDPASet
+		Both have a field CString	m_CASTER_INDICATOR;
+			m_forCaster[1] = (dpaSpec.m_CASTER_INDICATOR.Find('1') != -1);
+			m_forCaster[2] = (dpaSpec.m_CASTER_INDICATOR.Find('2') != -1);
+			m_forCaster[3] = (dpaSpec.m_CASTER_INDICATOR.Find('3') != -1);
+			m_isBloomSpec  = (dpaSpec.m_CASTER_INDICATOR.Find('B') != -1);
+			
+		Will the same be true for Casters 4,5?	
+		
+		
+	In CSpecMgr::FindSpecMaybe
+		When looking up spec info given the spec name, we first look it up directly.
+		If not found, we plae with the first digit of the second group:
+			//  XXX-0X-XX ==>  XXX-2X-XX    if caster == 2 or 3
+			//  XXX-0X-XX ==>  XXX-4X-XX     if caster == 1
+			//  XXX-0X-XX ==>  XXX-7X-XX     if caster == 1
+		Do any of these transformations apply to casters 4,5?  Other transformations?
+		
+		At the moment, calls to FindSpecMaybe from CSpecMgr::InitializeDPAChems has a strange caster calculation:
+		
+				//at the moment, having only caster == 2 or not has the desired effect.
+				int caster;
+				if ( chemSet.m_CASTER_INDICATOR.Find('1') != -1 )
+					caster = 1;
+				else 
+					caster = 2;
+
+				CSpec* pSpec = FindSpecMaybe(spec,caster);
+				
+				This is true only because we care about caster 1 vs caster 2.  We are checking for "on 1" vs "not on 1" because this triggers code in FindSpecMaybe.
+				What do we do with the new casters?
+
+	
