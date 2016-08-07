@@ -138,25 +138,25 @@ BOOL CPpgHeatSizes::OnKillActive()
 		return FALSE;
 	}
 		
-	m_pConsts->SetMinHeatSize(1,m_caster1HeatSizeMin);
-	m_pConsts->SetAimHeatSize(1,m_caster1HeatSizeAim);
-	m_pConsts->SetMaxHeatSize(1,m_caster1HeatSizeMax);
+	m_pConsts->SetMinHeatSize(Caster::C1, m_caster1HeatSizeMin);
+	m_pConsts->SetAimHeatSize(Caster::C1, m_caster1HeatSizeAim);
+	m_pConsts->SetMaxHeatSize(Caster::C1, m_caster1HeatSizeMax);
 
-	m_pConsts->SetMinHeatSize(2,m_caster23HeatSizeMin);
-	m_pConsts->SetAimHeatSize(2,m_caster23HeatSizeAim);
-	m_pConsts->SetMaxHeatSize(2,m_caster23HeatSizeMax);
+	m_pConsts->SetMinHeatSize(Caster::C2, m_caster23HeatSizeMin);
+	m_pConsts->SetAimHeatSize(Caster::C2, m_caster23HeatSizeAim);
+	m_pConsts->SetMaxHeatSize(Caster::C2, m_caster23HeatSizeMax);
 
-	m_pConsts->SetMinHeatSize(3,m_caster23HeatSizeMin);
-	m_pConsts->SetAimHeatSize(3,m_caster23HeatSizeAim);
-	m_pConsts->SetMaxHeatSize(3,m_caster23HeatSizeMax);
+	m_pConsts->SetMinHeatSize(Caster::C3, m_caster23HeatSizeMin);
+	m_pConsts->SetAimHeatSize(Caster::C3, m_caster23HeatSizeAim);
+	m_pConsts->SetMaxHeatSize(Caster::C3, m_caster23HeatSizeMax);
 
-	m_pConsts->SetMinHeatSize(4, m_caster4HeatSizeMin);
-	m_pConsts->SetAimHeatSize(4, m_caster4HeatSizeAim);
-	m_pConsts->SetMaxHeatSize(4, m_caster4HeatSizeMax);
+	m_pConsts->SetMinHeatSize(Caster::C4, m_caster4HeatSizeMin);
+	m_pConsts->SetAimHeatSize(Caster::C4, m_caster4HeatSizeAim);
+	m_pConsts->SetMaxHeatSize(Caster::C4, m_caster4HeatSizeMax);
 
-	m_pConsts->SetMinHeatSize(5, m_caster5HeatSizeMin);
-	m_pConsts->SetAimHeatSize(5, m_caster5HeatSizeAim);
-	m_pConsts->SetMaxHeatSize(5, m_caster5HeatSizeMax);
+	m_pConsts->SetMinHeatSize(Caster::C5, m_caster5HeatSizeMin);
+	m_pConsts->SetAimHeatSize(Caster::C5, m_caster5HeatSizeAim);
+	m_pConsts->SetMaxHeatSize(Caster::C5, m_caster5HeatSizeMax);
 
 	m_pConsts->Save();
 
@@ -171,21 +171,21 @@ BOOL CPpgHeatSizes::OnSetActive()
 	//   heat sizes are the same.
 	//  We could split out if we wanted, but won't for now.
 
-	m_caster1HeatSizeMin  = m_pConsts->MinHeatSize(1);
-	m_caster1HeatSizeAim  = m_pConsts->AimHeatSize(1);
-	m_caster1HeatSizeMax  = m_pConsts->MaxHeatSize(1);
+	m_caster1HeatSizeMin  = m_pConsts->MinHeatSize(Caster::C1);
+	m_caster1HeatSizeAim = m_pConsts->AimHeatSize(Caster::C1);
+	m_caster1HeatSizeMax = m_pConsts->MaxHeatSize(Caster::C1);
 
-	m_caster23HeatSizeMin  = m_pConsts->MinHeatSize(2);
-	m_caster23HeatSizeAim  = m_pConsts->AimHeatSize(2);
-	m_caster23HeatSizeMax  = m_pConsts->MaxHeatSize(2);
+	m_caster23HeatSizeMin = m_pConsts->MinHeatSize(Caster::C2);
+	m_caster23HeatSizeAim = m_pConsts->AimHeatSize(Caster::C2);
+	m_caster23HeatSizeMax = m_pConsts->MaxHeatSize(Caster::C2);
 	
-	m_caster4HeatSizeMin = m_pConsts->MinHeatSize(4);
-	m_caster4HeatSizeAim = m_pConsts->AimHeatSize(4);
-	m_caster4HeatSizeMax = m_pConsts->MaxHeatSize(4);
+	m_caster4HeatSizeMin = m_pConsts->MinHeatSize(Caster::C4);
+	m_caster4HeatSizeAim = m_pConsts->AimHeatSize(Caster::C4);
+	m_caster4HeatSizeMax = m_pConsts->MaxHeatSize(Caster::C4);
 
-	m_caster5HeatSizeMin = m_pConsts->MinHeatSize(5);
-	m_caster5HeatSizeAim = m_pConsts->AimHeatSize(5);
-	m_caster5HeatSizeMax = m_pConsts->MaxHeatSize(5);
+	m_caster5HeatSizeMin = m_pConsts->MinHeatSize(Caster::C5);
+	m_caster5HeatSizeAim = m_pConsts->AimHeatSize(Caster::C5);
+	m_caster5HeatSizeMax = m_pConsts->MaxHeatSize(Caster::C5);
 
 	UpdateData(false);
 
