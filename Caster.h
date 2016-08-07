@@ -18,6 +18,7 @@ namespace Caster
 	};
 
 	bool IsValidCasterValue(int caster);
+	bool NumStrandsOnCaster(int caster);
 
 }
 

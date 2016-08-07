@@ -1422,8 +1422,8 @@ bool CCastStringValidator::Validate340080(int strandNum)
 		// nothing to check
 		return true;
 
-	if ( strandNum == 2 && caster == 2 ) {
-		ostr << "Caster 2: There are orders on strand #2!" << ends;
+	if ( strandNum == 2 && Caster::NumStrandsOnCaster(caster) == 1 ) {
+		ostr << "Caster " << caster << ": There are orders on strand #2!" << ends;
 		//AddValidationString(ostr);
 		AddValidnError(-1,0,-1,ostr,CCastStringHeatValidnError::FATAL);
 		return false;

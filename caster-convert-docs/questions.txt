@@ -82,4 +82,75 @@ Specs are in the following tables:
 				This is true only because we care about caster 1 vs caster 2.  We are checking for "on 1" vs "not on 1" because this triggers code in FindSpecMaybe.
 				What do we do with the new casters?
 
+Orders:
+
+	We determine which caster an order is for by looking at table unappliedorders, fields
+			SM_PLAN_SLAB_UNIT_CD
+			SM_PLAN_FACL_PREF_1_CD
+			SM_PLAN_FACL_PREF_2_CD
+			SM_PLAN_FACL_PREF_3_CD
+	These will contain values "4" and "5"  (they are strings) to indicate orders for those casters?
 	
+
+number of strands
+		Caster  #strands
+			1		2
+			2		1
+			3		2
+			4		1  ???
+			5		1  ???
+
+CCastStringValidator::Validate340080
+			audit numPieces
+			if ( caster == 1 ) {
+
+				if ( numPieces == 0 
+					 || 
+					 (numPieces > 32 && numPieces != 99) ) {
+					ostr << "#PC must be < 33"
+						 << ends;
+					ADD_ERR(CCastStringHeatValidnError::FATAL);
+					isOk = false;
+				}
+			}
+			
+			audit steel width
+			if ( caster == 3 ) {
+
+				if ( width < 24 || width > 60 ) {
+					ostr << "steel width ("
+						 << setw(2) << width
+						 << ") not in range [24,60]"
+						 << ends;
+					ADD_ERR(CCastStringHeatValidnError::FATAL);
+					isOk = false;
+				}
+			}
+			
+			//  check heat position for 3 combi startup slabs
+
+			{
+				if ( caster == 3 ) {
+			
+			
+			// audit steel length compliance with steelshop limitations
+			if ( caster == 1 ) {
+			if ( caster == 2 ) {
+			if ( caster == 3 ) {
+			
+			// audit exposure code
+			if ( caster == 1 )
+			else
+			
+			// Audit 2BOF inward width change designs.  1-28-10 k. hubbard
+			{
+				if (( caster == 2 || caster == 3)
+		
+	
+			
+			Any such checks for 4, 5?
+			
+		CCastStringValidator::FixHeatSpec
+			Special rules for casters 2 3
+			Anything for 4,5
+			

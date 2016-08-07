@@ -197,13 +197,15 @@ X      1,392 CsdaEventLogSet2.h
 X      1,492 DailyPlanLastDownloadTimeSet.cpp
 X      1,467 DailyPlanLastDownloadTimeSet.h
 
-      11,222 DailyPlanLineupsUploadSet.cpp
-       3,230 DailyPlanLineupsUploadSet.h
+Y     11,222 DailyPlanLineupsUploadSet.cpp
+Y      3,230 DailyPlanLineupsUploadSet.h
 				CString M_PLAN_CAST_UNIT_CODE
+				No changes needed, assuming we pass through 4,5
 	   
-       8,930 DailyPlanUploadSet.cpp
-       3,441 DailyPlanUploadSet.h
+Y      8,930 DailyPlanUploadSet.cpp
+Y      3,441 DailyPlanUploadSet.h
 				CString M_PLAN_CAST_UNIT_CODE
+				No changes needed, assuming we pass through 4,5
 
 X     16,900 DalyPlanOrdersOnlySet.cpp
 X      5,673 DalyPlanOrdersOnlySet.h
@@ -270,6 +272,7 @@ Miscellaneous model support
        5,715 HeatSpecCrossApp.cpp
        2,150 HeatSpecCrossApp.h
 				caster is int
+				NEED TO figure out GetCrossAppSpecs -- special substitution rules per caster
 	   
 Y      8,608 MiscConstants.cpp
 Y      3,470 MiscConstants.h
@@ -285,6 +288,7 @@ X      1,201 NReport.h
       46,284 OrderSelection.cpp
       17,829 OrderSelection.h
 				caster as in converted back to caster as string
+				NEED TO MAKE SURE Fields SM_PLAN_SLAB_UNIT_CD, SM_PLAN_FACL_PREF_1_CD, ... have values 4,5.
   
       10,888 PlanWorksheetReport.cpp
        3,053 PlanWorksheetReport.h
@@ -325,6 +329,7 @@ X      1,767 SpecCmp.h
 				Interacts w/ BOFSpeedCalc
 				SlabCastTime takes an int caster, passed to BOFSpeedCalc
 				FindSpecMaybe -- has some caster-specific lookup 
+				InitializeDPAChems -- a weird caster-applicability calculation.
    
 	   
 ============				
@@ -361,6 +366,8 @@ X      2,493 CastStringSummaryRecord.h
       70,682 CastStringValidator.cpp
        4,403 CastStringValidator.h
 				ComputeSlabLength, FixHeatSpec, IsCompatibleSpec need caster
+				Multiple instances of caster-specific checks.
+				We'll need to look at each and also to check new validation rules.
 
 X      5,949 Chem.cpp
 X      2,730 Chem.h
@@ -371,11 +378,12 @@ X      2,214 ChemRange.h
 X     21,705 CICode.cpp
 X     12,569 CICode.h
 
-      46,025 CSOrder.cpp
-      19,049 CSOrder.h
+Y     46,025 CSOrder.cpp
+Y     19,049 CSOrder.h
 				Minor
 				CreateStockOrder, CalculateSlabduration, ComputeSlabWidthRelatedParms, CalculateSLengths
 				SetLotSpecPtr, initialization
+				Everything is pass-through
 
 X     28,103 order.cpp
 X     12,344 Order.h
