@@ -129,7 +129,7 @@ public:
 	////////////////////////////////////////////////////////////////
 
 	void ValidateCaster(int caster) const 
-	{  	assert( Caster::FirstCaster <= caster && caster <=  Caster::LastCaster ); }
+	{  	assert( Caster::IsValidCasterValue(caster) ); }
 
 };
 

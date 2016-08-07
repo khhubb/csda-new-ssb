@@ -14,6 +14,7 @@
 #include "modelTypes.h"
 #include "Chem.h"
 #include "ChemRange.h"
+#include "Caster.h"
 
 
 class CSpecDPASet;
@@ -51,7 +52,7 @@ public:
 
 private:
 	
-	bool m_forCaster[4]; // caster = 1,2,3
+	bool m_forCaster[Caster::CasterArrayLen]; // caster = 1,2,3,4,5
 		// flags indicating which casters the spec if for
 	bool m_isBloomSpec;
 		// flag indicating this is a bloom spec
@@ -73,7 +74,7 @@ public:
 
 	bool ForCaster(int caster) const
 	{
-		assert( caster == 1 || caster == 2 || caster == 3 );
+		assert( Caster::IsValidCasterValue(caster));
 		return m_forCaster[caster];
 	}
 

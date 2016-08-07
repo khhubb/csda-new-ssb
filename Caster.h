@@ -16,5 +16,8 @@ namespace Caster
 		LastCaster = C5,
 		CasterArrayLen = LastCaster + 1
 	};
+
+	bool IsValidCasterValue(int caster);
+
 }
 
