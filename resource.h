@@ -1,5 +1,5 @@
 //{{NO_DEPENDENCIES}}
-// Microsoft Developer Studio generated include file.
+// Microsoft Visual C++ generated include file.
 // Used by csda.rc
 //
 #define IDB_RESET                       3
@@ -219,18 +219,25 @@
 #define IDC_EDIT_MIN_CARBON             1080
 #define ID_EDIT_STRAND1_SUMMARY         1081
 #define IDC_SPIN_START1                 1081
+#define IDC_EDIT_CASTER4_HEAT_SIZE_AIM  1081
 #define ID_EDIT_STRAND2_SUMMARY         1082
 #define IDC_EDIT_END1                   1082
 #define IDC_COMBO_STRINGS               1082
+#define IDC_EDIT_CASTER4_HEAT_SIZE_MIN  1082
 #define IDC_SPIN_END1                   1083
+#define IDC_EDIT_CASTER4_HEAT_SIZE_MAX  1083
 #define IDC_EDIT_START2                 1084
+#define IDC_EDIT_CASTER5_HEAT_SIZE_AIM  1084
 #define IDC_EDIT1                       1085
 #define IDC_SPIN_START2                 1085
+#define IDC_EDIT_CASTER5_HEAT_SIZE_MIN  1085
 #define IDC_BUTTON_UPDATE_GROUPING      1086
 #define IDC_EDIT_MAX_CHEM1              1086
 #define IDC_EDIT_NUM_HEATS              1086
 #define IDC_EDIT_ELT_MN                 1086
 #define IDC_EDIT_CAST_LENGTH            1086
+#define IDC_EDIT_CASTER23_HEAT_SIZE_MAX3 1086
+#define IDC_EDIT_CASTER5_HEAT_SIZE_MAX  1086
 #define IDC_EDIT_MAX_CHEM2              1087
 #define IDC_EDIT_ELT_SIGNIF             1087
 #define IDC_BUTTON_UPDATE_SORTING       1087

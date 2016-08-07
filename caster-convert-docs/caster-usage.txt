@@ -228,7 +228,7 @@ X       1,531 MillOrderChemsSet.h
 
 Y      2,452 PerUserDefaultValuesSet.cpp
 Y      1,705 PerUserDefaultValuesSet.h
-				Codes Caster 1, 2, 3 Heat size min/aim/max as explicit fields.
+				Codes Caster 1, 2, 3 Heat size min/aim/max as explicit fields. 
 	   
 X      1,713 SpecChemRangePresetSet.cpp
 X      1,496 SpecChemRangePresetSet.h
@@ -267,9 +267,10 @@ Miscellaneous model support
        2,150 HeatSpecCrossApp.h
 				caster is int
 	   
-       8,608 MiscConstants.cpp
-       3,470 MiscConstants.h
+Y      8,608 MiscConstants.cpp
+Y      3,470 MiscConstants.h
 				capture minHeatSizes, etc. as array[4], indexed by caster=1,2,3
+				Also maxcasterslabLength[]
 	   
 X        309 modelTypes.h  
 
@@ -701,15 +702,15 @@ X      3,465 PpgOrderChemRange.h
 X      1,916 PSheetMiscConstants.cpp
 X      1,709 PSheetMiscConstants.h
 	   
-       4,610 PpgHeatSizes.cpp
-       1,734 PpgHeatSizes.h
-				int		m_caster1HeatSizeAim;
+Y      4,610 PpgHeatSizes.cpp
+Y      1,734 PpgHeatSizes.h
+			Y	int		m_caster1HeatSizeAim;
 				int		m_caster1HeatSizeMax;
 				int		m_caster1HeatSizeMin;
 				int		m_caster23HeatSizeAim;
 				int		m_caster23HeatSizeMax;
 				int		m_caster23HeatSizeMin;
-				will need to update MiscConstants and table for CPerUserDefaultValuesSet
+			Y   will need to update MiscConstants and table for CPerUserDefaultValuesSet
 	   
 
 	Scenario master editor

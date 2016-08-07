@@ -3,7 +3,11 @@ Questions:
 MiscConstants:
 We have turnaround times of 75 and 90 minutes on Casters 2 and 3.
 And 0 on Caster 1.
-What are values of turnaround time for Casters 4 5?
+What are values of turnaround time for Casters 4,5?
+
+Length CMiscConstants::m_casterSlabLengthMaxes[4] = { 0, 452, 452, 431 };
+What are values for casters 4,5?
+
 
 PerUserDefaultValues:
 Need values for
@@ -14,3 +18,7 @@ Caster5HeatSizeMin
 Caster5HeatSizeAim
 Caster5HeatSizeMax
 
+PPGHeatSizes:
+There is an editing screen for the caster 1,2,3 heat size min/aim/max that I will add to.
+On that dialog, the values for casters 2,3 are tied to be identical.
+Is there any similar tying of values for 4 and 5?

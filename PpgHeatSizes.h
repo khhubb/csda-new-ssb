@@ -1,3 +1,4 @@
+#include "afxwin.h"
 #if !defined(AFX_PPGHEATSIZES_H__642EE488_E2B3_11D0_8019_006097B38214__INCLUDED_)
 #define AFX_PPGHEATSIZES_H__642EE488_E2B3_11D0_8019_006097B38214__INCLUDED_
 
@@ -32,6 +33,12 @@ public:
 	int		m_caster23HeatSizeAim;
 	int		m_caster23HeatSizeMax;
 	int		m_caster23HeatSizeMin;
+	int m_caster4HeatSizeAim;
+	int m_caster4HeatSizeMax;
+	int m_caster4HeatSizeMin;
+	int m_caster5HeatSizeAim;
+	int m_caster5HeatSizeMax;
+	int m_caster5HeatSizeMin;
 	//}}AFX_DATA
 
 
@@ -67,6 +74,7 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 
+public:
 };
 
 //{{AFX_INSERT_LOCATION}}
