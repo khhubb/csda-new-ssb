@@ -19,6 +19,7 @@ static char THIS_FILE[]=__FILE__;
 #include "ReportDlg.h"
 #include "MultiSelectDlg.h"
 #include "NTime.h"
+#include "Caster.h"
 
 
 //
@@ -88,7 +89,7 @@ void CPstConformanceReport::Create()
 
 	{ 
 		ostrstream ostr;
-		for ( int caster=1; caster <= 3; ++ caster ) {
+		for ( int caster=Caster::FirstCaster; caster <= Caster::LastCaster; ++caster ) {
 			CCasterScen* pScen = m_pSS->CasterScen(caster);
 			if ( pScen != 0 ) {
 				for ( vector<CCastString*>::iterator is = pScen->CastStrings().begin();
@@ -119,7 +120,7 @@ void CPstConformanceReport::Create()
 
 	// dlg.m_posns contains the indexes of the selected strings.
 	// First, select out those strings, per caster
-	vector<CCastString*> selCastStrings[4];
+	vector<CCastString*> selCastStrings[Caster::CasterArrayLen];
 	{
 		for ( vector<int>::iterator ii = dlg.m_posns.begin();
 			  ii != dlg.m_posns.end();
@@ -134,7 +135,7 @@ void CPstConformanceReport::Create()
 	//   and having each compute its summary information.
 	// Add the summary information for each caster to the total information.
 
-	for ( int caster=1; caster <= 3; ++caster ) {
+	for ( int caster=Caster::FirstCaster; caster <= Caster::LastCaster; ++caster ) {
 		CCasterScen* pScen = m_pSS->CasterScen(caster);
 		if ( pScen != 0 && selCastStrings[caster].size() != 0 ) {
 			CScenHolder* pHolder = new CScenHolder(pScen);
@@ -197,7 +198,7 @@ void CPstConformanceReport::WriteReport(CString& filename)
 	//  Write a total report for all the casters.
 	CItem::WriteHeader(ofs);
 	m_totItem.WriteTotReport(ofs,
-							 "Total tons for all 3 casters",
+							 "Total tons for all casters",
 							 "Combined");
 
 	// close table on this last page

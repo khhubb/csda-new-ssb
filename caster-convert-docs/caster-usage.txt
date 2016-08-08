@@ -290,13 +290,14 @@ X      1,201 NReport.h
 				caster as in converted back to caster as string
 				NEED TO MAKE SURE Fields SM_PLAN_SLAB_UNIT_CD, SM_PLAN_FACL_PREF_1_CD, ... have values 4,5.
   
-      10,888 PlanWorksheetReport.cpp
-       3,053 PlanWorksheetReport.h
+Y    10,888 PlanWorksheetReport.cpp
+Y      3,053 PlanWorksheetReport.h
 				caster as int
+				nothing caster specific
 
-	   21,932 PstConformanceReport.cpp
-        4,717 PstConformanceReport.h
-				caster as int
+Y   21,932 PstConformanceReport.cpp
+Y       4,717 PstConformanceReport.h
+				caster as int, has some iterations through casters -- FIXED
 
 	  26,590 Snapshot.cpp
        5,481 Snapshot.h
