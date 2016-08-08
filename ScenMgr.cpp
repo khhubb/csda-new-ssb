@@ -120,7 +120,7 @@ void CScenMgr::CSuperScenInfoChangedMsg::Sprint(CString& strCmd)
 //	
 ////////////////////////////////////////////////////////////////
 
-TCasterScenVec	CScenMgr::m_casterScens[4];
+TCasterScenVec	CScenMgr::m_casterScens[Caster::CasterArrayLen];
 TProdnScenVec	CScenMgr::m_prodnScens;
 TSuperScenVec	CScenMgr::m_superScens;
 
@@ -250,11 +250,7 @@ void CScenMgr::DeleteCasterScen(CCasterScen* pScen)
 
 	int caster = pScen->m_caster;
 
-	assert( caster == 1
-		    || 
-			caster == 2
-			||
-			caster == 3 );
+	assert(Caster::IsValidCasterValue(caster));
 
 	TCasterScenVec::iterator is = find(CasterScensBegin(caster),
 									  CasterScensEnd(caster),
@@ -336,14 +332,18 @@ void CScenMgr::DeleteProdnScen(CProdnScen* pScen)
 CSuperScen* CScenMgr::CreateSuperScen(CCasterScen* pCScen1,
 									  CCasterScen* pCScen2,
 									  CCasterScen* pCScen3,
+									  CCasterScen* pCScen4,
+									  CCasterScen* pCScen5,
 									  CProdnScen*  pProdnScen,
 									  bool forSnap /* = false */)
 {
 	CSuperScen* pSS = new CSuperScen;
 
-	pSS->m_pCScens[1] = pCScen1;
-	pSS->m_pCScens[2] = pCScen2;
-	pSS->m_pCScens[3] = pCScen3;
+	pSS->m_pCScens[Caster::C1] = pCScen1;
+	pSS->m_pCScens[Caster::C2] = pCScen2;
+	pSS->m_pCScens[Caster::C3] = pCScen3;
+	pSS->m_pCScens[Caster::C4] = pCScen4;
+	pSS->m_pCScens[Caster::C5] = pCScen5;
 	pSS->m_pProdnScen = pProdnScen;
 
 	pSS->ForSnap(forSnap);
@@ -415,7 +415,7 @@ void CScenMgr::DeleteSuperScen(CSuperScen* pSS)
 
 CCasterScen* CScenMgr::CasterScen(int casterNum, int index)
 {
-	assert ( casterNum == 1 || casterNum == 2 || casterNum == 3 );
+	assert ( Caster::IsValidCasterValue(casterNum) );
 
 	assert ( 0 <= index && index < CasterScensCount(casterNum) );
 
@@ -489,17 +489,23 @@ int CScenMgr::ProdnScenIndex(CProdnScen* pScen)
 CSuperScen* CScenMgr::SuperScen(CCasterScen* pCScen1,
 								   CCasterScen* pCScen2,
 								   CCasterScen* pCScen3,
+								   CCasterScen* pCScen4,
+								   CCasterScen* pCScen5,
 								   CProdnScen*  pProdnScen)
 {
 	CSuperScen* pSS = FindSuperScen(pCScen1,
 								   pCScen2,
 								   pCScen3,
+								   pCScen4,
+								   pCScen5,
 								   pProdnScen);
 
 	if ( pSS == 0 )
 		return CreateSuperScen(pCScen1,
 							   pCScen2,
 							   pCScen3,
+							   pCScen4,
+							   pCScen5,
 							   pProdnScen);
 	else
 		return pSS;
@@ -514,17 +520,23 @@ CSuperScen* CScenMgr::SuperScen(CCasterScen* pCScen1,
 CSuperScen* CScenMgr::FindSuperScen(CCasterScen* pCScen1,
 								    CCasterScen* pCScen2,
 								    CCasterScen* pCScen3,
-								    CProdnScen*  pProdnScen)
+									CCasterScen* pCScen4,
+									CCasterScen* pCScen5,
+									CProdnScen*  pProdnScen)
 {
 	for ( TSuperScenVec::iterator is = SuperScensBegin();
 		  is != SuperScensEnd();
 		  ++is ) {
 		
-		if ((*is)->m_pCScens[1] == pCScen1
+		if ((*is)->m_pCScens[Caster::C1] == pCScen1
 			&&
-			(*is)->m_pCScens[2] == pCScen2
+			(*is)->m_pCScens[Caster::C2] == pCScen2
 			&&
-			(*is)->m_pCScens[3] == pCScen3 )
+			(*is)->m_pCScens[Caster::C3] == pCScen3
+			&&
+			(*is)->m_pCScens[Caster::C4] == pCScen4
+			&&
+			(*is)->m_pCScens[Caster::C5] == pCScen5)
 			//&&
 			//(*is)->pProdnScen == pProdnScen )
 			return (*is);
@@ -541,9 +553,11 @@ CSuperScen* CScenMgr::FindSuperScen(CCasterScen* pCScen1,
 bool CScenMgr::SuperScenExists(CCasterScen* pCScen1,
 							   CCasterScen* pCScen2,
 							   CCasterScen* pCScen3,
+							   CCasterScen* pCScen4,
+							   CCasterScen* pCScen5,
 							   CProdnScen*  pProdnScen)
 {
-	return FindSuperScen(pCScen1,pCScen2,pCScen3,pProdnScen) != 0;
+	return FindSuperScen(pCScen1,pCScen2,pCScen3,pCScen4,pCScen5,pProdnScen) != 0;
 }
 
 
@@ -554,7 +568,7 @@ bool CScenMgr::SuperScenExists(CCasterScen* pCScen1,
 
 CSuperScen* CScenMgr::CreateSuperScen()
 {
-	return CreateSuperScen(0,0,0,0,true);
+	return CreateSuperScen(0,0,0,0,0,0,true);
 }
 
 
@@ -681,6 +695,8 @@ void CScenMgr::ArchiveAllScens()
 	FindModifiedCasterScens(1,copyScens,origScens);
 	FindModifiedCasterScens(2,copyScens,origScens);
 	FindModifiedCasterScens(3,copyScens,origScens);
+	FindModifiedCasterScens(4, copyScens, origScens);
+	FindModifiedCasterScens(5, copyScens, origScens);
 
 	for ( int i=0; i<copyScens.size(); ++i )
 		m_archiveQueue.AddBackground(origScens[i],copyScens[i]);
@@ -727,7 +743,7 @@ void CScenMgr::FindModifiedCasterScens(int casterNum,
 
 void CScenMgr::DeleteAllCasterScens()
 {
-	for ( int i=1; i<=3; ++i ) 
+	for ( int i=Caster::FirstCaster; i<=Caster::LastCaster; ++i ) 
 
 		while ( CasterScensBegin(i) != CasterScensEnd(i) )
 		  DeleteCasterScen( (*CasterScensBegin(i)) );
@@ -735,10 +751,11 @@ void CScenMgr::DeleteAllCasterScens()
 	// we have to delete the snapshot's direct scenarios by hand,
 	//   because they are not in the lists.
 
-	DeleteCasterScen(TheSnapshot.SuperScen()->CasterScen(1));
-	DeleteCasterScen(TheSnapshot.SuperScen()->CasterScen(2));
-	DeleteCasterScen(TheSnapshot.SuperScen()->CasterScen(3));
-
+	DeleteCasterScen(TheSnapshot.SuperScen()->CasterScen(Caster::C1));
+	DeleteCasterScen(TheSnapshot.SuperScen()->CasterScen(Caster::C2));
+	DeleteCasterScen(TheSnapshot.SuperScen()->CasterScen(Caster::C3));
+	DeleteCasterScen(TheSnapshot.SuperScen()->CasterScen(Caster::C4));
+	DeleteCasterScen(TheSnapshot.SuperScen()->CasterScen(Caster::C5));
 
 }
 
@@ -763,11 +780,15 @@ void CScenMgr::DeleteContainingSuperScens(CScenario* pScen)
 	for ( TSuperScenVec::iterator is = SuperScensBegin();
 		  is != SuperScensEnd();
 		  ++is ) {
-		if ((*is)->m_pCScens[1] == pScen 
+		if ((*is)->m_pCScens[Caster::C1] == pScen 
 			||
-			(*is)->m_pCScens[2] == pScen
+			(*is)->m_pCScens[Caster::C2] == pScen
 			||
-			(*is)->m_pCScens[3] == pScen
+			(*is)->m_pCScens[Caster::C3] == pScen
+			||
+			(*is)->m_pCScens[Caster::C4] == pScen
+			||
+			(*is)->m_pCScens[Caster::C5] == pScen
 			||
 			(*is)->m_pProdnScen == pScen)
 		

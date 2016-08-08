@@ -19,6 +19,7 @@
 #include "SpecChemRangePreset.h"
 #include "HeatSpecCrossApp.h"
 #include "HMSupplyMgr.h"
+#include "Caster.h"
 
 
 #include "CastString.h"
@@ -230,7 +231,7 @@ private:
 	bool PopulateSpecChemRangePresets(CDatabase* pDB);
 	void AdjustOrderSlabsDue();
 	void CopyInitialCasterScens();
-	void CopyNew910sIntoAllScens(CCasterScen* pScens[4]);
+	void CopyNew910sIntoAllScens(CCasterScen* pScens[Caster::CasterArrayLen]);
 	void CopyNew910IntoAllScens( int caster, CCastString* pString );
 	static CCastString* CopyNew910IntoScen( CCasterScen* pScen, CCastString* pString, CCastString* pOrigString );
 	void LoadNew910( CCasterScen* pScen, CCastStringId& id);

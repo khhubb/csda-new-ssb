@@ -9,6 +9,7 @@
 #pragma once
 #endif // _MSC_VER >= 1000
 
+#include "Caster.h"
  
 class CCasterScen;
 class CProdnScen;
@@ -22,7 +23,7 @@ class CSuperScen
 {
 	////////////////////////////////////////////////////////////////
 	//	
-	//	A collection of one each of caster scens (1,2,3) and a prodn scen
+	//	A collection of one each of caster scens (1,2,3,4,5) and a prodn scen
 	//	
 	////////////////////////////////////////////////////////////////
 	
@@ -42,7 +43,7 @@ private:
 		//  The snapshot holds one superscen that holds the snapshot caster scens.
 		//  this flag marks it.
 
-	CCasterScen*	m_pCScens[4];  // 0 unused, 1,2,3 = caster
+	CCasterScen*	m_pCScens[Caster::CasterArrayLen];  // 0 unused, 1,2,3, 4, 5 = caster
 		//  The caster scens in this superscen
 
 	CProdnScen*		m_pProdnScen;

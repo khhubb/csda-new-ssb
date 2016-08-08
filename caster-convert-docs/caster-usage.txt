@@ -1,7 +1,9 @@
- Volume in drive D is Work
- Volume Serial Number is F6EF-7E9F
+CSDA - file analysis
 
- Directory of D:\miller\arcelor\csda-w-new-SB
+ 
+X  = nothing to work on
+Y  = had something, now fixed
+-> = looked at, not resolved 
 
  =============
  Support files
@@ -111,8 +113,8 @@ X      1,196 winUtils.h
 COM interfaces
 ==============
 
-       1,377 bofspecmgr.cpp
-         839 bofspecmgr.h
+->     1,377 bofspecmgr.cpp
+->       839 bofspecmgr.h
 				We'll need to add to BOFSpeedCalc to calculate cast times for new caster.
 
 X     31,883 msoutl85.cpp
@@ -269,8 +271,8 @@ X      5,739 UnappOrderSet.h
 Miscellaneous model support
 ============================
 
-       5,715 HeatSpecCrossApp.cpp
-       2,150 HeatSpecCrossApp.h
+->     5,715 HeatSpecCrossApp.cpp
+->     2,150 HeatSpecCrossApp.h
 				caster is int
 				NEED TO figure out GetCrossAppSpecs -- special substitution rules per caster
 	   
@@ -285,23 +287,24 @@ X      5,081 NReport.cpp
 X      1,201 NReport.h
 				various reports
 	   
-      46,284 OrderSelection.cpp
-      17,829 OrderSelection.h
+->    46,284 OrderSelection.cpp
+->    17,829 OrderSelection.h
 				caster as in converted back to caster as string
 				NEED TO MAKE SURE Fields SM_PLAN_SLAB_UNIT_CD, SM_PLAN_FACL_PREF_1_CD, ... have values 4,5.
   
-Y    10,888 PlanWorksheetReport.cpp
+Y     10,888 PlanWorksheetReport.cpp
 Y      3,053 PlanWorksheetReport.h
 				caster as int
 				nothing caster specific
 
-Y   21,932 PstConformanceReport.cpp
-Y       4,717 PstConformanceReport.h
+Y     21,932 PstConformanceReport.cpp
+Y      4,717 PstConformanceReport.h
 				caster as int, has some iterations through casters -- FIXED
 
-	  26,590 Snapshot.cpp
-       5,481 Snapshot.h
+Y     26,590 Snapshot.cpp
+Y      5,481 Snapshot.h
 				caster as int
+				various iterations through caster, FIXED>
 
 X        696 UserInfo.cpp
 X      1,903 UserInfo.h
@@ -325,8 +328,8 @@ X      3,342 SpecChemRangePreset.h
 X        495 SpecCmp.cpp
 X      1,767 SpecCmp.h
 	   
-       8,289 SpecMgr.cpp
-       3,048 SpecMgr.h
+->     8,289 SpecMgr.cpp
+->     3,048 SpecMgr.h
 				Interacts w/ BOFSpeedCalc
 				SlabCastTime takes an int caster, passed to BOFSpeedCalc
 				FindSpecMaybe -- has some caster-specific lookup 
@@ -364,8 +367,8 @@ X      4,562 CastStringHeatValidnError.h
 X      5,323 CastStringSummaryRecord.cpp
 X      2,493 CastStringSummaryRecord.h
 	   
-      70,682 CastStringValidator.cpp
-       4,403 CastStringValidator.h
+->    70,682 CastStringValidator.cpp
+->     4,403 CastStringValidator.h
 				ComputeSlabLength, FixHeatSpec, IsCompatibleSpec need caster
 				Multiple instances of caster-specific checks.
 				We'll need to look at each and also to check new validation rules.
@@ -402,13 +405,14 @@ X	     768 AvailCasterScenId.cpp
 X      2,770 AvailCasterScenId.h
 			int m_caster
 
-  	  17,872 CasterScen.cpp
-       4,608 CasterScen.h
+Y 	  17,872 CasterScen.cpp
+Y      4,608 CasterScen.h
 			int m_caster
 			I think only passed around, not acted on, so probably no changes.
+			NO CHANGES
 
-      91,739 CasterScenArchiver.cpp
-       9,815 CasterScenArchiver.h
+Y     91,739 CasterScenArchiver.cpp
+Y      9,815 CasterScenArchiver.h
 				validity check (caster in 1..3), array[4], some loops over caster# (1..3)
 	   
 X        335 ProdnScen.cpp
@@ -417,21 +421,24 @@ X      1,936 ProdnScen.h
 X        731 Scenario.cpp
 X      3,055 Scenario.h
 	   
-      17,357 ScenMgr.cpp
-       9,910 ScenMgr.h
+Y     17,357 ScenMgr.cpp
+Y      9,910 ScenMgr.h
 				m_casterScnes[4]
 				a number of methods take three caster scens to create a superscen
 				some 1,2,3 validity checks.
+				DONE:
 	   
-      18,600 ScenMru.cpp
-       8,534 ScenMru.h
+Y     18,600 ScenMru.cpp
+Y      8,534 ScenMru.h
 				m_casterScnes[4]
 				some other 1,2,3 nonsense
+				DONE.
 	   
-       5,900 SuperScen.cpp
-       3,058 SuperScen.h
+Y      5,900 SuperScen.cpp
+Y      3,058 SuperScen.h
 				m_pCScens[4]
 				some 1,2,3 validity checks.
+				Fixed
 
 	   
 =======

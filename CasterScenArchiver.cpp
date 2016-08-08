@@ -43,6 +43,7 @@ static char THIS_FILE[]=__FILE__;
 #include "MiscConstants.h"
 #include "MsgDlg.h"
 #include "CasterScenariosMaxIdSet.h"
+#include "Caster.h"
 
 
 //	There are two classes interwined here.
@@ -211,17 +212,17 @@ bool CCasterScenArchiver::MaybeCreatePublicScensForUser(const CString& user)
 
 		rs.Open(CRecordset::dynaset,0,CRecordset::none);
 
-		bool publicSeen[4] = { false, false, false, false };
+		bool publicSeen[Caster::CasterArrayLen] = { false, false, false, false, false, false };
 
 		while ( ! rs.IsEOF() ) {
 
-			if ( 1 <= rs.m_Caster  && rs.m_Caster <= 3 )
+			if ( Caster::IsValidCasterValue(rs.m_Caster) )
 				publicSeen[rs.m_Caster] = true;
 
 			rs.MoveNext();
 		}
 	
-		for ( int i=1; i<=3; ++i ) {
+		for ( int i=Caster::FirstCaster; i<=Caster::LastCaster; ++i ) {
 			if ( ! publicSeen[i] ) {
 
 				rs.AddNew();

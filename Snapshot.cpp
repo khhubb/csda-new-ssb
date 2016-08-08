@@ -653,16 +653,20 @@ void CSnapshot::ReadMillOrderChems(CDatabase* pDB)
 
 void CSnapshot::CopyInitialCasterScens()
 {
-	CCasterScen* p1 = CopyInitialCasterScen(1);
-	CCasterScen* p2 = CopyInitialCasterScen(2);
-	CCasterScen* p3 = CopyInitialCasterScen(3);
+	CCasterScen* p1 = CopyInitialCasterScen(Caster::C1);
+	CCasterScen* p2 = CopyInitialCasterScen(Caster::C2);
+	CCasterScen* p3 = CopyInitialCasterScen(Caster::C3);
+	CCasterScen* p4 = CopyInitialCasterScen(Caster::C4);
+	CCasterScen* p5 = CopyInitialCasterScen(Caster::C5);
 	CProdnScen*  pp = CScenMgr::CreateProdnScen(true);
 
 	p1->SetComment("Copy of daily plan");
 	p2->SetComment("Copy of daily plan");
 	p3->SetComment("Copy of daily plan");
+	p4->SetComment("Copy of daily plan");
+	p5->SetComment("Copy of daily plan");
 
-	CScenMgr::SuperScen(p1,p2,p3,pp);
+	CScenMgr::SuperScen(p1,p2,p3,p4,p5,pp);
 }
 
 
@@ -701,12 +705,12 @@ void CSnapshot::MaybeLoadNew910s()
 
 void CSnapshot::LoadNew910s()
 {
-	bool casterSeen[4] = { false, false, false, false };
+	bool casterSeen[Caster::CasterArrayLen] = { false, false, false, false, false, false };
 
-	CCasterScen* pScens[4];
+	CCasterScen* pScens[Caster::CasterArrayLen];
 
 	{
-		for ( int i=1; i<=3; ++i )
+		for ( int i=Caster::FirstCaster; i<=Caster::LastCaster; ++i )
 			pScens[i] = CScenMgr::CreateMasterCasterScen(i);
 	}
 
@@ -747,7 +751,7 @@ void CSnapshot::LoadNew910s()
 	CopyNew910sIntoAllScens(pScens);
 
 	{
-		for ( int caster=1; caster <=3; ++caster )
+		for ( int caster=Caster::FirstCaster; caster <= Caster::LastCaster; ++caster )
 			if ( casterSeen[caster] ) {
 				CScenMgr::CCasterScenInfoChangedMsg msg(0);
 				TheBus().UpdateAllObservers(0,&msg);
@@ -762,7 +766,7 @@ void CSnapshot::LoadNew910s()
 finish:
 
 	{
-		for ( int i=1; i<=3; ++i )
+		for ( int i=Caster::FirstCaster; i<=Caster::LastCaster; ++i )
 			CScenMgr::DeleteMasterCasterScen(pScens[i]);
 	}
 }
@@ -812,7 +816,7 @@ long CSnapshot::GetUpdated910Ids(long lastId, CTime lastTime, vector<CCastString
 			bool bad;
 			CString msg;
 
-			if ( caster < 1 || caster > 3 ) {
+			if ( ! Caster::IsValidCasterValue(caster) ) {
 				bad = true;
 				msg.Format("Bad caster (%d) in EventLog # %ld",caster,logRS.m_EventId);
 			}
@@ -871,9 +875,9 @@ void CSnapshot::LoadNew910( CCasterScen* pScen, CCastStringId& id)
 }
 
 
-void CSnapshot::CopyNew910sIntoAllScens(CCasterScen* pScens[4])
+void CSnapshot::CopyNew910sIntoAllScens(CCasterScen* pScens[Caster::CasterArrayLen])
 {
-	for ( int caster=1; caster<=3; ++caster ) {
+	for ( int caster=Caster::FirstCaster; caster<=Caster::LastCaster; ++caster ) {
 
 		for ( vector<CCastString*>::iterator is = pScens[caster]->CastStrings().begin();
 		      is != pScens[caster]->CastStrings().end();

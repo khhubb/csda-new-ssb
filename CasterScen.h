@@ -53,7 +53,7 @@ class CCasterScen : public CScenario
 private:
 
 	int m_caster;
-		//	Which caster the scenario is for, = 1,2,3.
+		//	Which caster the scenario is for, = 1,2,3,4,5.
 
 	TCastStringVec m_castStrings;
 		//	The sequence of strings scheduled for the caster.

@@ -18,6 +18,7 @@ class CSuperScen;
 #include "ProdnScen.h"
 #include "CastStringId.h"
 #include "MessageBus.h"
+#include "Caster.h"
  
 
 
@@ -249,7 +250,7 @@ private:
 
 private:
 
-	vector<CCasterScenInfo> m_casterScens[4];  // using 1,2,3
+	vector<CCasterScenInfo> m_casterScens[Caster::CasterArrayLen];  // using 1,2,3,4,5
 		//  info on each caster scen that exists
 
 	vector <CProdnScen*> m_prodnScens;

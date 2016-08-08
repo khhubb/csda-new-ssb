@@ -41,7 +41,7 @@ static char THIS_FILE[]=__FILE__;
 
 CCasterScen* CSuperScen::CasterScen(int i) const
 {
-	assert( 1 <= i && i <= 3 );
+	assert( Caster::IsValidCasterValue(i) );
 
 	return m_pCScens[i];
 }
@@ -89,7 +89,7 @@ int CSuperScen::CasterScenIndex(int i) const
 
 CSuperScen::CSuperScen()
 {
-	for ( int i=0; i<4; ++i )
+	for ( int i=Caster::FirstCaster; i<=Caster::LastCaster; ++i )
 		m_pCScens[i] = 0;
 
 	m_pProdnScen = 0;
@@ -121,7 +121,9 @@ CString CSuperScen::IdString() const
 		<< (m_pCScens[1] == 0 ? -1 : m_pCScens[1]->Id() )
 		<< (m_pCScens[2] == 0 ? -1 : m_pCScens[2]->Id() )
 		<< (m_pCScens[3] == 0 ? -1 : m_pCScens[3]->Id() )
-		<< (m_pProdnScen == 0 ? -1 : m_pProdnScen->Id() )
+		<< (m_pCScens[4] == 0 ? -1 : m_pCScens[4]->Id())
+		<< (m_pCScens[5] == 0 ? -1 : m_pCScens[5]->Id()) 
+		<< (m_pProdnScen == 0 ? -1 : m_pProdnScen->Id())
 		<< ">"
 		<< ends;
 	CString result(ostr.str());
@@ -140,12 +142,11 @@ bool CSuperScen::InitFromDalyPlan()
 	NOutputWnd::PostLoadMsg("Loading daily plan ... ");
 
 	assert( m_pCScens[1] == 0
-			&&
-			m_pCScens[2] == 0
-			&& 
-			m_pCScens[3] == 0
-			&&
-			m_pProdnScen == 0 );
+			&& m_pCScens[2] == 0
+			&& m_pCScens[3] == 0
+			&& m_pCScens[4] == 0
+			&& m_pCScens[5] == 0
+			&& m_pProdnScen == 0 );
 
 	CDBConn dbc(CDBConn::DB_DPA);
 	dbc.Connect();
@@ -161,13 +162,19 @@ bool CSuperScen::InitFromDalyPlan()
 	NOutputWnd::PostLoadMsg(" 3 ... ");
 	bool result3 = CreateAndLoadCasterScen(3,planSet);
 
+	NOutputWnd::PostLoadMsg(" 4 ... ");
+	bool result4 = CreateAndLoadCasterScen(4, planSet);
+
+	NOutputWnd::PostLoadMsg(" 5 ... ");
+	bool result5 = CreateAndLoadCasterScen(5, planSet);
+
 	m_pProdnScen = CScenMgr::CreateProdnScen(false);
 
 	planSet.Close();
 	
 	NOutputWnd::PostLoadMsg(" done.\n");
 
-	return result1 && result2 && result3;	
+	return result1 && result2 && result3 && result4 && result5;	
 }
 
 
@@ -279,8 +286,10 @@ CTime CSuperScen::LastDailyPlanDownloadTime()
 int CSuperScen::NumSlabsScheduled(const COrder* pOrder) const
 {
 	return m_pCScens[1]->NumSlabsScheduled(pOrder)
-		 + m_pCScens[2]->NumSlabsScheduled(pOrder)
-		 + m_pCScens[3]->NumSlabsScheduled(pOrder);
+		+ m_pCScens[2]->NumSlabsScheduled(pOrder)
+		+ m_pCScens[3]->NumSlabsScheduled(pOrder)
+		+ m_pCScens[4]->NumSlabsScheduled(pOrder)
+		+ m_pCScens[5]->NumSlabsScheduled(pOrder);
 }
 
 

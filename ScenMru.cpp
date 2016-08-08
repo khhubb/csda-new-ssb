@@ -75,13 +75,15 @@ CScenMru::CScenMru()
 	Mrus.push_back(this);
 
 	// Bring this up-to-date on all currently existing scenarios
-	CreateCasterScenEntries(1);
-	CreateCasterScenEntries(2);
-	CreateCasterScenEntries(3);
+	CreateCasterScenEntries(Caster::C1);
+	CreateCasterScenEntries(Caster::C2);
+	CreateCasterScenEntries(Caster::C3);
+	CreateCasterScenEntries(Caster::C4);
+	CreateCasterScenEntries(Caster::C5);
 	CreateProdnScenEntries();
 
 	//  Default to caster 1 selected
-	m_casterNum		= 1;
+	m_casterNum = Caster::C1;
 
 
 	//  Synchronize the superScen
@@ -421,7 +423,7 @@ void CScenMru::OnUpdate(IMvcSubject* pSubject,
 
 void CScenMru::SetCasterNum(int newVal) 
 { 
-	assert( newVal == 1 || newVal == 2 || newVal == 3 );
+	assert( Caster::IsValidCasterValue(newVal) );
 
 	CSelectCasterMsg msg(newVal,m_casterNum);
 	m_casterNum = newVal;
@@ -591,15 +593,18 @@ CScenMru::CCasterScenInfo CScenMru::RemoveCasterScen(CCasterScen* pScen)
 
 void CScenMru::SetSuperScen()
 {
-	if ( CurrentCasterScen(1) != 0
-		 &&
-		 CurrentCasterScen(2) != 0
-		 &&
-		 CurrentCasterScen(3) != 0 )
-		 m_pSuperScen = CScenMgr::SuperScen(CurrentCasterScen(1),
-											CurrentCasterScen(2),
-											CurrentCasterScen(3),
-											CurrentProdnScen());
+	if ( CurrentCasterScen(Caster::C1) != 0
+		&& CurrentCasterScen(Caster::C2) != 0
+		&& CurrentCasterScen(Caster::C3) != 0
+		&& CurrentCasterScen(Caster::C4) != 0
+		&& CurrentCasterScen(Caster::C5) != 0 )
+		 m_pSuperScen = CScenMgr::SuperScen(
+		 CurrentCasterScen(Caster::C1),
+		 CurrentCasterScen(Caster::C2),
+		 CurrentCasterScen(Caster::C3),
+		 CurrentCasterScen(Caster::C4),
+		 CurrentCasterScen(Caster::C5),
+		 CurrentProdnScen());
 	else
 		m_pSuperScen = 0;
 }

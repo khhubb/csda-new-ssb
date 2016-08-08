@@ -20,6 +20,7 @@ class CScenario;
 #include "SuperScen.h"
 #include "ArchiveQueue.h"
 #include "MessageBus.h"
+#include "Caster.h"
 
 //  These seemed useful
 
@@ -246,7 +247,7 @@ public:
 
 private:
 
-	static TCasterScenVec	m_casterScens[4]; // index = 1,2,3
+	static TCasterScenVec	m_casterScens[Caster::CasterArrayLen]; // index = 1,2,3,4,5
 		// vectors of caster scens for each caster
 
 	static TProdnScenVec		m_prodnScens;
@@ -351,6 +352,8 @@ public:
 	static CSuperScen* CreateSuperScen(CCasterScen* pCScen1,
 									   CCasterScen* pCScen2,
 									   CCasterScen* pCScen3,
+									   CCasterScen* pCScen4,
+									   CCasterScen* pCScen5,
 									   CProdnScen*  pProdnScen,
 									   bool forSnap = false);
 
@@ -359,16 +362,22 @@ public:
 	static CSuperScen* FindSuperScen(CCasterScen* pCScen1,
 								    CCasterScen* pCScen2,
 								    CCasterScen* pCScen3,
-								    CProdnScen*  pProdnScen);
+									CCasterScen* pCScen4, 
+									CCasterScen* pCScen5, 
+									CProdnScen*  pProdnScen);
 
 	static CSuperScen* SuperScen(CCasterScen* pCScen1,
 						 	     CCasterScen* pCScen2,
 								 CCasterScen* pCScen3,
+								 CCasterScen* pCScen4,
+								 CCasterScen* pCScen5, 
 								 CProdnScen*  pProdnScen);
 
 	static bool SuperScenExists(CCasterScen* pCScen1,
 								CCasterScen* pCScen2,
 								CCasterScen* pCScen3,
+								CCasterScen* pCScen4,
+								CCasterScen* pCScen5, 
 								CProdnScen*  pProdnScen);
 
 
