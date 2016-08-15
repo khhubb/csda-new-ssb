@@ -93,4 +93,7 @@ Values?
 
 ---------------------
 
+the file I sent you is now in caster-convert-docs/caster-usage.txt.
+I'll be updating it as I go along.
+
 
