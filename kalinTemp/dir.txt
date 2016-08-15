@@ -1,0 +1,696 @@
+ Volume in drive D is Work
+ Volume Serial Number is F6EF-7E9F
+
+ Directory of D:\miller\arcelor\csda-w-new-SB
+
+ =============
+ Support files
+ =============
+ 
+X      1,804 aaaab.cpp  
+				template file for class definitions
+	   
+X      5,126 ArchiveQueue.cpp
+X      2,409 ArchiveQueue.h
+				Archiving (making backup copies to db of scenarios that have been edited) runs on a
+				background thread.  This is the background thread (CWinThread) for managing and running
+				archive requests.
+				Takes a CasterScen, but no dependency on caster. (other than being int)
+	   
+	  
+X      2,053 ChildFrm.cpp
+X      1,643 ChildFrm.h	 
+				Stingray support
+	   
+X      1,440 clipFormat.cpp
+X      1,312 clipFormat.h
+				defines clipboard formats for drag-drop ops
+	   
+X      2,544 DBConn.cpp
+X      2,564 DBConn.h
+				A utility class for managing database connections
+
+X      1,253 DocBase.cpp
+X      1,416 DocBase.h
+				Stingray support
+	   
+X        768 DocMvcMixin.cpp
+X      2,207 DocMvcMixin.h
+				Stingray support
+				
+X      1,398 DragSourceButton.cpp
+X      1,512 DragSourceButton.h
+				Support for drag-drop
+	   
+X        365 HeaderInfo.cpp
+X      6,297 HeaderInfo.h	
+				Help for handling headers on CListCtrls and SECTreeCtrls
+	   
+X      8,830 ListCtrlEx.cpp
+X      2,302 ListCtrlEx.h
+				provides a full row selection mode for the report mode list view control.
+
+X      1,782 MaintainListCtrlPosn.cpp
+X      1,338 MaintainListCtrlPosn.h
+				Restore a CListCtrl's position after an operation that loses it
+	   
+X      1,139 MessageBus.cpp
+X      4,676 MessageBus.h	 
+				message bus for event notifications
+	   
+X         320 Notify.cpp
+X         760 Notify.h
+				Used to provide a callback fro CDragSourceButton
+		 
+X      3,548 NOutputWnd.cpp
+X      1,082 NOutputWnd.h
+				Manages the output windows on the main display
+	   
+X      2,806 NStateBitmapButton.cpp
+X      1,763 NStateBitmapButton.h
+				Subclasses a CButton, supporting images tied to a state
+	   
+X      8,205 nTime.cpp
+X      2,487 nTime.h
+				Namespace providing some functions for manipulating times.
+	   	   
+X       3,064 OrderColor.cpp
+X         882 OrderColor.h
+				Provides standard colors based on first two digits of condition code.
+		 
+X      7,644 OutputControlBar.cpp
+X      3,496 OutputControlBar.h
+				A control bar to be located at the bottom of the main frame.
+	   
+X      2,104 OutputWnd.cpp
+X      1,366 OutputWnd.h
+				A special CEdit designed for inclusion in a COutputControlBar.
+	   
+X     30,355 resource.h
+X        491 resource2.h
+				resource files
+
+X        202 StdAfx.cpp
+X      2,306 StdAfx.h
+				what it always is
+	   
+X      2,155 stlext.h
+				This file contains templated functions that provide some useful functionality 
+				for playing with STL.
+	   
+X        371 stlUtils.cpp
+X      4,837 stlUtils.h
+				Some helpers for managing stl containers
+	   
+X      8,308 WinUtils.cpp
+X      1,196 winUtils.h
+				A miscellany of useful windows macros.
+	   	   
+
+==============
+COM interfaces
+==============
+
+       1,377 bofspecmgr.cpp
+         839 bofspecmgr.h
+				We'll need to add to BOFSpeedCalc to calculate cast times for new caster.
+
+X     31,883 msoutl85.cpp
+X      8,698 msoutl85.h
+
+X     11,299 webbrowser2.cpp
+X      3,759 webbrowser2.h
+
+X      2,743 _remotedl1.cpp
+X      2,051 _remotedl1.h
+
+	   
+==========	   
+CRecordset
+==========
+
+X      1,400 CasterScenariosMaxIdSet.cpp
+X      1,410 CasterScenariosMaxIdSet.h
+				Record maximum id used in any CasterScenario
+	   
+X      1,745 CasterScenariosSet.cpp
+X      1,495 CasterScenariosSet.h
+				Caster as int.
+	
+X      2,472 CasterStringHeatChemsSet.cpp
+X      1,741 CasterStringHeatChemsSet.h
+				Caster as int.
+				
+X      2,753 CasterStringHeatsSet.cpp
+X      1,805 CasterStringHeatsSet.h
+				Caster as int.
+				
+X     4,918 CasterStringOrdersSet.cpp
+X      2,244 CasterStringOrdersSet.h
+				Caster as int.
+				
+X      3,843 CasterStringsSet.cpp
+X      2,115 CasterStringsSet.h
+				Caster as int.
+				
+X      2,395 CasterStringTemplateChemsSet.cpp
+X      1,741 CasterStringTemplateChemsSet.h
+				Caster as int.
+				
+X      2,390 CasterStringTemplateSortsSet.cpp
+X      1,741 CasterStringTemplateSortsSet.h
+				Caster as int.
+				
+X      2,306 CasterStringTemplateSpecsSet.cpp
+X      1,713 CasterStringTemplateSpecsSet.h
+				Caster as int.
+				
+X      4,304 CasterStringTemplatesSet.cpp
+X      2,269 CasterStringTemplatesSet.h
+				Caster as int.
+				
+X     3,374 CheckStockApplicationRules.cpp
+X      2,012 CheckStockApplicationRules.h
+	   			Caster as int.
+					
+X      1,933 CIBogieSet.cpp
+X      1,474 CIBogieSet.h
+	   
+X      2,423 CICodeGroupDefSet.cpp
+X      1,607 CICodeGroupDefSet.h
+	   
+X      1,564 CICodeGroupXrefSet.cpp
+X      1,409 CICodeGroupXrefSet.h
+	   
+X      1,444 CICodeSet.cpp
+X      1,344 CICodeSet.h
+
+X      1,330 CsdaEventLogMaxId.cpp
+X      1,355 CsdaEventLogMaxId.h
+	   
+X      1,716 CsdaEventLogSet.cpp
+X      1,490 CsdaEventLogSet.h
+	   
+X      1,484 CsdaEventLogSet2.cpp
+X      1,392 CsdaEventLogSet2.h
+
+X      1,492 DailyPlanLastDownloadTimeSet.cpp
+X      1,467 DailyPlanLastDownloadTimeSet.h
+
+      11,222 DailyPlanLineupsUploadSet.cpp
+       3,230 DailyPlanLineupsUploadSet.h
+				CString M_PLAN_CAST_UNIT_CODE
+	   
+       8,930 DailyPlanUploadSet.cpp
+       3,441 DailyPlanUploadSet.h
+				CString M_PLAN_CAST_UNIT_CODE
+
+X     16,900 DalyPlanOrdersOnlySet.cpp
+X      5,673 DalyPlanOrdersOnlySet.h
+	   
+X      8,920 DalyPlanSet.cpp
+X      3,069 DalyPlanSet.h
+
+X      1,496 HeatSpecCrossAppSet.cpp
+X      1,418 HeatSpecCrossAppSet.h
+	   
+X      1,380 HMLastLoadCountSet.cpp
+X      1,379 HMLastLoadCountSet.h
+
+X      1,509 HMSupplyActual.cpp
+X      1,393 HMSupplyActual.h
+
+X      1,554 HMSupplyProjected.cpp
+X      1,423 HMSupplyProjected.h
+	   
+X       1,895 MillOrderChemsSet.cpp
+X       1,531 MillOrderChemsSet.h
+
+       2,452 PerUserDefaultValuesSet.cpp
+       1,705 PerUserDefaultValuesSet.h
+				Codes Caster 1, 2, 3 Heat size min/aim/max as explicit fields.
+	   
+X      1,713 SpecChemRangePresetSet.cpp
+X      1,496 SpecChemRangePresetSet.h
+	   
+       2,230 SpecDPAChemsSet.cpp
+       1,627 SpecDPAChemsSet.h
+				CString	m_CASTER_INDICATOR;
+	   
+       1,340 SpecDPASet.cpp
+       1,315 SpecDPASet.h
+				CString	m_CASTER_INDICATOR;
+
+       6,014 SSBInput.cpp
+       2,705 SSBInput.h
+			CString	m_PLAN_CAST_UNIT_CODE
+	   
+       7,534 SSBOutput.cpp
+       3,115 SSBOutput.h
+			CString	m_PLAN_CAST_UNIT_CODE
+
+X	   1,509 SteelSpecCrossAppSet.cpp
+X      1,428 SteelSpecCrossAppSet.h
+ 
+X	   1,468 UsersSet.cpp
+X      1,350 UsersSet.h
+	   
+X     17,561 UnappOrderSet.cpp
+X      5,739 UnappOrderSet.h
+
+	   
+============================
+Miscellaneous model support
+============================
+
+       5,715 HeatSpecCrossApp.cpp
+       2,150 HeatSpecCrossApp.h
+				caster is int
+	   
+       8,608 MiscConstants.cpp
+       3,470 MiscConstants.h
+				capture minHeatSizes, etc. as array[4], indexed by caster=1,2,3
+	   
+X        309 modelTypes.h  
+
+X      5,081 NReport.cpp
+X      1,201 NReport.h
+				various reports
+	   
+      46,284 OrderSelection.cpp
+      17,829 OrderSelection.h
+				caster as in converted back to caster as string
+  
+      10,888 PlanWorksheetReport.cpp
+       3,053 PlanWorksheetReport.h
+				caster as int
+
+	   21,932 PstConformanceReport.cpp
+        4,717 PstConformanceReport.h
+				caster as int
+
+	  26,590 Snapshot.cpp
+       5,481 Snapshot.h
+				caster as int
+
+X        696 UserInfo.cpp
+X      1,903 UserInfo.h
+	   
+X      1,825 Week.cpp
+X      2,013 Week.h
+
+
+=====
+Specs
+=====
+
+       1,899 Spec.cpp
+       3,021 Spec.h
+			capture bool for_caster, etc. as array[4], indexed by caster=1,2,3
+			dpaSpec.m_CASTER_INDICATOR.Find('1')
+	   
+X        526 SpecChemRangePreset.cpp
+X      3,342 SpecChemRangePreset.h
+
+X        495 SpecCmp.cpp
+X      1,767 SpecCmp.h
+	   
+       8,289 SpecMgr.cpp
+       3,048 SpecMgr.h
+				Interacts w/ BOFSpeedCalc
+				SlabCastTime takes an int caster, passed to BOFSPecCalc
+				FindSpecMaybe -- has some caster-specific lookup 
+   
+	   
+============				
+Cast strings
+============			
+   
+      77,543 CastString.cpp
+      14,913 CastString.h
+				extremely minor use of caster, mostly pass-through. Could be no changes.
+				PourToOpenTime, HotMetalTonsPerHeat
+	  
+      20,477 CastStringHeat.cpp
+       7,758 CastStringHeat.h
+				m_caster
+				pass-through, needed for spec lookup, 
+				SetChemsFromHeatSpec, FixAimChems, FixAimChem
+				init from DalyPlanSet
+	   
+X      3,958 CastStringHeatValidnError.cpp
+X      4,562 CastStringHeatValidnError.h
+	   
+       2,015 CastStringId.cpp
+       1,783 CastStringId.h
+				of course there is m_caster.
+				Comes from DalyPlanSet.PLAN_CAST_UNIT_CODE
+	   
+       2,595 CastStringMiscProps.cpp
+       5,615 CastStringMiscProps.h
+				casterNum used to pick up min/aim/max heat size, turnaroundtime
+	   
+X      5,323 CastStringSummaryRecord.cpp
+X      2,493 CastStringSummaryRecord.h
+	   
+      70,682 CastStringValidator.cpp
+       4,403 CastStringValidator.h
+				ComputeSlabLength, FixHeatSpec, IsCompatibleSpec need caster
+
+X      5,949 Chem.cpp
+X      2,730 Chem.h
+	   
+X        145 ChemRange.cpp
+X      2,214 ChemRange.h
+
+X     21,705 CICode.cpp
+X     12,569 CICode.h
+
+      46,025 CSOrder.cpp
+      19,049 CSOrder.h
+				Minor
+				CreateStockOrder, CalculateSlabduration, ComputeSlabWidthRelatedParms, CalculateSLengths
+				SetLotSpecPtr, initialization
+
+X     28,103 order.cpp
+X     12,344 Order.h
+   
+	   	  
+	  
+	   
+=========
+Scenarios
+=========
+
+You can assume most of these will need modifications.
+
+X	     768 AvailCasterScenId.cpp
+X      2,770 AvailCasterScenId.h
+			int m_caster
+
+  	  17,872 CasterScen.cpp
+       4,608 CasterScen.h
+			int m_caster
+			I think only passed around, not acted on, so probably no changes.
+
+      91,739 CasterScenArchiver.cpp
+       9,815 CasterScenArchiver.h
+				validity check (caster in 1..3), array[4], some loops over caster# (1..3)
+	   
+X        335 ProdnScen.cpp
+X      1,936 ProdnScen.h
+	   
+X        731 Scenario.cpp
+X      3,055 Scenario.h
+	   
+      17,357 ScenMgr.cpp
+       9,910 ScenMgr.h
+				m_casterScnes[4]
+				a number of methods take three caster scens to create a superscen
+				some 1,2,3 validity checks.
+	   
+      18,600 ScenMru.cpp
+       8,534 ScenMru.h
+				m_casterScnes[4]
+				some other 1,2,3 nonsense
+	   
+       5,900 SuperScen.cpp
+       3,058 SuperScen.h
+				m_pCScens[4]
+				some 1,2,3 validity checks.
+
+	   
+=======
+Dialogs
+=======
+
+X      5,377 CasterScenInfoDlg.cpp
+X      2,296 CasterScenInfoDlg.h
+	   
+      20,540 CastStringIdDlg.cpp
+       3,966 CastStringIdDlg.h
+				m_usedIds[4];
+				some controls are enabled caster-dependent.  Ditto validations.
+				range check on text box for caster
+	   
+      34,130 CSOrderParmDlg.cpp
+       3,197 CSOrderParmDlg.h
+	   				range check on m_casterNum on init
+	   
+X      2,436 DateTimeDlg.cpp
+X      1,475 DateTimeDlg.h
+	   
+X      5,055 EMailDlg.cpp
+X      1,735 EMailDlg.h
+	   
+X      4,028 GanttColorChartDlg.cpp
+X      1,492 GanttColorChartDlg.h
+
+       6,581 InitialScenLoaderDlg.cpp
+       2,087 InitialScenLoaderDlg.h
+				number of places where array[4] comes up.
+				Also, three ListCtrl, one per Caster
+	   
+X      4,482 HeatLockDlg.cpp
+X      1,926 HeatLockDlg.h
+
+X      3,809 LoginDlg.cpp
+X      1,390 LoginDlg.h
+	   
+X      3,408 LongOpn.cpp
+X      1,780 LongOpn.h
+	   
+X      5,462 LongOpnFrameWnd.cpp
+X      2,304 LongOpnFrameWnd.h	  
+	  
+X      2,640 MsgDlg.cpp
+X      1,287 MsgDlg.h
+	   
+      18,043 MultipleOrderInsertDlg.cpp
+       2,488 MultipleOrderInsertDlg.h
+				range check on caster num
+				mostly just passed around.
+	   
+X      2,312 MultipleOrderInsertGrid.cpp
+X      1,510 MultipleOrderInsertGrid.h
+	   
+X      3,697 MultiSelectDlg.cpp
+X      1,767 MultiSelectDlg.h	   
+
+      16,410 OrderInquiryDlg.cpp
+       2,868 OrderInquiryDlg.h
+				SetParentData assume caster=1,2,3
+				SetLineupLists ditto
+	   
+       3,202 OrderNumDlg.cpp
+       1,454 OrderNumDlg.h
+				range check
+
+       2,183 PickCasterDlg.cpp
+       1,334 PickCasterDlg.h
+				obviously
+	   
+X      5,659 ReportDlg.cpp
+X      1,588 ReportDlg.h
+
+X      3,281 Select909sDlg.cpp
+X      1,690 Select909sDlg.h
+				Not currently used
+
+       4,389 SpecSelectionDlg.cpp
+       1,890 SpecSelectionDlg.h
+
+      16,688 StringBuilderDlg.cpp
+       3,230 StringBuilderDlg.h
+	   
+      29,212 StringStatusDlg.cpp
+       3,031 StringStatusDlg.h
+	   
+       2,916 StringStatusGrid.cpp
+       1,398 StringStatusGrid.h
+	   
+       3,298 TabNumDlg.cpp
+       1,469 TabNumDlg.h
+	   
+
+	   
+=============================
+Primary application structure
+==============================	
+	
+     10,986 csda.cpp
+       2,608 csda.h
+	   
+       9,567 MainFrm.cpp
+       2,473 MainFrm.h
+	   
+       2,187 toolbars.h
+
+=============
+Major windows
+=============
+
+	   
+      55,523 GanttDisplay.cpp
+      34,611 GanttDisplay.h
+
+
+	Cast String Editor
+	==================
+
+	5,245 CastStringEditorChildFrame.cpp
+       2,236 CastStringEditorChildFrame.h
+	   
+       8,467 CastStringEditorDoc.cpp
+       2,095 CastStringEditorDoc.h
+	   
+       5,860 CastStringEditorGanttBars.cpp
+       1,930 CastStringEditorGanttBars.h
+	   
+       3,501 CastStringEditorGanttView.cpp
+       2,087 CastStringEditorGanttView.h
+	   
+     139,464 CastStringEditorMvc.cpp
+      37,465 CastStringEditorMvc.h
+	  
+       3,359 CastStringEditorScenMgrView.cpp
+       2,298 CastStringEditorScenMgrView.h
+	   
+       4,241 CastStringEditorStrandSummaryView.cpp
+       2,504 CastStringEditorStrandSummaryView.h
+	   
+      61,617 CastStringEditorTextView.cpp
+       6,865 CastStringEditorTextView.h
+	   
+       3,400 CastStringEditorValidnView.cpp
+       2,259 CastStringEditorValidnView.h
+	   
+	   
+	 Heat details dialog
+	 ===================
+ 
+      45,229 HeatDetailsDlg.cpp
+       5,157 HeatDetailsDlg.h
+
+       1,985 HeatChemsGrid.cpp
+       1,338 HeatChemsGrid.h
+	   
+       2,746 HeatDetailsGrid.cpp
+       1,539 HeatDetailsGrid.h
+	   
+	   
+	Hot metal load display
+	======================
+ 	   
+      21,831 HMLoadGraphBars.cpp
+       3,759 HMLoadGraphBars.h
+	   
+       7,796 HMLoadGraphChildFrame.cpp
+       1,798 HMLoadGraphChildFrame.h
+	   
+      20,597 HMLoadGraphDoc.cpp
+       4,942 HMLoadGraphDoc.h
+	   
+      80,586 HMLoadGraphMvc.cpp
+      24,295 HMLoadGraphMvc.h
+	  
+       3,564 HMLoadGraphScenSeqView.cpp
+       2,397 HMLoadGraphScenSeqView.h
+	   
+       2,883 HMLoadGraphSheetView.cpp
+       2,034 HMLoadGraphSheetView.h
+	   
+       2,888 HMLoadGraphView.cpp
+       1,890 HMLoadGraphView.h
+	   
+       3,302 HMStartTimeDlg.cpp
+       1,564 HMStartTimeDlg.h
+	   
+       5,352 HMSupplyMgr.cpp
+       5,190 HMSupplyMgr.h
+	   
+	   
+	MRU One Scen dialog bar
+	=======================
+		 
+       2,999 MruOneScenDlgBar.cpp
+       1,321 MruOneScenDlgBar.h
+	   
+       7,516 MruOneScenMVC.cpp
+       4,908 MruOneScenMVC.h
+	   
+	   
+	Avail orders selection dialog
+	=============================
+		  
+       3,474 PSheetAvailOrders.cpp
+       2,322 PSheetAvailOrders.h
+	   
+      11,938 PpgCICodeSelect.cpp
+       2,307 PpgCICodeSelect.h	   
+	   	   
+      15,626 PpgOrderChemRange.cpp
+       3,465 PpgOrderChemRange.h
+	   
+      17,673 PpgOrderRange.cpp
+       3,373 PpgOrderRange.h
+
+	   
+	Misc constants dialog
+	======================
+	   
+       1,916 PSheetMiscConstants.cpp
+       1,709 PSheetMiscConstants.h
+	   
+       4,610 PpgHeatSizes.cpp
+       1,734 PpgHeatSizes.h
+	   
+
+	Scenario master editor
+	======================
+	
+       2,442 ScenMasterChildFrame.cpp
+       1,745 ScenMasterChildFrame.h
+	   
+       3,680 ScenMasterCtrlView.cpp
+       2,313 ScenMasterCtrlView.h
+	   
+       1,345 ScenMasterDoc.cpp
+       1,353 ScenMasterDoc.h
+	   
+       2,889 ScenMasterGraphView.cpp
+       1,917 ScenMasterGraphView.h
+	   
+      23,718 ScenMasterMvc.cpp
+      12,633 ScenMasterMvc.h
+	
+	Scenario manager window
+	=======================
+	
+       1,042 ScenMgrChildFrame.cpp
+       1,387 ScenMgrChildFrame.h
+	   
+       1,301 ScenMgrDoc.cpp
+       1,297 ScenMgrDoc.h
+	   
+      14,969 ScenMgrMvc.cpp
+       5,052 ScenMgrMvc.h
+	   
+       2,988 ScenMgrView.cpp
+       2,092 ScenMgrView.h	   
+
+	
+	Upload support
+	==============
+		   
+       2,689 UploadDlg.cpp
+       1,600 UploadDlg.h
+	   
+       2,434 UploadMgr.cpp
+       2,560 UploadMgr.h
+	   
+         545 UploadProcessMgr.cpp
+         204 UploadProcessMgr.h
+		 
+       3,911 UploadValidnErrorsDlg.cpp
+       1,589 UploadValidnErrorsDlg.h
