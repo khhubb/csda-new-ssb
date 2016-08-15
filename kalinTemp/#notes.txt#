@@ -1,0 +1,96 @@
+Validation logic and flow of control:
+
+
+bool CCastStringValidator::Validate(vector<CCastStringHeat>& heats,
+				    CCastString* pCastString,
+				    CCasterScen* pCasterScen,
+				    CSuperScen* pSuperScen) 
+
+ -- validate cond and disp codes: slab thickness, etc.
+
+ -- Validate340080
+
+ -- CheckCondAndDispCodeRelationships
+
+## finding the caster
+
+   int caster = m_pCastString->Id().Caster();  // 3 and 4, each single strand (like caster 2)
+
+## new code:
+
+
+Introduced a few goodies in Caster.h/.cpp to avoid magic constants.  
+You'll new see things like
+
+    bool m_casterSeen[Caster::CasterArrayLen];
+
+    m_casterSeen[Caster::C4]
+
+    for ( int i=Caster::FirstCaster; i<= Caster::LastCaster;; ++i )
+       m_casterScen[i] ...
+
+
+    assert (Caster::IsValidCasterValue(casterNum));
+
+    if ( Caster::CasterNumStrands[caster] == 2 ) 
+      ...
+
+## Questions to KH
+
+
+MiscConstants:
+We have turnaround times of 75 and 90 minutes on Casters 2 and 3.
+And 0 on Caster 1.
+What are values of turnaround time for Casters 4,5?
+
+Length CMiscConstants::m_casterSlabLengthMaxes[4] = { 0, 452, 452, 431 };
+What are values for casters 4,5?
+
+
+PerUserDefaultValues:
+Need values for
+Caster4HeatSizeMin
+Caster4HeatSizeAim
+Caster4HeatSizeMax
+Caster5HeatSizeMin
+Caster5HeatSizeAim
+Caster5HeatSizeMax
+
+PPGHeatSizes:
+There is an editing screen for the caster 1,2,3 heat size min/aim/max that I will add to.
+On that dialog, the values for casters 2,3 are tied to be identical.
+Is there any similar tying of values for 4 and 5?
+
+----
+Some of this data may be in the rules you gave us for the new casters.
+
+First, I need to add columns to the table PerUserDefaultValues.
+It has one row, many columns. 
+Rather stupid, probably me.
+
+We'll need to add columns for the two new casters.  I'll need values.  Here is what's in there now:
+
+
+
+
+Caster1HeatSizeMin	
+Caster1HeatSizeAim	
+Caster1HeatSizeMax	
+Caster2HeatSizeMin	
+Caster2HeatSizeAim	
+Caster2HeatSizeMax	
+Caster3HeatSizeMin	
+Caster3HeatSizeAim	
+Caster3HeatSizeMax
+
+
+	240	245	273	205	210	230	205	210	230
+
+
+I'll be adding the obvious min/aim/max for 4 and 5.
+
+Values?
+
+---------------------
+
+
