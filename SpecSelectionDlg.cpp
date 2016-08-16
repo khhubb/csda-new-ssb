@@ -16,6 +16,7 @@ static char THIS_FILE[] = __FILE__;
 #include "Snapshot.h"
 #include "spec.h"
 #include "SpecMgr.h"
+#include "Caster.h"
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -95,7 +96,7 @@ BOOL CSpecSelectionDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 	
-	assert( m_caster == 1 || m_caster == 2 || m_caster == 3 );
+	assert( Caster::IsValidCasterValue(m_caster) );
 
 	for ( set<CString>::iterator is = m_specs.begin();
 		  is != m_specs.end();
