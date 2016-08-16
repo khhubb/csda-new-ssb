@@ -178,4 +178,7 @@ CCastStringValidator::Validate340080
 				//  in case 2), aim = average(min,max)
 			WHat is correct calculation for casters 4,5?
 			
+		CCastStringIdDlg::SetWidthSpinLimits
+				We have values for 1 and not 1.  What about 4,5?
+			
 			

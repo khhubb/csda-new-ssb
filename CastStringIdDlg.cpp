@@ -80,9 +80,11 @@ static char THIS_FILE[] = __FILE__;
 //		CCastStringIdDlg dlg;
 //	
 //		dlg.m_pId				= &id;
-//		dlg.m_usedIds[1]		= usedIds[1];  // copy
-//		dlg.m_usedIds[2]		= usedIds[2];  // copy
-//		dlg.m_usedIds[3]		= usedIds[3];  // copy
+//		dlg.m_usedIds[Caster::C1]		= usedIds[Caster::C1];  // copy
+//		dlg.m_usedIds[Caster::C2]		= usedIds[Caster::C2];  // copy
+//		dlg.m_usedIds[Caster::C3]		= usedIds[Caster::C3];  // copy
+//		dlg.m_usedIds[Caster::C4]		= usedIds[Caster::C4];  // copy
+//		dlg.m_usedIds[Caster::C5]		= usedIds[Caster::C5];  // copy
 //		dlg.m_pProps			= &props;
 //		dlg.m_isEditing		= false;
 //		dlg.m_setInitialId	= true;
@@ -190,7 +192,7 @@ void CCastStringIdDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT_NUM, m_editNum);
 	DDX_Control(pDX, IDC_EDIT_CASTER, m_editCaster);
 	DDX_Text(pDX, IDC_EDIT_CASTER, m_caster);
-	DDV_MinMaxInt(pDX, m_caster, 1, 3);
+	DDV_MinMaxInt(pDX, m_caster, Caster::FirstCaster, Caster::LastCaster);
 	DDX_Text(pDX, IDC_EDIT_NUM, m_num);
 	DDV_MinMaxInt(pDX, m_num, 0, 999);
 	DDX_Text(pDX, IDC_EDIT_WEEK, m_week);
@@ -270,7 +272,7 @@ BOOL CCastStringIdDlg::OnInitDialog()
 	m_spinYear.SetRange(1990,2100);
 	m_spinWeek.SetRange(0,53);
 	m_spinNum.SetRange(0,999);
-	m_spinCaster.SetRange(1,3);
+	m_spinCaster.SetRange(Caster::FirstCaster,Caster::LastCaster);
 	m_spinNumHeats.SetRange(1,100);
 
 
@@ -407,6 +409,7 @@ void CCastStringIdDlg::SetChemPresets()
 
 void CCastStringIdDlg::SetWidthSpinLimits(int caster)
 {
+	// CASTER TODO: What is correct for casters 4,5?
 	if ( caster == 1 )  {
 		m_spinStrand1Start.SetRange(25,99);
 		m_spinStrand1End.SetRange(25,99);
@@ -459,7 +462,7 @@ void CCastStringIdDlg::SetHeatSizeExtremes(int casterNum, bool updateString)
 
 void CCastStringIdDlg::SetStrand2Enabled(int casterNum)
 {	
-	bool enabled = m_pProps != 0 && casterNum != 2;
+	bool enabled = m_pProps != 0 && Caster::NumStrandsOnCaster(casterNum) == 2;
 
 	m_editStrand2Start.EnableWindow(enabled);
 	m_editStrand2End.EnableWindow(enabled);

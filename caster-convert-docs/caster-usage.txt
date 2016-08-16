@@ -449,15 +449,16 @@ Dialogs
 X      5,377 CasterScenInfoDlg.cpp
 X      2,296 CasterScenInfoDlg.h
 	   
-      20,540 CastStringIdDlg.cpp
-       3,966 CastStringIdDlg.h
+->    20,540 CastStringIdDlg.cpp
+->     3,966 CastStringIdDlg.h
 				m_usedIds[4];
 				some controls are enabled caster-dependent.  Ditto validations.
 				range check on text box for caster
+				-> Need :SetWidthSpinLimits for 4,5
 	   
-      34,130 CSOrderParmDlg.cpp
-       3,197 CSOrderParmDlg.h
-	   				range check on m_casterNum on init
+Y    34,130 CSOrderParmDlg.cpp
+Y      3,197 CSOrderParmDlg.h
+	   				range check on m_casterNum on init -- FIXED
 	   
 X      2,436 DateTimeDlg.cpp
 X      1,475 DateTimeDlg.h

@@ -242,7 +242,7 @@ BOOL CCSOrderParmDlg::OnInitDialog()
 	assert( m_pSuperScen != 0 );
 	
 	//  user must supply the casterNum
-	assert( Caster::IsValidCasterValue(m_casterNum);
+	assert( Caster::IsValidCasterValue(m_casterNum));
 
 	//  if the user supplies a CSOrder, then we use its Order, if it has one.
 	if ( m_pCSOrder != 0 && m_pCSOrder->Order() != 0 )

@@ -10,6 +10,7 @@
 
 #include "CastString.h"
 #include "SpecChemRangePreset.h"
+#include "Caster.h"
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -28,8 +29,8 @@ public:
 	CCastStringMiscProps* m_pProps;
 		// the miscProps being edited
 
-	vector<CCastStringId> m_usedIds[4];
-		// caststring ids that are in use, per caster = 1,2,3
+	vector<CCastStringId> m_usedIds[Caster::CasterArrayLen];
+		// caststring ids that are in use, per caster = 1,2,3,4,5
 
 	vector<CSpecChemRangePreset> m_selectedSpecChemRangePresets;
 		// holds the selected presets.
