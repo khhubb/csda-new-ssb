@@ -18,6 +18,7 @@ static char THIS_FILE[] = __FILE__;
 #include "Order.h"
 #include "CasterScen.h"
 #include "CastString.h"
+#include "Caster.h"
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -334,7 +335,7 @@ void COrderInquiryDlg::SetParentData()
 		numPiecesDue += (*io)->NumSlabsDue();
 		tonsDue += ((*io)->NumSlabsDue()*(*io)->IndivSlabWgt())/2000;
 
-		for (int casterNum = 1; casterNum <=3; ++casterNum) {
+		for (int casterNum = Caster::C1; casterNum <= Caster::C3; ++casterNum) {
 			CCasterScen* pScen = m_pSuperScen->CasterScen(casterNum);
 
 			for ( vector<CCastString*>::iterator is = pScen->CastStrings().begin();

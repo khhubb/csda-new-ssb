@@ -502,8 +502,8 @@ X      1,510 MultipleOrderInsertGrid.h
 X      3,697 MultiSelectDlg.cpp
 X      1,767 MultiSelectDlg.h	   
 
-      16,410 OrderInquiryDlg.cpp
-       2,868 OrderInquiryDlg.h
+Y    16,410 OrderInquiryDlg.cpp
+Y      2,868 OrderInquiryDlg.h
 				SetParentData assume caster=1,2,3
 				SetLineupLists ditto
 	   
