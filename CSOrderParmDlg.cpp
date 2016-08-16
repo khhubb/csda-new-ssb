@@ -72,6 +72,7 @@ static char THIS_FILE[] = __FILE__;
 #include "CastString.h"
 #include "CastStringValidator.h"
 #include "MiscConstants.h"
+#include "Caster.h"
 
 // #include "colordynamics.h"
 
@@ -241,7 +242,7 @@ BOOL CCSOrderParmDlg::OnInitDialog()
 	assert( m_pSuperScen != 0 );
 	
 	//  user must supply the casterNum
-	assert( 1 <= m_casterNum && m_casterNum <= 3 );  
+	assert( Caster::IsValidCasterValue(m_casterNum);
 
 	//  if the user supplies a CSOrder, then we use its Order, if it has one.
 	if ( m_pCSOrder != 0 && m_pCSOrder->Order() != 0 )
