@@ -6,6 +6,9 @@ bool Caster::IsValidCasterValue(int caster)  {
 }
 
 
-bool Caster::NumStrandsOnCaster(int caster) {
-	return caster == C2;
+int Caster::NumStrandsOnCaster(int caster) {
+	if (caster == C2 || caster == C4 || caster == C5)
+		return 1;
+	else
+		return 2;
 }
