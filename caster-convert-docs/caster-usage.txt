@@ -469,10 +469,11 @@ X      1,735 EMailDlg.h
 X      4,028 GanttColorChartDlg.cpp
 X      1,492 GanttColorChartDlg.h
 
-       6,581 InitialScenLoaderDlg.cpp
-       2,087 InitialScenLoaderDlg.h
+Y      6,581 InitialScenLoaderDlg.cpp
+Y      2,087 InitialScenLoaderDlg.h
 				number of places where array[4] comes up.
 				Also, three ListCtrl, one per Caster
+				FIXED!
 	   
 X      4,482 HeatLockDlg.cpp
 X      1,926 HeatLockDlg.h
@@ -489,10 +490,11 @@ X      2,304 LongOpnFrameWnd.h
 X      2,640 MsgDlg.cpp
 X      1,287 MsgDlg.h
 	   
-      18,043 MultipleOrderInsertDlg.cpp
-       2,488 MultipleOrderInsertDlg.h
+Y    18,043 MultipleOrderInsertDlg.cpp
+Y      2,488 MultipleOrderInsertDlg.h
 				range check on caster num
 				mostly just passed around.
+				Fixed.
 	   
 X      2,312 MultipleOrderInsertGrid.cpp
 X      1,510 MultipleOrderInsertGrid.h

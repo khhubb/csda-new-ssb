@@ -26,6 +26,7 @@ static char THIS_FILE[] = __FILE__;
 #include "OrderNumDlg.h"
 #include "OrderInquiryDlg.h"
 #include "SpecMgr.h"
+#include "Caster.h"
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -92,7 +93,7 @@ BOOL CMultipleOrderInsertDlg::OnInitDialog()
 
 	assert( m_pSuperScen != 0 );
 	assert( m_strandNum == 1 || m_strandNum == 2 );
-	assert( 1 <= m_casterNum && m_casterNum <= 3 );
+	assert(Caster::IsValidCasterValue(m_casterNum));
 
 	InitializeCellContents();
 
