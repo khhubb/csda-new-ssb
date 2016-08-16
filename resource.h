@@ -543,7 +543,9 @@
 #define IDC_CHECK_PST_29_35             1306
 #define IDC_STATIC_LABEL                1306
 #define IDC_CHECK_PST_GT_35             1307
+#define IDC_RADIO4                      1307
 #define IDC_CHECK_PRIORITY              1308
+#define IDC_RADIO5                      1308
 #define IDC_STATIC_PRIO_TONS            1309
 #define IDC_STATIC_PST_LT_8_TONS        1310
 #define IDC_STATIC_PST_8_14_TONS        1311

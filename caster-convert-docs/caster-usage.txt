@@ -511,8 +511,8 @@ Y      3,202 OrderNumDlg.cpp
 Y      1,454 OrderNumDlg.h
 				range check
 
-       2,183 PickCasterDlg.cpp
-       1,334 PickCasterDlg.h
+Y      2,183 PickCasterDlg.cpp
+Y      1,334 PickCasterDlg.h
 				obviously
 	   
 X      5,659 ReportDlg.cpp

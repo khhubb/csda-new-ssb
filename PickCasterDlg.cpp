@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "csda.h"
 #include "PickCasterDlg.h"
+#include "Caster.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -70,10 +71,11 @@ BOOL CPickCasterDlg::OnInitDialog()
 
 	CDialog::OnInitDialog();
 	
-	GetDlgItem(IDC_RADIO1)->EnableWindow( m_ignoreCaster != 1 );
-	GetDlgItem(IDC_RADIO2)->EnableWindow( m_ignoreCaster != 2 );
-	GetDlgItem(IDC_RADIO3)->EnableWindow( m_ignoreCaster != 3 );
-
+	GetDlgItem(IDC_RADIO1)->EnableWindow(m_ignoreCaster != Caster::C1);
+	GetDlgItem(IDC_RADIO2)->EnableWindow(m_ignoreCaster != Caster::C2);
+	GetDlgItem(IDC_RADIO3)->EnableWindow(m_ignoreCaster != Caster::C3);
+	GetDlgItem(IDC_RADIO3)->EnableWindow(m_ignoreCaster != Caster::C4);
+	GetDlgItem(IDC_RADIO3)->EnableWindow(m_ignoreCaster != Caster::C5);
 	
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
@@ -82,6 +84,6 @@ BOOL CPickCasterDlg::OnInitDialog()
 void CPickCasterDlg::OnOK() 
 {
 	CDialog::OnOK();
-	// index is 0,1,2 but we need caster = 1,2,3
+	// index is 0,1,2,3,4 but we need caster = 1,2,3,4,5
 	++m_caster;
 }
