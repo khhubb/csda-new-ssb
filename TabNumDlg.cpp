@@ -10,6 +10,7 @@
 
 #include "csda.h"
 #include "TabNumDlg.h"
+#include "Caster.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -70,10 +71,11 @@ BOOL CTabNumDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 	
-	assert( m_caster == 1 || m_caster == 2 || m_caster == 3 );
+	assert( Caster::IsValidCasterValue(m_caster) );
 
 	SetWindowText(m_prompt);
 
+	// CASTER TODO: do we force second digit on tab# for casters 4,5?
 	m_force2ndDigit = m_caster != 1;
 
 	InitTabNum();
@@ -89,6 +91,7 @@ void CTabNumDlg::InitTabNum()
 {
 	CString str;
 
+	// CASTER TODO:  What is starting digit for tab#s for casters 4,5?
 	if ( m_caster == 3 )
 		str = "3";
 	else if ( m_caster == 2 )
@@ -126,6 +129,8 @@ bool CTabNumDlg::ValidateTabNum()
 	str.Format("%05d",m_tabNum);
 	
 	char firstDigit = str[0];
+
+	// CASTER TODO: What are valid tab #s for casters 4,5?
 
 	if ( ! (firstDigit == '9' 
 			||

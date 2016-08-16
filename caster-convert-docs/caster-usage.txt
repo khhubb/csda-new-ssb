@@ -543,8 +543,8 @@ X      3,031 StringStatusDlg.h
 X      2,916 StringStatusGrid.cpp
 X      1,398 StringStatusGrid.h
 	   
-       3,298 TabNumDlg.cpp
-       1,469 TabNumDlg.h
+->     3,298 TabNumDlg.cpp
+->     1,469 TabNumDlg.h
 				int m_caster;
 				assert on m_caster
 				Any special rules on tab nums per caster.
