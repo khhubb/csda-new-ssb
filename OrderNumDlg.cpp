@@ -15,6 +15,7 @@ static char THIS_FILE[] = __FILE__;
 
 #include "Snapshot.h"
 #include "SpecMgr.h"
+#include "Caster.h"
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -131,7 +132,7 @@ BOOL COrderNumDlg::OnInitDialog()
 
 	assert ( m_type != TYPE_LOT_SPEC 
 		     || 
-			 ( 1 <= m_casterNum && m_casterNum <= 3 ));
+			 Caster::IsValidCasterValue(m_casterNum));
 
 	m_pOrder = 0;
 	m_spec	 = "";

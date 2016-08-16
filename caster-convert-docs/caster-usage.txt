@@ -507,8 +507,8 @@ Y      2,868 OrderInquiryDlg.h
 				SetParentData assume caster=1,2,3
 				SetLineupLists ditto
 	   
-       3,202 OrderNumDlg.cpp
-       1,454 OrderNumDlg.h
+Y      3,202 OrderNumDlg.cpp
+Y      1,454 OrderNumDlg.h
 				range check
 
        2,183 PickCasterDlg.cpp
