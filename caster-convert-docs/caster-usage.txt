@@ -340,28 +340,29 @@ X      1,767 SpecCmp.h
 Cast strings
 ============			
    
-      77,543 CastString.cpp
-      14,913 CastString.h
+->      77,543 CastString.cpp
+->      14,913 CastString.h
 				extremely minor use of caster, mostly pass-through. Could be no changes.
-				PourToOpenTime, HotMetalTonsPerHeat
+				PourToOpenTime, HotMetalTonsPerHeat  -- need to determine values for casters 4,5
 	  
-      20,477 CastStringHeat.cpp
-       7,758 CastStringHeat.h
+->      20,477 CastStringHeat.cpp
+->       7,758 CastStringHeat.h
 				m_caster
 				pass-through, needed for spec lookup, 
 				SetChemsFromHeatSpec, FixAimChems, FixAimChem
 				init from DalyPlanSet
+				-> FixAimChem needs updating.
 	   
 X      3,958 CastStringHeatValidnError.cpp
 X      4,562 CastStringHeatValidnError.h
 	   
-       2,015 CastStringId.cpp
-       1,783 CastStringId.h
+Y      2,015 CastStringId.cpp
+Y      1,783 CastStringId.h
 				of course there is m_caster.
 				Comes from DalyPlanSet.PLAN_CAST_UNIT_CODE
 	   
-       2,595 CastStringMiscProps.cpp
-       5,615 CastStringMiscProps.h
+Y      2,595 CastStringMiscProps.cpp
+Y      5,615 CastStringMiscProps.h
 				casterNum used to pick up min/aim/max heat size, turnaroundtime
 	   
 X      5,323 CastStringSummaryRecord.cpp

@@ -2185,6 +2185,7 @@ CTimeSpan CCastString::PourToOpenTime() const
 		hours = 2;
 		minutes = 0;
 	}
+	// Caster TODO:  What is correct caln of PourToOpenTime for casters 4,5 
 	else if ( Heats().size() > 0
 		      &&
 			  Heats()[0].Spec().GetLength() >= 4
@@ -2220,6 +2221,7 @@ Weight CCastString::HotMetalTonsPerHeat() const
 
 	if ( Id().Caster() == 1 )
 		w = 225;
+	// CASTER TODO: What is correct HotMetalTonsPerHeat for casters 4,5
 	else
 		w = 195;
 

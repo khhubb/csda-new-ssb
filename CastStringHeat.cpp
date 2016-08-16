@@ -399,6 +399,8 @@ bool CCastStringHeat::FixAimChem(CChem::Element elt,
 //  in case 2), aim = average(min,max)
 //
     
+// CASTER TODO: WHat is correct for casters 4,5
+// CASTER TODO: when we find out, firx caster!=1 to be caster==2 or 3, and whatever for 4,5
 bool CCastStringHeat::FixAimChem(const CChemRange* pRange,
 								 CChem::Element elt, 
 								 int caster)

@@ -153,4 +153,29 @@ CCastStringValidator::Validate340080
 		CCastStringValidator::FixHeatSpec
 			Special rules for casters 2 3
 			Anything for 4,5
+
+		CCastString::PourToOpenTime
+			What is correct calculation of PourToOpenTime for casters 4,5?
+
+		CCastString::HotMetalTonsPerHeat()	
+			What is value for HotMetalTonsPerHeat for casters 4,5?
+
+		CCastStringHeat::FixAimChem
+				//  Fix aim chem for a given element 
+				//    given the range object from the spec for that element.
+				//
+				//  The aim chem will have already been set from the range element.
+				//  That value may need adjusting.  Specifically, 
+				//     case 1) if on casters 2 or 3, 
+				//             and the element is Sulfur.
+				//             and min is 0 and max is non-trivial (not 0, not 100)
+				//			   and aim is 0
+				//     case 2) not ( on casters 2,3, element Sulfur)
+				//             and min > 0 and max is non-trivial
+				//			   and aim is 0
+				//
+				//  in case 1), aim = max - 0.001
+				//  in case 2), aim = average(min,max)
+			WHat is correct calculation for casters 4,5?
+			
 			
