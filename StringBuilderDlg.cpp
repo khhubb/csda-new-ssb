@@ -39,9 +39,16 @@ static char THIS_FILE[] = __FILE__;
 //		// sigh.
 //
 //		CStringBuilderDlg sbd;
-//		sbd.m_casterScen[1] = GetViewport()->CurrentCasterScen(1);
-//		sbd.m_casterScen[2] = GetViewport()->CurrentCasterScen(2);
-//		sbd.m_casterScen[3] = GetViewport()->CurrentCasterScen(3);
+
+//		sbd.m_casterScen[Caster::C1] = GetViewport()->CurrentCasterScen(Caster::C1);
+//		sbd.m_casterScen[Caster::C2] = GetViewport()->CurrentCasterScen(Caster::C2);
+//		sbd.m_casterScen[Caster::C3] = GetViewport()->CurrentCasterScen(Caster::C3);
+//		sbd.m_casterScen[Caster::C4] = GetViewport()->CurrentCasterScen(Caster::C4);
+//		sbd.m_casterScen[Caster::C5] = GetViewport()->CurrentCasterScen(Caster::C5);
+//  or
+//      for (int i= Caster::FirstCaster; i<=Caster::LastCaster; i++ )
+//          sbd.m_casterScend[i] = GetViewport()->CurrentCasterScen(i);
+
 //		sbd.m_pScen = pScen;
 //		sbd.m_caster = GetViewport()->CasterNum();
 //		sbd.m_id = CCastStringId(0,0,pScen->Caster(),0);
@@ -60,12 +67,11 @@ CStringBuilderDlg::CStringBuilderDlg(CWnd* pParent /*=NULL*/)
 	m_numOrders = 0;
 	//}}AFX_DATA_INIT
 
-	m_casterScen[0] = 0;
-	m_casterScen[1] = 0;
-	m_casterScen[2] = 0;
-	m_casterScen[3] = 0;
+	for (int i = 0; i < Caster::CasterArrayLen; i++) {
+		m_casterScen[i] = 0;
+	}
 	m_pScen = 0;
-	m_caster = 1;
+	m_caster = Caster::C1;
 	m_pSuperScen = 0;
 	m_pOrderSelection = 0;
 }
@@ -308,11 +314,10 @@ void CStringBuilderDlg::OnButtonCreateString()
 
 void CStringBuilderDlg::OnButtonId() 
 {
-	vector<CCastStringId> usedIds[4];
+	vector<CCastStringId> usedIds[Caster::CasterArrayLen];
 
-	m_casterScen[1]->GetLineupIds(usedIds[1]);
-	m_casterScen[2]->GetLineupIds(usedIds[2]);
-	m_casterScen[3]->GetLineupIds(usedIds[3]);
+	for (int i = Caster::FirstCaster; i <= Caster::LastCaster; i++)
+		m_casterScen[i]->GetLineupIds(usedIds[i]);
 
 	CCastStringMiscProps props(1,m_pScen->Caster());
 
@@ -320,9 +325,8 @@ void CStringBuilderDlg::OnButtonId()
 	CCastStringId id = m_id;
 
 	dlg.m_pId				= &id;
-	dlg.m_usedIds[1]		= usedIds[1];  // copy
-	dlg.m_usedIds[2]		= usedIds[2];  // copy
-	dlg.m_usedIds[3]		= usedIds[3];  // copy
+	for (int i = Caster::FirstCaster; i <= Caster::LastCaster; i++)
+		dlg.m_usedIds[i] = usedIds[i]; // copy
 	dlg.m_pProps			= &props;
 	dlg.m_isEditing		= true;	// prevent change of caster
 	dlg.m_setInitialId	= true;

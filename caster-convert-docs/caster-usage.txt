@@ -522,18 +522,18 @@ X      3,281 Select909sDlg.cpp
 X      1,690 Select909sDlg.h
 				Not currently used
 
-       4,389 SpecSelectionDlg.cpp
-       1,890 SpecSelectionDlg.h
+Y      4,389 SpecSelectionDlg.cpp
+Y      1,890 SpecSelectionDlg.h
 					int m_caster;
 					assert check
 					where called, the specs will depend on the caster
 
-      16,688 StringBuilderDlg.cpp
-       3,230 StringBuilderDlg.h
+Y     16,688 StringBuilderDlg.cpp
+Y      3,230 StringBuilderDlg.h
 					CCasterScen* m_casterScen[4];
 					int m_caster
 					When called, this array gets set up, as does the specific caster
-					Calls out to StringBuilder -- this won't handle the new casters yet, so we should screen.
+-->					Calls out to StringBuilder -- this won't handle the new casters yet, so we should screen.
 					Call to CastStringIdDlg -- sets up m_usedIds[1,2,3]
 	   
 X     29,212 StringStatusDlg.cpp

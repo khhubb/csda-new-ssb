@@ -16,6 +16,7 @@ class CSuperScen;
 
 #include "CastStringId.h"
 #include "OrderSelection.h"
+#include "Caster.h"
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -37,8 +38,8 @@ public:
 //	CSBDriver	m_sbDriver;
 	//}}AFX_DATA
 
-	CCasterScen* m_casterScen[4];
-		// the caster scenarios for caster=1,2,3 
+	CCasterScen* m_casterScen[Caster::CasterArrayLen];
+		// the caster scenarios for caster=1,2,3,4,5
 		// used to make sure we don't get id overlap.
 
 	CCasterScen* m_pScen;

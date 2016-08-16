@@ -4659,9 +4659,8 @@ void CCastStringEditorTextController::OnEditStringbuilder()
 	if ( pScen == 0 ) return;
 
 	CStringBuilderDlg sbd;
-	sbd.m_casterScen[1] = GetViewport()->CurrentCasterScen(1);
-	sbd.m_casterScen[2] = GetViewport()->CurrentCasterScen(2);
-	sbd.m_casterScen[3] = GetViewport()->CurrentCasterScen(3);
+	for (int i = Caster::FirstCaster; i <= Caster::LastCaster; i++)
+		sbd.m_casterScen[i] = GetViewport()->CurrentCasterScen(i);
 	sbd.m_pScen = pScen;
 	sbd.m_caster = GetViewport()->CasterNum();
 	sbd.m_id = CCastStringId(0,0,pScen->Caster(),0);
