@@ -50,11 +50,14 @@ void CInitialScenLoaderDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CInitialScenLoaderDlg)
+	DDX_Control(pDX, IDC_LIST_CASTER_5, m_listCaster5);
+	DDX_Control(pDX, IDC_LIST_CASTER_4, m_listCaster4);
 	DDX_Control(pDX, IDC_LIST_CASTER_3, m_listCaster3);
 	DDX_Control(pDX, IDC_LIST_CASTER_2, m_listCaster2);
 	DDX_Control(pDX, IDC_LIST_CASTER_1, m_listCaster1);
 	DDX_Radio(pDX, IDC_RB_MOST_RECENT_SCEN, m_showCategory);
 	//}}AFX_DATA_MAP
+
 }
 
 
@@ -109,18 +112,22 @@ void CInitialScenLoaderDlg::FilterScens()
 {
 	const CString& owner = CUserInfo::TheUser.LoginName();
 
-	m_showScens[1].clear();
-	m_showScens[2].clear();
-	m_showScens[3].clear();
-
+	m_showScens[Caster::C1].clear();
+	m_showScens[Caster::C2].clear();
+	m_showScens[Caster::C3].clear();
+	m_showScens[Caster::C4].clear();
+	m_showScens[Caster::C5].clear();
 	// Find most recent, for each caster
 
-	CTime lastTimes[4];
+	CTime lastTimes[Caster::CasterArrayLen];
 	CTime uninitTime(1970,1,1,0,0,0);
 
-	lastTimes[1] = uninitTime;
-	lastTimes[2] = uninitTime;
-	lastTimes[3] = uninitTime;
+	lastTimes[Caster::C1] = uninitTime;
+	lastTimes[Caster::C2] = uninitTime;
+	lastTimes[Caster::C3] = uninitTime;
+	lastTimes[Caster::C4] = uninitTime;
+	lastTimes[Caster::C5] = uninitTime;
+
 
 	{
 		for ( vector<CAvailCasterScenId>::iterator ia = m_availScens.begin();
@@ -132,7 +139,7 @@ void CInitialScenLoaderDlg::FilterScens()
 	
 			int caster = (*ia).Caster();
 			
-			if ( caster < 1 || caster > 3 ) 
+			if ( !Caster::IsValidCasterValue(caster)) 
 				continue;			
 
 			if ( lastTimes[caster] < (*ia).LastSaveTime() )
@@ -153,8 +160,8 @@ void CInitialScenLoaderDlg::FilterScens()
 	
 			int caster = (*ia).Caster();
 			
-			if ( caster < 1 || caster > 3 ) 
-				continue;	
+			if (!Caster::IsValidCasterValue(caster))
+				continue;
 			
 			if ( m_showCategory == SHOW_ALL
 				 ||
@@ -185,6 +192,8 @@ void CInitialScenLoaderDlg::SetListHeaders()
 	SetListHeader(m_listCaster1);
 	SetListHeader(m_listCaster2);
 	SetListHeader(m_listCaster3);
+	SetListHeader(m_listCaster4);
+	SetListHeader(m_listCaster5);
 }
 
 
@@ -200,9 +209,11 @@ void CInitialScenLoaderDlg::SetLists()
 {
 	FilterScens();
 
-	SetList(m_listCaster1,1);
-	SetList(m_listCaster2,2);
-	SetList(m_listCaster3,3);
+	SetList(m_listCaster1, Caster::C1);
+	SetList(m_listCaster2, Caster::C2);
+	SetList(m_listCaster3, Caster::C3);
+	SetList(m_listCaster4, Caster::C4);
+	SetList(m_listCaster5, Caster::C5);
 }
 
 
@@ -264,9 +275,11 @@ void CInitialScenLoaderDlg::OnOK()
 	{
 		CWaitCursor wait;
 
-		LoadScens(m_listCaster1,1);
-		LoadScens(m_listCaster2,2);
-		LoadScens(m_listCaster3,3);
+		LoadScens(m_listCaster1,Caster::C1);
+		LoadScens(m_listCaster2, Caster::C2);
+		LoadScens(m_listCaster3, Caster::C3);
+		LoadScens(m_listCaster4, Caster::C4);
+		LoadScens(m_listCaster5, Caster::C5);
 	}
 
 	MessageBox("Done loading prior scenarios.","Done",MB_OK);

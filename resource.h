@@ -236,7 +236,6 @@
 #define IDC_EDIT_NUM_HEATS              1086
 #define IDC_EDIT_ELT_MN                 1086
 #define IDC_EDIT_CAST_LENGTH            1086
-#define IDC_EDIT_CASTER23_HEAT_SIZE_MAX3 1086
 #define IDC_EDIT_CASTER5_HEAT_SIZE_MAX  1086
 #define IDC_EDIT_MAX_CHEM2              1087
 #define IDC_EDIT_ELT_SIGNIF             1087
@@ -500,10 +499,12 @@
 #define IDC_STATIC_STRAND2_GROUP        1253
 #define IDC_LIST_3CC_SEL_SCEN           1254
 #define IDC_STATIC_GROUP_GROUP          1254
+#define IDC_LIST_CASTER_4               1254
 #define IDC_COMBO_3CC_SCENS             1255
 #define IDC_STATIC_AVAIL_GROUP          1255
 #define IDC_BUTTON_3CC_SCEN_OPS         1256
 #define IDC_REMOTEDL1                   1256
+#define IDC_LIST_CASTER_5               1256
 #define IDC_LIST_STRING_SEQ             1257
 #define IDC_BUTTON_UPDATE_STRING_SEQ    1258
 #define IDC_BUTTON_RESET_STRING_SEQ     1259

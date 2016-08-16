@@ -9,6 +9,8 @@
 
 
 #include "AvailCasterScenId.h"
+#include "afxcmn.h"
+#include "Caster.h"
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -31,6 +33,8 @@ public:
 // Dialog Data
 	//{{AFX_DATA(CInitialScenLoaderDlg)
 	enum { IDD = IDD_DLG_INITIAL_SCEN_LOADER };
+	CListCtrl m_listCaster5;
+	CListCtrl m_listCaster4;
 	CListCtrl	m_listCaster3;
 	CListCtrl	m_listCaster2;
 	CListCtrl	m_listCaster1;
@@ -41,7 +45,7 @@ public:
 	vector<CAvailCasterScenId> m_availScens;
 		// the currently available scens
 
-	vector<CAvailCasterScenId> m_showScens[4];  // caster = 1,2,3
+	vector<CAvailCasterScenId> m_showScens[Caster::CasterArrayLen];  // caster = 1,2,3,4,5
 		// which scenarios to display, per caster.
 
 	void FilterScens();
@@ -72,6 +76,8 @@ protected:
 	afx_msg void OnChangeCategory();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
+public:
+
 };
 
 //{{AFX_INSERT_LOCATION}}
