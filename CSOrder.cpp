@@ -109,13 +109,12 @@ static char THIS_FILE[]=__FILE__;
 // Each c-tor defers to a corresponding initialization routine.
 // I have no idea why I did it this way.
 
-
 CCSOrder::CCSOrder()
 {
 	Init();
 }
 
-
+//### caster-specific (arg)
 CCSOrder::CCSOrder(const CDalyPlanSet& planSet,
 				   int caster)
 {
@@ -123,7 +122,7 @@ CCSOrder::CCSOrder(const CDalyPlanSet& planSet,
 }
 
 
-
+//### caster-specific (3rd arg)
 CCSOrder::CCSOrder(COrder* pOrder, 
 				   int strandNum,
 				   int caster)
@@ -149,6 +148,7 @@ CCSOrder::CCSOrder(const CCheckStockApplicationRules& x)  // added 4-4-08 k. hub
     Init(x);
 }
 
+//### caster-specific (arg)
 CCSOrder::CCSOrder(const CSSBOutput& sbSet,
 				   int caster)
 {
@@ -210,7 +210,7 @@ void CCSOrder::Init()
 
 
 // Initializing from DPA file exisiting 910 fields during model startups k. hubbard 
-
+//### caster-specific (arg)
 void CCSOrder::Init(const CDalyPlanSet& planSet,    // DPA field data initialization only.
 					int caster)
 {
@@ -218,6 +218,7 @@ void CCSOrder::Init(const CDalyPlanSet& planSet,    // DPA field data initializa
  	m_heatSeqNum	= planSet.m_PLAN_HEAT_SEQUENCE_NO - 1;
 	m_lotNum		= planSet.m_PLAN_LOT_NUMBER;
 
+	//### caster-specific: pick out strands on combi?
 	m_strandNum		= (planSet.m_PLAN_CASTER_STRAND_NO == "1"
 					   ? 1
 					   : (planSet.m_PLAN_CASTER_STRAND_NO == "2"
@@ -292,13 +293,13 @@ void CCSOrder::Init(const CDalyPlanSet& planSet,    // DPA field data initializa
 	else
 		m_fpOrderNum = "???????";
 
-
+	//### caster-specific (arg)
 	SetLotSpecPtr(caster);
 }
 
 // Initializing DPA 909/910 fields during click and drag of orders during
 //   manual string building, with order data where available k. hubbard 
-
+//### caster-specific (arg)
 void CCSOrder::Init(COrder* pOrder, 
 					int strandNum,
 					int caster)
@@ -354,7 +355,7 @@ void CCSOrder::Init(COrder* pOrder,
 	m_slabLength = m_pOrder->ProvCastSlLnth();
 
 	if ( m_slabLength == 0 || m_pOrder->IsCMS() ) 
-		CalculateLengths(caster,
+		CalculateLengths(caster,                    //### caster-specific (arg)
 					   m_pOrder,
 					   SlabWidth(),
 					   m_planSteelLengthMin,
@@ -380,7 +381,7 @@ void CCSOrder::Init(COrder* pOrder,
 #if 0
 	// get rid of this
 	if ( m_pOrder->IsCMS() )
-		PreCMSPercentageAdjustment(caster);
+		PreCMSPercentageAdjustment(caster); //### caster-specific (code blocked out)
 	else {
 		m_planSteelLengthMin = m_pOrder->MinSlabLength();
 		m_planSteelLengthMax = m_pOrder->MaxSlabLength();
@@ -427,9 +428,9 @@ void CCSOrder::Init(COrder* pOrder,
 	m_slitReason  = ' ';   // added reasons 2-26-10 k. hubbard
 
 	CString tempSpec = m_lotSpec;
-	if ( CCastStringValidator::FixHeatSpec(tempSpec,m_lotSpec,caster) )
+	if ( CCastStringValidator::FixHeatSpec(tempSpec,m_lotSpec,caster) ) //### caster-specific (arg)
 		m_lotSpec = tempSpec;
-	SetLotSpecPtr(caster);
+	SetLotSpecPtr(caster); //### caster-specific
 }
 
 
@@ -499,7 +500,7 @@ void CCSOrder::Init(const CCSOrder& x)
 
 
 
-
+//### caster-specific (arg)
 void CCSOrder::Init(const CSSBOutput& sbSet,
 					int caster)
 {
@@ -577,7 +578,7 @@ void CCSOrder::Init(const CSSBOutput& sbSet,
 	m_outputCondnCode = m_slabCondnCode;
 	m_outputDispCode  = m_dispCode;
 
-	SetLotSpecPtr(caster);
+	SetLotSpecPtr(caster); //### caster-specific (arg)
 }
 
 
@@ -608,7 +609,7 @@ void CCSOrder::Init(const CCasterStringOrdersSet& ordersSet)
 
 		Init(pOrder,
 			 ordersSet.m_StrandNum,
-			 ordersSet.m_StringCaster);
+			 ordersSet.m_StringCaster); //### caster-specific
 	}
 
 	HeatSeqNum		( ordersSet.m_HeatSeqNum	);
@@ -640,7 +641,7 @@ void CCSOrder::Init(const CCasterStringOrdersSet& ordersSet)
 
 
 	LotSpec			( ordersSet.m_LotSpec,
-					  ordersSet.m_StringCaster	);
+					  ordersSet.m_StringCaster	); //### caster-specific
 
 	
 	SlitReason     (ordersSet.m_SlitReason.GetLength() == 0      // added reasons 5-5-09 k. hubbard
@@ -648,10 +649,10 @@ void CCSOrder::Init(const CCasterStringOrdersSet& ordersSet)
 						: ordersSet.m_SlitReason[0]);
 
 	StockReason    ( ordersSet.m_StockReason,        // added reasons 5-5-09 k. hubbard
-					 ordersSet.m_StringCaster	);
+					 ordersSet.m_StringCaster	);  //### caster-specific
 
 	StockCommercialReason    ( ordersSet.m_StockCommercialReason,        // added reasons 5-5-09 k. hubbard
-					 ordersSet.m_StringCaster	);
+					 ordersSet.m_StringCaster	);  //### caster-specific
 
 //	StockReason    ( ordersSet.m_StockReason   );     // added reasons 5-5-09 k. hubbard
 
@@ -671,7 +672,7 @@ CCSOrder* CCSOrder::CreateStockOrder(const CString& lotSpec,
 									 int condnCode,
 									 int numPieces,
 									 int strandNum,
-									 int casterNum,
+									 int casterNum,               //### caster-specific 
      								 CString InclusionModified,  // added material direction see caststring.h def k. hubbard 5-20-08
                                      CString stockReason,             // added 5-5-09 k. hubbard 
 							         CString stockCommercialReason)   // added reason 5-5-09 k. hubbard declaration error
@@ -720,7 +721,7 @@ CCSOrder* CCSOrder::CreateStockOrder(const CString& lotSpec,
 	pOrder->m_numPieces	= numPieces;
 	pOrder->m_tons		= numPieces*pOrder->m_pieceWgt/2000.0;
 
-	pOrder->LotSpec(lotSpec,casterNum);
+	pOrder->LotSpec(lotSpec,casterNum); //### caster-specific
 
 	pOrder->m_slabCondnCode	= condnCode;
 
@@ -754,10 +755,10 @@ CCSOrder* CCSOrder::CreateStockOrder(const CString& lotSpec,
 
 
 
-void CCSOrder::SetLotSpecPtr(int caster)
+void CCSOrder::SetLotSpecPtr(int caster) //### caster-specific
 {
 	//m_pLotSpec	= TheSnapshot.SpecMgr().FindSpec(m_lotSpec,caster);
-	m_pLotSpec	= TheSnapshot.SpecMgr().FindSpecMaybe(m_lotSpec,caster);
+	m_pLotSpec	= TheSnapshot.SpecMgr().FindSpecMaybe(m_lotSpec,caster); //### caster-specific
 
 	if ( m_pLotSpec == 0 ) {
 #ifdef _DEBUG
@@ -767,16 +768,16 @@ void CCSOrder::SetLotSpecPtr(int caster)
 }
 
 
-void CCSOrder::LotSpec(const CString& newVal,int caster)
+void CCSOrder::LotSpec(const CString& newVal,int caster) //### caster-specific
 {	
 	CString copySpec = m_lotSpec;
-	if ( CCastStringValidator::FixHeatSpec(copySpec,newVal,caster) )
+	if ( CCastStringValidator::FixHeatSpec(copySpec,newVal,caster) ) //### caster-specific
 		m_lotSpec = copySpec;
 	else
 		m_lotSpec = newVal;
 
 //	m_lotSpec = newVal;
-	SetLotSpecPtr(caster);
+	SetLotSpecPtr(caster); //### caster-specific
 }
 
 
@@ -940,7 +941,7 @@ void CCSOrder::CalculateMinMaxLengths(COrder* pOrder,
 
 
 // static
-void CCSOrder::CalculateLengths(int caster,
+void CCSOrder::CalculateLengths(int caster,           //### caster-specific
 								COrder* pOrder,
 								Width width,
 								Length& rMinLength,
@@ -957,9 +958,9 @@ void CCSOrder::CalculateLengths(int caster,
 		// if this adjustment makes the slab too long, use default values for all
 		if (  rLength >= CMiscConstants::Max80HsmRunoutLength() ) {
 
-			rLength    = CMiscConstants::CasterSlabLengthMax(caster);
-			rMinLength = CMiscConstants::CasterSlabLengthMax(caster);
-			rMaxLength = CMiscConstants::CasterSlabLengthMax(caster);
+			rLength    = CMiscConstants::CasterSlabLengthMax(caster);  //### caster-specific
+			rMinLength = CMiscConstants::CasterSlabLengthMax(caster);  //### caster-specific
+			rMaxLength = CMiscConstants::CasterSlabLengthMax(caster);  //### caster-specific
 			return;
 		}
 	}
@@ -1023,7 +1024,7 @@ Width CCSOrder::MaxAllowedSlabWidth()
 //	
 
 // static
-void CCSOrder::ComputeSlabWidthRelatedParms(int caster,
+void CCSOrder::ComputeSlabWidthRelatedParms(int caster,               //### caster-specific
 											COrder* pOrder,
 											bool isTransition,
 											Width width,
@@ -1102,7 +1103,7 @@ void CCSOrder::ComputeSlabWidthRelatedParms(int caster,
 	else
 		rNumPieces = numPieces;
 
-	CalculateLengths(caster,
+	CalculateLengths(caster,     //### caster-specific
 					 pOrder,
 					 useWidth,
 					 rMinLength,
@@ -1113,14 +1114,14 @@ void CCSOrder::ComputeSlabWidthRelatedParms(int caster,
 #if 0
 	// get rid of this
 	if ( pOrder->IsCMS() )
-		CalculateLengthsForCMS(caster,
+		CalculateLengthsForCMS(caster,       //### caster-specific
 							   pOrder,
 							   useWidth,
 							   rMinLength,
 							   rAimLength,
 							   rMaxLength);
 	else
-		CalculateLengthsForNonCMS(caster,
+		CalculateLengthsForNonCMS(caster,     //### caster-specific
 							      pOrder,
 								  useWidth,
 								  rMinLength,
@@ -1132,7 +1133,7 @@ void CCSOrder::ComputeSlabWidthRelatedParms(int caster,
 
 
 
-CTimeSpan CCSOrder::CalculateSlabDuration(int caster,
+CTimeSpan CCSOrder::CalculateSlabDuration(int caster,       //### caster-specific
 										  int heatIndex,
 										  int heatSize)
 {
@@ -1145,7 +1146,7 @@ CTimeSpan CCSOrder::CalculateSlabDuration(int caster,
 	bool isValid;
 
 	return TheSnapshot.SpecMgr().SlabCastTime(m_pLotSpec->Name(),
-											  caster,
+											  caster,                      //### caster-specific
 											  m_strandNum,
 											  heatIndex,
 											  m_tons*2000/m_numPieces,
@@ -1439,7 +1440,7 @@ int CCSOrder::ComputeDispCode(char slitTypeCode, int condnCode, int m_ciCode, lo
 //        unless it is zero.
 //  In the other, we want to force a new length calculation.
 
-void CCSOrder::PreCMSPercentageAdjustment(int caster)
+void CCSOrder::PreCMSPercentageAdjustment(int caster) //### caster-specific
 {
 	assert( m_pOrder != 0 );
 
@@ -1459,7 +1460,7 @@ void CCSOrder::PreCMSPercentageAdjustment(int caster)
 
 	Length adjustedLen = len * ( 1 + m_pOrder->CmsYieldLossFactor() );
 
-	CalculateLengthsForCMS(caster,m_pOrder,m_pOrder->SlabWidth(),len,minL,aimL,maxL);
+	CalculateLengthsForCMS(caster,m_pOrder,m_pOrder->SlabWidth(),len,minL,aimL,maxL); //### caster-specific
 
 	// Per request, truncate slab length
 
@@ -1471,7 +1472,7 @@ void CCSOrder::PreCMSPercentageAdjustment(int caster)
 
 
 // static
-void CCSOrder::CalculateLengthsForCMS(int caster,
+void CCSOrder::CalculateLengthsForCMS(int caster,     //### caster-specific
 									  COrder* pOrder, 
 									  Width width,
 									  Length length,
@@ -1486,9 +1487,9 @@ void CCSOrder::CalculateLengthsForCMS(int caster,
 	
 	if (  adjustedLength >= CMiscConstants::Max80HsmRunoutLength() ) {
 
-		rLength    = CMiscConstants::CasterSlabLengthMax(caster);
-		rMinLength = CMiscConstants::CasterSlabLengthMax(caster);
-		rMaxLength = CMiscConstants::CasterSlabLengthMax(caster);
+		rLength    = CMiscConstants::CasterSlabLengthMax(caster); //### caster-specific
+		rMinLength = CMiscConstants::CasterSlabLengthMax(caster); //### caster-specific
+		rMaxLength = CMiscConstants::CasterSlabLengthMax(caster); //### caster-specific
 
 	}
 	else {
@@ -1501,7 +1502,7 @@ void CCSOrder::CalculateLengthsForCMS(int caster,
 
 
 //  static
-void CCSOrder::CalculateLengthsForCMS(int caster,
+void CCSOrder::CalculateLengthsForCMS(int caster,          //### caster-specific
 									  COrder* pOrder,
 									  Width width,
 									  Length& rMinLength,
@@ -1509,7 +1510,7 @@ void CCSOrder::CalculateLengthsForCMS(int caster,
 									  Length& rMaxLength)
 {
 	Length length = ComputeSlabLengthFromWidth(pOrder,width);
-	CalculateLengthsForCMS(caster,pOrder,width,length,rMinLength,rLength,rMaxLength);
+	CalculateLengthsForCMS(caster,pOrder,width,length,rMinLength,rLength,rMaxLength); //### caster-specific
 }
 
 
@@ -1517,7 +1518,7 @@ void CCSOrder::CalculateLengthsForCMS(int caster,
 
 
 //  static
-void CCSOrder::CalculateLengthsForNonCMS(int caster,
+void CCSOrder::CalculateLengthsForNonCMS(int caster,               //### caster-specific
 									     COrder* pOrder,
 										 Width width,
 										 Length& rMinLength,

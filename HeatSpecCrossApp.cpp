@@ -128,7 +128,7 @@ void CHeatSpecCrossApp::PrintMap()
 //  We play some games with the last two digits (zeroing them out)
 //		to try to get a match.
 //
-
+//### caster-specific (arg)
 THeatSpecCrossAppSet CHeatSpecCrossApp::GetCrossAppSpecs(const CString& spec, int caster) const
 {
 
@@ -171,7 +171,7 @@ THeatSpecCrossAppSet CHeatSpecCrossApp::GetCrossAppSpecs(const CString& spec, in
 		char dig4 = (*im).second[3];
 
 		// filter for specs suitable for this caster
-			  
+		//### caster-specific validation of code digits  
 		if ( dig4 == '0'
 			 ||
 			 ( caster == 1 && ( dig4 == '4' || dig4 == '7' ) )
@@ -181,11 +181,9 @@ THeatSpecCrossAppSet CHeatSpecCrossApp::GetCrossAppSpecs(const CString& spec, in
 			x.insert( (*im).second );
 	}
 		  
-
 	return x;
 }
 	
-
 void my_set_intersection(THeatSpecCrossAppSet& x,
 						 THeatSpecCrossAppSet& y,
 						 vector<CString>& v)
@@ -204,7 +202,7 @@ void my_set_intersection(THeatSpecCrossAppSet& x,
 //
 //  For a set of specs, find the intersection of the their sets of cross-applicable specs
 //
-
+//### caster-specifc (arg)
 THeatSpecCrossAppSet CHeatSpecCrossApp::GetCrossAppSpecs(THeatSpecCrossAppSet& specs, int caster) const
 {
 	if ( specs.size() == 0 )
@@ -267,12 +265,12 @@ THeatSpecCrossAppSet CHeatSpecCrossApp::GetCrossAppSpecs(THeatSpecCrossAppSet& s
 //  
 //  IsCompatible(spec1,spec2) if spec2 appears in spec1's list of cross-app specs.
 //
-
+//### caster-specific (arg)
 bool CHeatSpecCrossApp::IsCompatible(const CString& spec1, const CString& spec2, int caster) const
 {
 	if ( spec1 == spec2 )
 		return true;
-
+	//### caster-specific all
 	THeatSpecCrossAppSet xset = GetCrossAppSpecs(spec1,caster);
 
 	return xset.find( spec2 ) != xset.end();

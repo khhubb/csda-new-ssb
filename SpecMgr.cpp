@@ -135,7 +135,7 @@ CSpec* CSpecMgr::FindSpec(CString& specName)
 }
 
 
-
+//### caster-specific (arg)
 CSpec* CSpecMgr::FindSpecMaybe(CString& specName, int caster)
 {
 	CSpec* pSpec = FindSpec(specName);
@@ -147,9 +147,9 @@ CSpec* CSpecMgr::FindSpecMaybe(CString& specName, int caster)
 	CString copy(specName);
 
 	//  XXX-0X-XX ==>  XXX-*X-XX  where X = 2,4,7
-
+	
 	if ( copy[3] == '0' ) {
-
+		//### caster-specific test: for 2 and 3
 		if ( caster == 2 || caster == 3 ) {
 
 			copy.SetAt(3,'2');
@@ -158,7 +158,7 @@ CSpec* CSpecMgr::FindSpecMaybe(CString& specName, int caster)
 				return pSpec;
 
 		}
-
+		//### caster-specific: this 'else' may become 'else if (caster == 1)' check
 		else { // caster == 1
 			
 			// TODO -- when we have the list of RHOB specs, we can choose 4 vs 7.
@@ -174,7 +174,6 @@ CSpec* CSpecMgr::FindSpecMaybe(CString& specName, int caster)
 				return pSpec;
 		}
 	}
-
 	return 0;
 }
 
