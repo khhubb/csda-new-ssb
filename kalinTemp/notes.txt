@@ -96,4 +96,20 @@ Values?
 the file I sent you is now in caster-convert-docs/caster-usage.txt.
 I'll be updating it as I go along.
 
+-----------------------------------
+
+Figure out logic in Validate340080 8-17
+
+------
+additional files to look at for 'caster' occurrences:
+
+Snapshot.cpp
+SuperScen.cpp
+CSOrder.cpp   **
+SpecMgr.cpp
+CasterScen.cpp
+ScenMgr.cpp
+
+
+
 
