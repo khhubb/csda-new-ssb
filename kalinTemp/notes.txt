@@ -103,9 +103,10 @@ Figure out logic in Validate340080 8-17
 ------
 additional files to look at for 'caster' occurrences:
 
+CastStringValidator.cpp
 Snapshot.cpp
 SuperScen.cpp
-CSOrder.cpp   **
+CSOrder.cpp   
 SpecMgr.cpp
 CasterScen.cpp
 ScenMgr.cpp
