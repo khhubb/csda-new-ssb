@@ -225,4 +225,8 @@ CCastStringValidator::Validate340080
 									MB_ICONHAND | MB_OK);
 						return false;
 					}								
+					
+					
+		CCastStringEditorTextController::OnEditMovestringtoothercaster
 		
+				Can we move strings between casters, involving 4,5?

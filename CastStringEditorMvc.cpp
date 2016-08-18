@@ -61,7 +61,7 @@ static char THIS_FILE[]=__FILE__;
 #include "PstConformanceReport.h"
 #include "CastStringEditorDoc.h"
 #include "PlanWorksheetReport.h"
-
+#include "Caster.h"
 
 
 
@@ -92,11 +92,10 @@ static void CreateCastString(CSuperScen* pSS, int casterNum)
 	if ( pSS == 0 )
 		return;
 
-	vector<CCastStringId> usedIds[4];
+	vector<CCastStringId> usedIds[Caster::CasterArrayLen];
 
-	pSS->CasterScen(1)->GetLineupIds(usedIds[1]);
-	pSS->CasterScen(2)->GetLineupIds(usedIds[2]);
-	pSS->CasterScen(3)->GetLineupIds(usedIds[3]);
+	for (int i = Caster::FirstCaster; i <= Caster::LastCaster; i++)
+		pSS->CasterScen(i)->GetLineupIds(usedIds[i]);
 
 	CCastStringId id(0,0,casterNum,0);
 	CCastStringMiscProps props(1,casterNum);
@@ -104,9 +103,8 @@ static void CreateCastString(CSuperScen* pSS, int casterNum)
 	CCastStringIdDlg dlg;
 
 	dlg.m_pId				= &id;
-	dlg.m_usedIds[1]		= usedIds[1];  // copy
-	dlg.m_usedIds[2]		= usedIds[2];  // copy
-	dlg.m_usedIds[3]		= usedIds[3];  // copy
+	for (int i = Caster::FirstCaster; i <= Caster::LastCaster; i++)
+		dlg.m_usedIds[i] = usedIds[i];  // copy
 	dlg.m_pProps			= &props;
 	dlg.m_isEditing		= false;
 	dlg.m_setInitialId	= true;
@@ -384,7 +382,7 @@ CMessageBus* CCastStringEditorGanttController::GetMyModel()
 //
 //  Manages display for CCastStringEditorScenMgrView
 //
-//  list-style combo boxes for each caster (1,2,3) showing available scens.
+//  list-style combo boxes for each caster (1,2,3,4,5) showing available scens.
 //  buttons to indicate selected caster
 //  buttons to created, etc. scens
 //  list-style combo to show strings on selected caster.
@@ -487,9 +485,11 @@ void CCastStringEditorScenMgrViewport::Synchronize(bool updateLists)
 	if ( updateLists ) 
 		UpdateLists();
 	
-	SelectComboBoxItem( GetCasterScenIndex(1), IDC_COMBO_CASTER_1 );
-	SelectComboBoxItem( GetCasterScenIndex(2), IDC_COMBO_CASTER_2 );
-	SelectComboBoxItem( GetCasterScenIndex(3), IDC_COMBO_CASTER_3 );
+	SelectComboBoxItem( GetCasterScenIndex(Caster::C1), IDC_COMBO_CASTER_1 );
+	SelectComboBoxItem(GetCasterScenIndex(Caster::C2), IDC_COMBO_CASTER_2);
+	SelectComboBoxItem(GetCasterScenIndex(Caster::C3), IDC_COMBO_CASTER_3);
+	SelectComboBoxItem(GetCasterScenIndex(Caster::C4), IDC_COMBO_CASTER_4);
+	SelectComboBoxItem(GetCasterScenIndex(Caster::C5), IDC_COMBO_CASTER_5);
 
 	SelectComboBoxItem( CScenMru::GlobalScenMru.CurrentCastStringIndex(CScenMru::GlobalScenMru.CasterNum()),
 						IDC_COMBO_STRING	);
@@ -664,20 +664,28 @@ CMessageBus* CCastStringEditorScenMgrController::GetMyModel()
 
 void CCastStringEditorScenMgrController::OnSelchangeComboCaster1() 
 {
-	ChangeCasterScen(1,IDC_COMBO_CASTER_1);	
+	ChangeCasterScen(Caster::C1,IDC_COMBO_CASTER_1);	
 }
 
 void CCastStringEditorScenMgrController::OnSelchangeComboCaster2() 
 {
-	ChangeCasterScen(2,IDC_COMBO_CASTER_2);
+	ChangeCasterScen(Caster::C2, IDC_COMBO_CASTER_2);
 }
 
 void CCastStringEditorScenMgrController::OnSelchangeComboCaster3() 
 {
-	ChangeCasterScen(3,IDC_COMBO_CASTER_3);
+	ChangeCasterScen(Caster::C3, IDC_COMBO_CASTER_3);
 }
 
+void CCastStringEditorScenMgrController::OnSelchangeComboCaster4()
+{
+	ChangeCasterScen(Caster::C4, IDC_COMBO_CASTER_4);
+}
 
+void CCastStringEditorScenMgrController::OnSelchangeComboCaster5()
+{
+	ChangeCasterScen(Caster::C5, IDC_COMBO_CASTER_5);
+}
 
 void CCastStringEditorScenMgrController::ChangeCasterScen(int whichCaster, int ctrlId)
 {
@@ -752,19 +760,28 @@ void CCastStringEditorScenMgrController::OnSelchangeComboString()
 
 void CCastStringEditorScenMgrController::OnRbCaster1() 
 {
-	SetCasterNum(1);	
+	SetCasterNum(Caster::C1);	
 }
 
 void CCastStringEditorScenMgrController::OnRbCaster2() 
 {
-	SetCasterNum(2);	
+	SetCasterNum(Caster::C2);
 }
 
 void CCastStringEditorScenMgrController::OnRbCaster3() 
 {
-	SetCasterNum(3);	
+	SetCasterNum(Caster::C3);
 }
 
+void CCastStringEditorScenMgrController::OnRbCaster4()
+{
+	SetCasterNum(Caster::C4);
+}
+
+void CCastStringEditorScenMgrController::OnRbCaster5()
+{
+	SetCasterNum(Caster::C5);
+}
 
 
 
@@ -1336,7 +1353,7 @@ void CCastStringEditorStrandSummaryViewport::SetListItem(int itemNum,
 
 	int aimHeatSize = pString->Props().AimHeatSize();
 
-	if ( pString->Id().Caster() == 2 )
+	if ( Caster::NumStrandsOnCaster(pString->Id().Caster()) == 1 )
 		m_pListSummary->SetItemText( itemNum, 3, _itoa(aimHeatSize,buf,10));
 	else {
 
@@ -4727,9 +4744,10 @@ void CCastStringEditorTextController::OnEditMovestringtoothercaster()
 	if ( pString == 0 )
 		return;
 
+	// CASTER TODO: Do we allow moving strings to/from 4,5?
 	CPickCasterDlg dlg;
 	dlg.m_ignoreCaster = pString->Id().Caster();
-	dlg.m_caster = pString->Id().Caster() == 1 ? 2 : 1;
+	dlg.m_caster = pString->Id().Caster() == Caster::C1 ? Caster::C2 : Caster::C1;
 	dlg.m_label = "Pick caster to move string to:";
 	
 	if ( dlg.DoModal() != IDOK )

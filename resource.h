@@ -360,6 +360,7 @@
 #define IDC_EDIT_ELT_SIGNIF_MAX         1142
 #define IDC_COMBO_CASTER_1              1142
 #define IDC_EDIT_FP_MELT_PST            1142
+#define IDC_COMBO_CASTER_6              1143
 #define IDC_COMBO_CASTER_2              1144
 #define IDC_EDIT_FP_ISHRO_PRIO          1144
 #define IDC_COMBO_CASTER_3              1145
@@ -368,7 +369,13 @@
 #define IDC_RB_CASTER_1                 1147
 #define IDC_RB_CASTER_2                 1148
 #define IDC_RB_CASTER_3                 1149
+#define IDC_RB_CASTER_4                 1150
+#define IDC_COMBO_CASTER_4              1151
+#define IDC_RB_CASTER_5                 1152
 #define IDC_COMBO_STRING                1153
+#define IDC_COMBO_CASTER_5              1154
+#define IDC_RB_CASTER_6                 1154
+#define IDC_COMBO_CASTER_7              1155
 #define IDC_LIST_GROUP_SORT_AVAIL_FIELDS 1156
 #define IDC_BUTTON_PRINT                1156
 #define IDC_STATIC_OPERATION            1157

@@ -409,11 +409,15 @@ protected:
 	afx_msg void OnSelchangeComboCaster1();
 	afx_msg void OnSelchangeComboCaster2();
 	afx_msg void OnSelchangeComboCaster3();
+	afx_msg void OnSelchangeComboCaster4();
+	afx_msg void OnSelchangeComboCaster5();
 	afx_msg void OnSelchangeComboProdn();
 	afx_msg void OnSelchangeComboString();
 	afx_msg void OnRbCaster1();
 	afx_msg void OnRbCaster2();
 	afx_msg void OnRbCaster3();
+	afx_msg void OnRbCaster4();
+	afx_msg void OnRbCaster5();
 	afx_msg void OnEditCreateString();
 	afx_msg void OnEditDeleteString();
 	afx_msg void OnScenCopy();

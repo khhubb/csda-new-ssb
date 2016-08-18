@@ -577,9 +577,10 @@ X     34,611 GanttDisplay.h
 X	   5,245 CastStringEditorChildFrame.cpp
 X      2,236 CastStringEditorChildFrame.h
 	   
-       8,467 CastStringEditorDoc.cpp
-       2,095 CastStringEditorDoc.h
+Y     8,467 CastStringEditorDoc.cpp
+Y      2,095 CastStringEditorDoc.h
 				Looks like caster# is a pass-through
+				most code is commented out.
 	   
 X      5,860 CastStringEditorGanttBars.cpp
 X      1,930 CastStringEditorGanttBars.h

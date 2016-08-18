@@ -52,8 +52,6 @@ BEGIN_MESSAGE_MAP(CCastStringEditorScenMgrView, CFormView)
 	ON_WM_CREATE()
 	ON_WM_SIZE()
 	//}}AFX_MSG_MAP
-
-
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -145,4 +143,3 @@ BOOL CCastStringEditorScenMgrView::OnWndMsg( UINT message, WPARAM wParam, LPARAM
 	else
 		return CFormView::OnWndMsg(message,wParam,lParam,pResult);
 }
-
