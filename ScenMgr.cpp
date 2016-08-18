@@ -139,16 +139,16 @@ CArchiveQueue	CScenMgr::m_archiveQueue;
 //  If editable, assign an id, add it to the vector and notify.
 //
 
-CCasterScen* CScenMgr::CreateCasterScen(int casterNum,
+CCasterScen* CScenMgr::CreateCasterScen(int casterNum, //### caster-specific
 										bool canEdit)
 {
-	CCasterScen* pScen = new CCasterScen(casterNum);
+  CCasterScen* pScen = new CCasterScen(casterNum); //### caster-specific
 
 	pScen->SetCanEdit(canEdit);
 
 	if ( canEdit ) {
 		CCasterScenArchiver::AssignCasterScenId(pScen);
-		m_casterScens[casterNum].push_back(pScen);
+		m_casterScens[casterNum].push_back(pScen); //### caster-specific
 		CCreateCasterScenMsg msg(pScen);
 		TheBus().UpdateAllObservers(0,&msg);
 	}
@@ -162,17 +162,17 @@ CCasterScen* CScenMgr::CreateCasterScen(int casterNum,
 //  Used by archival code.
 //
 
-CCasterScen* CScenMgr::CreateCasterScen(int casterNum,
+CCasterScen* CScenMgr::CreateCasterScen(int casterNum, //### caster-specific
 										long id)
 {
-	assert( CasterScenById(casterNum,id) == 0 );
+	assert( CasterScenById(casterNum,id) == 0 ); //### caster-specific
 
-	CCasterScen* pScen = new CCasterScen(casterNum);
+	CCasterScen* pScen = new CCasterScen(casterNum); //### caster-specific
 
 	pScen->SetCanEdit(true);
 	pScen->SetId(id);
 
-	m_casterScens[casterNum].push_back(pScen);
+	m_casterScens[casterNum].push_back(pScen); //### caster-specific
 
 	CCreateCasterScenMsg msg(pScen);
 	TheBus().UpdateAllObservers(0,&msg);
@@ -248,18 +248,18 @@ void CScenMgr::DeleteCasterScen(CCasterScen* pScen)
 	DeleteContainingSuperScens(pScen);
 
 
-	int caster = pScen->m_caster;
+	int caster = pScen->m_caster; //### caster-specific
 
-	assert(Caster::IsValidCasterValue(caster));
+	assert(Caster::IsValidCasterValue(caster)); //### caster-specific
 
-	TCasterScenVec::iterator is = find(CasterScensBegin(caster),
-									  CasterScensEnd(caster),
+	TCasterScenVec::iterator is = find(CasterScensBegin(caster), //### caster-specific
+									  CasterScensEnd(caster), //### caster-specific
 									  pScen);
 
 
 	
-	if ( is != CasterScensEnd(caster) )
-		m_casterScens[caster].erase(is);
+	if ( is != CasterScensEnd(caster) ) //### caster-specific
+		m_casterScens[caster].erase(is); //### caster-specific
 
 	// we should notify before we d-tor this object
 	CDeleteCasterScenMsg msg(pScen);
@@ -339,6 +339,7 @@ CSuperScen* CScenMgr::CreateSuperScen(CCasterScen* pCScen1,
 {
 	CSuperScen* pSS = new CSuperScen;
 
+        //### caster-specific
 	pSS->m_pCScens[Caster::C1] = pCScen1;
 	pSS->m_pCScens[Caster::C2] = pCScen2;
 	pSS->m_pCScens[Caster::C3] = pCScen3;
@@ -413,13 +414,13 @@ void CScenMgr::DeleteSuperScen(CSuperScen* pSS)
 // Retrieve a caster scenario based on caster and its position in the vector
 //
 
-CCasterScen* CScenMgr::CasterScen(int casterNum, int index)
+CCasterScen* CScenMgr::CasterScen(int casterNum, int index) //### caster-specific
 {
-	assert ( Caster::IsValidCasterValue(casterNum) );
+	assert ( Caster::IsValidCasterValue(casterNum) ); //### caster-specific
 
-	assert ( 0 <= index && index < CasterScensCount(casterNum) );
+	assert ( 0 <= index && index < CasterScensCount(casterNum) ); //### caster-specific
 
-	return m_casterScens[casterNum][index];
+	return m_casterScens[casterNum][index]; //### caster-specific
 }
 
 
@@ -429,10 +430,10 @@ CCasterScen* CScenMgr::CasterScen(int casterNum, int index)
 //  Find the index of a caster scen in the vector
 //
 
-int CScenMgr::CasterScenIndex(int casterNum, CCasterScen* pScen)
+int CScenMgr::CasterScenIndex(int casterNum, CCasterScen* pScen) //### caster-specific
 {
-	TCasterScenVec::const_iterator ib = CScenMgr::CasterScensBegin(casterNum);
-	TCasterScenVec::const_iterator ie = CScenMgr::CasterScensEnd(casterNum);
+	TCasterScenVec::const_iterator ib = CScenMgr::CasterScensBegin(casterNum); //### caster-specific
+	TCasterScenVec::const_iterator ie = CScenMgr::CasterScensEnd(casterNum);   //### caster-specific
 
 	TCasterScenVec::const_iterator is = find(ib,ie,pScen);
 	
@@ -447,10 +448,10 @@ int CScenMgr::CasterScenIndex(int casterNum, CCasterScen* pScen)
 //  Find a caster scenario from its id
 //
 
-CCasterScen* CScenMgr::CasterScenById(int casterNum, long id)
+CCasterScen* CScenMgr::CasterScenById(int casterNum, long id) //### caster-specific
 {
-	for ( TCasterScenVec::const_iterator is = CasterScensBegin(casterNum);
-		  is != CasterScensEnd(casterNum);
+	for ( TCasterScenVec::const_iterator is = CasterScensBegin(casterNum); //### caster-specific
+		  is != CasterScensEnd(casterNum); //### caster-specific
 		  ++is ) {
 	
 		if ( (*is)->Id() == id )
@@ -527,7 +528,7 @@ CSuperScen* CScenMgr::FindSuperScen(CCasterScen* pCScen1,
 	for ( TSuperScenVec::iterator is = SuperScensBegin();
 		  is != SuperScensEnd();
 		  ++is ) {
-		
+		//### caster-specific
 		if ((*is)->m_pCScens[Caster::C1] == pCScen1
 			&&
 			(*is)->m_pCScens[Caster::C2] == pCScen2
@@ -590,12 +591,12 @@ CSuperScen* CScenMgr::CreateSuperScen()
 //  This keeps track of global 910 strings for initialization
 //
 
-CCasterScen* CScenMgr::CreateMasterCasterScen(int casterNum)
+CCasterScen* CScenMgr::CreateMasterCasterScen(int casterNum) //### caster-specific
 {
-	CCasterScen* pScen = new CCasterScen(casterNum);
+	CCasterScen* pScen = new CCasterScen(casterNum); //### caster-specific
 
 	pScen->SetCanEdit(false);
-	pScen->SetId(casterNum);
+	pScen->SetId(casterNum); //### caster-specific
 
 	return pScen;
 }
@@ -710,12 +711,12 @@ void CScenMgr::ArchiveAllScens()
 //
 
 // static
-void CScenMgr::FindModifiedCasterScens(int casterNum,
+void CScenMgr::FindModifiedCasterScens(int casterNum, //### caster-specific
 									   vector<CCasterScen*>& copyScens,
 									   vector<CCasterScen*>& origScens)
 {
-	for ( TCasterScenVec::const_iterator is = CasterScensBegin(casterNum);
-		  is != CasterScensEnd(casterNum);
+	for ( TCasterScenVec::const_iterator is = CasterScensBegin(casterNum); //### caster-specific
+		  is != CasterScensEnd(casterNum); //### caster-specific
 		  ++is ) {
 		if ( (*is)->IsModified() ) {
 

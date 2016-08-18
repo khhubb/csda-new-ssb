@@ -1311,7 +1311,7 @@ bool CCastStringValidator::ValidateLotSpecs( CCastStringHeat& rHeat, int strandN
 
 	bool isOk = true;
 
-	int caster = m_pCastString->Id().Caster();
+	int caster = m_pCastString->Id().Caster(); //### caster-specific
 
 	for ( vector<CCSOrder*>::iterator io = rHeat.StrandBegin(strandNum);
 		  io != rHeat.StrandEnd(strandNum);
@@ -1329,7 +1329,7 @@ bool CCastStringValidator::ValidateLotSpecs( CCastStringHeat& rHeat, int strandN
 		}
 		else if ( rHeat.SpecPtr() != 0 ) {
 			// check for compatibility between heat spec and lot spec
-			if ( ! TheSnapshot.HeatSpecCrossApp().IsCompatible( (*io)->LotSpec(), rHeat.Spec(), caster ) ) {
+		  if ( ! TheSnapshot.HeatSpecCrossApp().IsCompatible( (*io)->LotSpec(), rHeat.Spec(), caster ) ) { //### caster-specific
 				ostr << "Lot spec "
 					<<  LPCTSTR((*io)->LotSpec())
 					<< " incompatible with heat spec "
@@ -1413,7 +1413,7 @@ bool CCastStringValidator::Validate340080(int strandNum)
 	bool isOk = true;
 	ostrstream ostr;
 
-	int caster = m_pCastString->Id().Caster();
+	int caster = m_pCastString->Id().Caster(); //### caster-specific
 
 
 	const vector<CCSOrder*>& strand = m_pCastString->Strand(strandNum);
@@ -1422,7 +1422,7 @@ bool CCastStringValidator::Validate340080(int strandNum)
 		// nothing to check
 		return true;
 
-	if ( strandNum == 2 && Caster::NumStrandsOnCaster(caster) == 1 ) {
+	if ( strandNum == 2 && Caster::NumStrandsOnCaster(caster) == 1 ) { //### caster-specific
 		ostr << "Caster " << caster << ": There are orders on strand #2!" << ends;
 		//AddValidationString(ostr);
 		AddValidnError(-1,0,-1,ostr,CCastStringHeatValidnError::FATAL);
@@ -1445,13 +1445,13 @@ bool CCastStringValidator::Validate340080(int strandNum)
 
 		//  We need to have some fun with certain digits of the spec.
 
-		FixHeatSpec( rHeat, caster );
+		FixHeatSpec( rHeat, caster ); //### caster-specific
 
 		// audit numPieces
 		{
 			int numPieces = (*io)->NumPieces();
 
-			if ( caster == 1 ) {
+			if ( caster == 1 ) { //### caster-specific
 
 				if ( numPieces == 0 
 					 || 
@@ -1499,7 +1499,7 @@ bool CCastStringValidator::Validate340080(int strandNum)
 		{
 			Width width = (*io)->SlabWidth();
 
-			if ( caster == 3 ) {
+			if ( caster == 3 ) { //### caster-specific
 
 				if ( width < 24 || width > 60 ) {
 					ostr << "steel width ("
@@ -1596,8 +1596,8 @@ bool CCastStringValidator::Validate340080(int strandNum)
 
 						if ( (*io)->SlabLength() >= 365 ) {
 
-							(*io)->PlanSteelLengthMin(GlobalConstants.CasterSlabLengthMax(caster));
-							(*io)->PlanSteelLengthMax(GlobalConstants.CasterSlabLengthMax(caster));
+							(*io)->PlanSteelLengthMin(GlobalConstants.CasterSlabLengthMax(caster)); //### caster-specific
+							(*io)->PlanSteelLengthMax(GlobalConstants.CasterSlabLengthMax(caster)); //### caster-specific
 						}
 
 						// shouldn't we have an else here?
@@ -1618,7 +1618,7 @@ bool CCastStringValidator::Validate340080(int strandNum)
 						Length minL;
 						Length maxL;
 	
-						ComputeSlabLength( caster, (*io), isLenOk, minL, maxL );
+						ComputeSlabLength( caster, (*io), isLenOk, minL, maxL ); //### caster-specific
 						(*io)->PlanSteelLengthMin( minL );
 						(*io)->PlanSteelLengthMax( maxL );
 					}
@@ -1669,7 +1669,7 @@ bool CCastStringValidator::Validate340080(int strandNum)
 		//  check heat position for 3 combi startup slabs
 
 		{
-			if ( caster == 3 ) {
+			if ( caster == 3 ) { //### caster-specific
 
 				CString heatSpec3 = rHeat.Spec().Left(3);
 				CString heatSpec5 = rHeat.Spec().Left(5);
@@ -1716,21 +1716,21 @@ bool CCastStringValidator::Validate340080(int strandNum)
 			Length len = (*io)->SlabLength();
 
 //            Added 1 Slab Caster length check 2-4-10 k. hubbard  
-			if ( caster == 1 ) {
-				if ( len > GlobalConstants.CasterSlabLengthMax(caster) ) {
+			if ( caster == 1 ) { //### caster-specific
+				if ( len > GlobalConstants.CasterSlabLengthMax(caster) ) { //### caster-specific
 					ostr << "Slab length " << setw(3) << len 
-						 << " not within steelshop length boundary " << GlobalConstants.CasterSlabLengthMax(caster)
+						 << " not within steelshop length boundary " << GlobalConstants.CasterSlabLengthMax(caster) //### caster-specific
 						 << ends;
 					ADD_ERR(CCastStringHeatValidnError::FATAL);
 					isOk = false;
 				}
 			}
 //            Added 2 Slab Caster length check 2-4-10 k. hubbard  
-			if ( caster == 2 ) {
-//  				if ( len > GlobalConstants.CasterSlabLengthMax(caster) || len < 171 ) {
-				if ( len > GlobalConstants.CasterSlabLengthMax(caster) ) {
+			if ( caster == 2 ) { //### caster-specific
+//  				if ( len > GlobalConstants.CasterSlabLengthMax(caster) || len < 171 ) { //### caster-specific
+				if ( len > GlobalConstants.CasterSlabLengthMax(caster) ) { //### caster-specific
 					ostr << "Slab length " << setw(3) << len 
-						 << " not within steelshop length boundary " << GlobalConstants.CasterSlabLengthMax(caster)
+						 << " not within steelshop length boundary " << GlobalConstants.CasterSlabLengthMax(caster) //### caster-specific
 						 << ends;
 					ADD_ERR(CCastStringHeatValidnError::FATAL);
 					isOk = false;
@@ -1738,11 +1738,11 @@ bool CCastStringValidator::Validate340080(int strandNum)
 			}
 			else {
 
-				if ( caster == 3 ) {
+				if ( caster == 3 ) { //### caster-specific
 
-					if ( len > GlobalConstants.CasterSlabLengthMax(caster) || len < 171 ) {
+					if ( len > GlobalConstants.CasterSlabLengthMax(caster) || len < 171 ) { //### caster-specific
 						ostr << "Slab length " << setw(3) << len 
-						 << " not between steelshop length boundaries 171 and " << GlobalConstants.CasterSlabLengthMax(caster)
+						 << " not between steelshop length boundaries 171 and " << GlobalConstants.CasterSlabLengthMax(caster) //### caster-specific
 						 << ends;
 						ADD_ERR(CCastStringHeatValidnError::FATAL);
 						isOk = false;
@@ -1805,7 +1805,7 @@ bool CCastStringValidator::Validate340080(int strandNum)
 			char exp = (*io)->ExposureCode();
 			int condn = (*io)->SlabCondnCode();
 
-			if ( caster == 1 ) {
+			if ( caster == 1 ) { //### caster-specific
 
 				if ( condn > 0 && ( exp == 'E' || exp == 'U' ) ) {
 					// no-op
@@ -2164,7 +2164,7 @@ bool CCastStringValidator::Validate340080(int strandNum)
 		// Audit 2BOF inward width change designs.  1-28-10 k. hubbard
 
 		{
-		if (( caster == 2 || caster == 3)
+		if (( caster == 2 || caster == 3) //### caster-specific
 			&&
 			 prevWidth > 0)
 			{
@@ -2205,7 +2205,7 @@ bool CCastStringValidator::Validate340080(int strandNum)
 	return isOk;
 }
 
-bool CCastStringValidator::FixHeatSpec( CCastStringHeat& rHeat, int caster )
+bool CCastStringValidator::FixHeatSpec( CCastStringHeat& rHeat, int caster ) //### caster-specific
 {
 	if ( rHeat.StrandBegin(1) == rHeat.StrandEnd(1)
 		 &&
@@ -2223,7 +2223,7 @@ bool CCastStringValidator::FixHeatSpec( CCastStringHeat& rHeat, int caster )
 	const CString& orderedSpec = pOrder->LotSpec();
 	CString heatSpec = rHeat.Spec();
 
-	bool result = FixHeatSpec( heatSpec, orderedSpec, caster );
+	bool result = FixHeatSpec( heatSpec, orderedSpec, caster ); //### caster-specific
 
 	if ( ! result ) {
 		ostrstream ostr;
@@ -2237,7 +2237,7 @@ bool CCastStringValidator::FixHeatSpec( CCastStringHeat& rHeat, int caster )
 		return false;
 	}
 
-	rHeat.SetSpec(heatSpec,caster);
+	rHeat.SetSpec(heatSpec,caster); //### caster-specific
 	return true;
 }
 
@@ -2245,7 +2245,7 @@ bool CCastStringValidator::FixHeatSpec( CCastStringHeat& rHeat, int caster )
 // static 
 bool CCastStringValidator::FixHeatSpec(CString& heatSpec,
 									   const CString& orderedSpec,
-									   int caster)
+									   int caster) //### caster-specific
 {
 	if ( orderedSpec.GetLength() != 7 )
 		return false;
@@ -2256,7 +2256,7 @@ bool CCastStringValidator::FixHeatSpec(CString& heatSpec,
 	char ord4 = orderedSpec[3];  // compare fourth digit of individual lot specs within the heat spec. k. hubbard
 	char ord6 = orderedSpec[5];  // compare sixth digit of individual lot specs within the heat spec. k. hubbard
 
-	if ( caster == 2 || caster == 3 ) {
+	if ( caster == 2 || caster == 3 ) { //### caster-specific
 	
 		if ( ord4 == '2' || ord4 == '6' )
 			heatSpec.SetAt(3,ord4);
@@ -2282,7 +2282,7 @@ bool CCastStringValidator::FixHeatSpec(CString& heatSpec,
 		}
 	}
 	
-	CSpec* pSpec = TheSnapshot.SpecMgr().FindSpecMaybe(heatSpec,caster);
+	CSpec* pSpec = TheSnapshot.SpecMgr().FindSpecMaybe(heatSpec,caster); //### caster-specific
 
 	return pSpec != 0;
 }
@@ -2384,7 +2384,7 @@ bool CCastStringValidator::AuditSlabLengthData(CCSOrder* pOrder)
 
 
 
-void CCastStringValidator::ComputeSlabLength(int caster,	
+void CCastStringValidator::ComputeSlabLength(int caster,	//### caster-specific
 											 CCSOrder* pOrder, 
 											 bool isLenOk, 
 											 Length& minL, 
@@ -2438,9 +2438,9 @@ void CCastStringValidator::ComputeSlabLength(int caster,
 
 			if ( po->ProvCastSlLnth() >= 365 ) {
 
-				pOrder->SlabLength( GlobalConstants.CasterSlabLengthMax(caster) );
-				minL = GlobalConstants.CasterSlabLengthMax(caster);
-				maxL = GlobalConstants.CasterSlabLengthMax(caster);
+				pOrder->SlabLength( GlobalConstants.CasterSlabLengthMax(caster) ); //### caster-specific
+				minL = GlobalConstants.CasterSlabLengthMax(caster);                //### caster-specific
+				maxL = GlobalConstants.CasterSlabLengthMax(caster);                //### caster-specific
 				return;
 			}
 			else {
