@@ -84,7 +84,7 @@ CCastStringHeat::CCastStringHeat()
   m_condnCode		( 0						),
   m_dispCode		( 1						),
   m_pSpec			( 0						),
-  m_caster			( 0						),
+  m_caster			( 0						), //### caster-specific, init to 0 (not a good index)
   m_isMarked		( false					),
   m_signifEl		( CChem::Element(-1)	),
   m_status			( HEAT_STATUS_NEW		)
@@ -106,7 +106,7 @@ CCastStringHeat::CCastStringHeat(CCasterStringHeatsSet& rHeatsSet,
   m_condnCode		( 0						),
   m_dispCode		( 1						),
   m_pSpec			( 0						),
-  m_caster			( 0						),
+  m_caster			( 0						), //### caster-specific (see above)
   m_isMarked		( false					),
   m_signifEl		( CChem::Element(-1)	),
   m_status			( HEAT_STATUS_NEW		)
@@ -128,17 +128,17 @@ CCastStringHeat::CCastStringHeat(CCasterStringHeatsSet& rHeatsSet,
 //  Initialize from P_STLMAKE_DALY_PLAN
 //
 
-void CCastStringHeat::Init(int caster,
+void CCastStringHeat::Init(int caster, //### caster-specific
 						   CDalyPlanSet& planSet)
 {
-	m_caster = caster;
+	m_caster = caster; //### caster-specific
 
 	m_spec.Format("%05d%c%d",
 		            planSet.m_PLAN_HEAT_SPEC,
 					planSet.m_PLAN_HEAT_SIXTH_DIGIT_SPEC[0],
 					planSet.m_PLAN_HEAT_SEVENTH_DIGIT_SPEC);
 
-	SetSpecPtr(m_caster);
+	SetSpecPtr(m_caster); //### caster-specific
 
 	m_minChems[CChem::ELT_C ] = planSet.m_PLAN_HEAT_CARBON_MIN;
 	m_maxChems[CChem::ELT_C ] = planSet.m_PLAN_HEAT_CARBON_MAX;
@@ -181,10 +181,10 @@ void CCastStringHeat::Init(int caster,
 //  Initialize from the results of the single string builder
 //
 
-void CCastStringHeat::Init(int caster,
+void CCastStringHeat::Init(int caster, //### caster-specific
 						   CSSBOutput& sbSet)
 {
-	m_caster = caster;
+	m_caster = caster; //### caster-specific
 
 	// Specs and chems should be set by the user.
 
@@ -240,13 +240,13 @@ void CCastStringHeat::Init(CCasterStringHeatsSet& rHeatsSet,
 //
 
 void CCastStringHeat::SetSpec(CString newVal,
-							  int caster)
+							  int caster) //### caster-specific
 {
 	m_spec = newVal; 
 	if ( m_spec == "" ) 
 		NullifySpecPtr();
 	else
-		SetSpecPtr(caster);
+		SetSpecPtr(caster); //### caster-specific
 }
 
 
@@ -256,10 +256,10 @@ void CCastStringHeat::SetSpec(CString newVal,
 //  Set the signifEl to match.
 //
 
-void CCastStringHeat::SetSpecPtr(int caster)
+void CCastStringHeat::SetSpecPtr(int caster) //### caster-specific
 {
 	//m_pSpec = TheSnapshot.SpecMgr().FindSpec(m_spec,caster);
-	m_pSpec = TheSnapshot.SpecMgr().FindSpecMaybe(m_spec,caster);
+	m_pSpec = TheSnapshot.SpecMgr().FindSpecMaybe(m_spec,caster); //### caster-specific
 
 	if ( m_pSpec == 0 )
 		m_signifEl = CChem::Element(-1);
@@ -299,7 +299,7 @@ void CCastStringHeat::ResetChems()
 //  Otherwise, set the range for an element to what is given on the spec
 //    and fix aim chems to match.
 
-bool CCastStringHeat::SetChemsFromHeatSpec(ostrstream& ostr, int heatNum, int caster)
+bool CCastStringHeat::SetChemsFromHeatSpec(ostrstream& ostr, int heatNum, int caster) //### caster-specific
 {
 	if ( m_pSpec == 0 ) {
 		ostr << "No spec set for heat # " << heatNum << "\n";
@@ -320,7 +320,7 @@ bool CCastStringHeat::SetChemsFromHeatSpec(ostrstream& ostr, int heatNum, int ca
 			m_maxChems[elt] = specMax;
 			m_aimChems[elt] = specAim;
 
-			FixAimChem(pRange,CChem::Element(elt),caster);
+			FixAimChem(pRange,CChem::Element(elt),caster); //### caster-specific
 
 #ifdef _DEBUG
 			afxDump << "Setting heat chems: "
@@ -346,7 +346,7 @@ bool CCastStringHeat::SetChemsFromHeatSpec(ostrstream& ostr, int heatNum, int ca
 
 bool CCastStringHeat::FixAimChems(ostrstream& ostr, 
 								  int heatNum, 
-								  int caster)
+								  int caster) //### caster-specific
 {
 	if ( m_pSpec == 0 ) {
 		// already we would have added the error message.
@@ -355,7 +355,7 @@ bool CCastStringHeat::FixAimChems(ostrstream& ostr,
 	}
 
 	for ( int elt=0; elt<CChem::NumElements; ++elt ) 
-		FixAimChem( CChem::Element(elt), caster );
+		FixAimChem( CChem::Element(elt), caster ); //### caster-specific
 	
 	return true;	
 }
@@ -368,7 +368,7 @@ bool CCastStringHeat::FixAimChems(ostrstream& ostr,
 //
 
 bool CCastStringHeat::FixAimChem(CChem::Element elt, 
-								 int caster)
+								 int caster) //### caster-specific
 {
 	if ( m_pSpec == 0 )
 		return false;
@@ -376,7 +376,7 @@ bool CCastStringHeat::FixAimChem(CChem::Element elt,
 	const CChemRange* pRange = m_pSpec->GetChemRange(elt);
 
 
-	return FixAimChem(pRange,elt,caster);
+	return FixAimChem(pRange,elt,caster); //### caster-specific
 
 }
 
@@ -394,6 +394,7 @@ bool CCastStringHeat::FixAimChem(CChem::Element elt,
 //     case 2) not ( on casters 2,3, element Sulfur)
 //             and min > 0 and max is non-trivial
 //			   and aim is 0
+//### logic needs to be expanded for casters 4 and 5
 //
 //  in case 1), aim = max - 0.001
 //  in case 2), aim = average(min,max)
@@ -403,7 +404,7 @@ bool CCastStringHeat::FixAimChem(CChem::Element elt,
 // CASTER TODO: when we find out, firx caster!=1 to be caster==2 or 3, and whatever for 4,5
 bool CCastStringHeat::FixAimChem(const CChemRange* pRange,
 								 CChem::Element elt, 
-								 int caster)
+								 int caster) //### caster-specific
 {
 	if ( pRange != 0 ) {
 			
@@ -412,7 +413,7 @@ bool CCastStringHeat::FixAimChem(const CChemRange* pRange,
 		CChem::Bound specAim = pRange->AimVal();
 	
 
-		bool computeAim = (caster != 1 && elt == CChem::ELT_S
+		bool computeAim = (caster != 1 && elt == CChem::ELT_S  //### caster-specific
 				           ? (m_minChems[elt] == 0
 								&&
 								m_maxChems[elt] > 0 
@@ -430,7 +431,7 @@ bool CCastStringHeat::FixAimChem(const CChemRange* pRange,
 
 		if ( computeAim ) {
 
-			if ( caster != 1 && elt == CChem::ELT_S )
+			if ( caster != 1 && elt == CChem::ELT_S ) //### caster-specific
 				m_aimChems[elt] = m_maxChems[elt] - 0.001;
 			else
 				m_aimChems[elt] = (m_minChems[elt] + m_maxChems[elt])/2.0;

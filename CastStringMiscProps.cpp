@@ -27,12 +27,12 @@
 //
 
 CCastStringMiscProps::CCastStringMiscProps(int h,
-										   int casterNum) 
+										   int casterNum)  //### caster-specific
 		: m_numHeats(h), 
-		  m_minHeatSize(GlobalConstants.MinHeatSize(casterNum)),
-		  m_aimHeatSize(GlobalConstants.AimHeatSize(casterNum)),
-		  m_maxHeatSize(GlobalConstants.MaxHeatSize(casterNum)),
-		  m_turnaroundTime(GlobalConstants.TurnaroundTime(casterNum)),
+		  m_minHeatSize(GlobalConstants.MinHeatSize(casterNum)), //### caster-specific
+		  m_aimHeatSize(GlobalConstants.AimHeatSize(casterNum)), //### caster-specific
+		  m_maxHeatSize(GlobalConstants.MaxHeatSize(casterNum)), //### caster-specific
+		  m_turnaroundTime(GlobalConstants.TurnaroundTime(casterNum)), //### caster-specific
 		  m_initSpec(""),
 		  m_pInitSpec(0),
 		  m_minC(0.0),
@@ -79,7 +79,7 @@ CCastStringMiscProps::CCastStringMiscProps(int h,
 
 
 
-void CCastStringMiscProps::SetInitSpec(const CString& newVal,int caster)
+void CCastStringMiscProps::SetInitSpec(const CString& newVal,int caster) //### caster-specific
 {
 	static CString zeros("0000000");
 
@@ -104,6 +104,6 @@ void CCastStringMiscProps::SetInitSpec(const CString& newVal,int caster)
 			 && lookup[3] != '7' )
 			 lookup.SetAt(3,'0');
 
-		m_pInitSpec = TheSnapshot.SpecMgr().FindSpecMaybe(lookup,caster);
+		m_pInitSpec = TheSnapshot.SpecMgr().FindSpecMaybe(lookup,caster); //### caster-specific
 	}
 }
