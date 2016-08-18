@@ -40,6 +40,7 @@ static char THIS_FILE[] = __FILE__;
 #include "CasterScenArchiver.h"
 #include "ScenMgr.h"
 #include "LongOpn.h"
+#include "Caster.h"
 
 
 
@@ -416,6 +417,8 @@ BOOL CHeatDetailsDlg::OnValidateCell(ROWCOL nrow, ROWCOL ncol)
 			if ( tabNum != 0 ) {
 
 				// we know this is in the range [0,99999] because of range limit on cell
+
+				// CASTER TODO: More tab# validation -- what are rules for 4,5?
 
 				int firstDigit = tabNum/10000;
 				int secondDigit = (tabNum/1000) % 10;
@@ -1894,7 +1897,7 @@ void CHeatDetailsDlg::OnButtonEditOrders(int strandNum)
 	if ( m_currentHeatIndex == -1 )
 		return;
 
-	if ( strandNum == 2  && m_pCastString->Id().Caster() == 2 )
+	if (strandNum == 2 && Caster::NumStrandsOnCaster(m_pCastString->Id().Caster()) == 1 )
 		return;
 
 	CCastStringHeat& rHeat = EditedHeats()[m_currentHeatIndex];

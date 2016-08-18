@@ -4,6 +4,7 @@ CSDA - file analysis
 X  = nothing to work on
 Y  = had something, now fixed
 -> = looked at, not resolved 
+?  = I think resolved, but could use more testing.
 
  =============
  Support files
@@ -588,8 +589,8 @@ X      1,930 CastStringEditorGanttBars.h
 X      3,501 CastStringEditorGanttView.cpp
 X      2,087 CastStringEditorGanttView.h
 	   
-     139,464 CastStringEditorMvc.cpp
-      37,465 CastStringEditorMvc.h
+?   139,464 CastStringEditorMvc.cpp
+?    37,465 CastStringEditorMvc.h
 				CreateCastSTring - plays with SuperScen explicitly, caster=1,2,3
 				CCastStringEditorScenMgrViewport -- list boxes per caster				 CCastStringEditorScenMgrViewport::Synchronize  IDC_COMBO_CASTER_n
 				CCastStringEditorScenMgrViewport::UpdateLists()
@@ -597,8 +598,8 @@ X      2,087 CastStringEditorGanttView.h
 				OnSelChangeComboCasterN, onRBCasterN
 				CCastStringEditorStrandSummaryViewport::SetListItem -- sensitive to num strands	  
 				
-       3,359 CastStringEditorScenMgrView.cpp
-       2,298 CastStringEditorScenMgrView.h
+?      3,359 CastStringEditorScenMgrView.cpp
+?      2,298 CastStringEditorScenMgrView.h
 				check dialog window itself
 	   
 X      4,241 CastStringEditorStrandSummaryView.cpp
@@ -614,9 +615,9 @@ X      2,259 CastStringEditorValidnView.h
 	 Heat details dialog
 	 ===================
  
-      45,229 HeatDetailsDlg.cpp
-       5,157 HeatDetailsDlg.h
-				caster-dependent tab# check
+->    45,229 HeatDetailsDlg.cpp
+->     5,157 HeatDetailsDlg.h
+->				caster-dependent tab# check
 				#strands checked once or twice
 				mostly caster# passed through from CasterScen
 
