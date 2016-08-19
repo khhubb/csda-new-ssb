@@ -2385,10 +2385,10 @@ bool CCastStringValidator::AuditSlabLengthData(CCSOrder* pOrder)
 
 
 void CCastStringValidator::ComputeSlabLength(int caster,	//### caster-specific
-											 CCSOrder* pOrder, 
-											 bool isLenOk, 
-											 Length& minL, 
-											 Length& maxL)
+					     CCSOrder* pOrder, 
+					     bool isLenOk, 
+					     Length& minL, 
+					     Length& maxL)
 {
 	if ( isLenOk ) {
 		CCSOrder::CalculateMinMaxLengths(pOrder->Order(),
