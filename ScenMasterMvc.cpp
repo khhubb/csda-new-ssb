@@ -17,6 +17,7 @@ static char THIS_FILE[]=__FILE__;
 #include "ScenMgr.h"
 #include "CastString.h"
 #include "CastStringHeat.h"
+#include "Caster.h"
 
 
 
@@ -162,14 +163,20 @@ void CScenMasterCtrlViewport::PopulateList(CListBox* pListBox,
 
 		char* strCaster;
 		switch ( (*is)->Caster() ) {
-		case 1:
+		case Caster::C1:
 			strCaster = "#1SC";
 			break;
-		case 2:
+		case Caster::C2:
 			strCaster = "#2SC";
 			break;
-		case 3:
+		case Caster::C3:
 			strCaster = "#3CC";
+			break;
+		case Caster::C4:
+			strCaster = "#4";
+			break;
+		case Caster::C5:
+			strCaster = "#5";
 			break;
 		default:
 			assert(0);
@@ -557,16 +564,24 @@ void CScenMasterGraphViewport::DrawScenHeader(CCasterScen* pScen, CDC* pDC)
 
 	char* strCaster;
 	switch ( pScen->Caster() ) {
-	case 1:
+	case Caster::C1:
 		strCaster = "#1SC";
 		break;
 
-	case 2:
+	case Caster::C2:
 		strCaster = "#2SC";
 		break;
 
-	case 3:
+	case Caster::C3:
 		strCaster = "#3CC";
+		break;
+
+	case Caster::C4:
+		strCaster = "#4";
+		break;
+
+	case Caster::C5:
+		strCaster = "#5";
 		break;
 
 	default:

@@ -717,9 +717,10 @@ X      2,307 PpgCICodeSelect.h
 X     15,626 PpgOrderChemRange.cpp
 X      3,465 PpgOrderChemRange.h
 	   
-      17,673 PpgOrderRange.cpp
-       3,373 PpgOrderRange.h
+Y     17,673 PpgOrderRange.cpp
+Y      3,373 PpgOrderRange.h
 					IDC_RADIO_SHOW_THIS_CASTER / OnRadioShowThisCaster  -- check radio buttons
+					nothing to fix.
 
 	   
 	Misc constants dialog
@@ -754,8 +755,8 @@ X      1,353 ScenMasterDoc.h
 X      2,889 ScenMasterGraphView.cpp
 X      1,917 ScenMasterGraphView.h
 	   
-      23,718 ScenMasterMvc.cpp
-      12,633 ScenMasterMvc.h
+Y     23,718 ScenMasterMvc.cpp
+Y     12,633 ScenMasterMvc.h
 				CScenMasterCtrlViewport::PopulateList  -- populate caster names
 				CScenMasterGraphViewport::DrawScenHeader -- caster names
 				
@@ -768,9 +769,10 @@ X      1,387 ScenMgrChildFrame.h
 X      1,301 ScenMgrDoc.cpp
 X      1,297 ScenMgrDoc.h
 	   
-      14,969 ScenMgrMvc.cpp
-       5,052 ScenMgrMvc.h
+Y     14,969 ScenMgrMvc.cpp
+Y      5,052 ScenMgrMvc.h
 				uses caster, but probably no change
+				I don't see anything needing fixing.
 	   
 X      2,988 ScenMgrView.cpp
 X      2,092 ScenMgrView.h	   
