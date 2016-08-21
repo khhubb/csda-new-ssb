@@ -181,6 +181,8 @@ void CMruOneScenViewport::InitializeCasterNumBox()
 	m_cbCasterNum.AddString("#1 CC");
 	m_cbCasterNum.AddString("#2 SC");
 	m_cbCasterNum.AddString("#3 CC");
+	m_cbCasterNum.AddString("#4 1CCm");
+	m_cbCasterNum.AddString("#5 2CCm");
 
 	SetCasterNumBoxSel();
 }

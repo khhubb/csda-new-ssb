@@ -249,3 +249,6 @@ CCastStringValidator::Validate340080
 					m_wndDetailsGrid.SetWarningText("Second digit of tab# must be 9 (for #2BOF).");
 					return FALSE;
 				}	
+				
+	HMLoadGraph -- the hot metal load graph
+		DOES THIS NEED TO BE EXTENDED FOR CASTERS 4,5?

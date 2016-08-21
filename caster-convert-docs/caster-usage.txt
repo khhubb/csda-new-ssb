@@ -694,13 +694,13 @@ X      5,190 HMSupplyMgr.h
 	MRU One Scen dialog bar
 	=======================
 		 
-       2,999 MruOneScenDlgBar.cpp
-       1,321 MruOneScenDlgBar.h
+Y      2,999 MruOneScenDlgBar.cpp
+Y      1,321 MruOneScenDlgBar.h
 				IDC_COMBO_CASTER_NUM -- need to look at init.
 				This does attachment, so maybe the work is all in MruOneScenMVC
 	   
-       7,516 MruOneScenMVC.cpp
-       4,908 MruOneScenMVC.h
+Y      7,516 MruOneScenMVC.cpp
+Y      4,908 MruOneScenMVC.h
 				CComboBox m_cbCasterNum;
 				CMruOneScenViewport::InitializeCasterNumBox()
 	   
