@@ -788,12 +788,15 @@ X      1,600 UploadDlg.h
 X      2,434 UploadMgr.cpp
 X      2,560 UploadMgr.h
 	   
-         545 UploadProcessMgr.cpp
-         204 UploadProcessMgr.h
+Y        545 UploadProcessMgr.cpp
+Y        204 UploadProcessMgr.h
 					int m_caster;
 					just a passthrough, I think.
+					Nothing to fix.
+					We will have to verify the upload process manager can handle.
 		 
-       3,911 UploadValidnErrorsDlg.cpp
-       1,589 UploadValidnErrorsDlg.h
+Y      3,911 UploadValidnErrorsDlg.cpp
+Y      1,589 UploadValidnErrorsDlg.h
 					( (*is)->Id().Caster() == 3 ? "CC" : "SC" )
+					Not sure if this is worth bothering with.
 			
