@@ -200,6 +200,26 @@ bool CCastStringValidator::IsExposureCodeOk(vector<CCSOrder*>::const_iterator io
   return isOk;
 }
 
+bool CCastStringValidator::Is2BOFInwardWidthChangeOk(vector<CCSOrder*>::const_iterator io, int caster) {
+  bool isOk = true;
+
+  if ((caster == 2 || caster == 3) && prevWidth > 0) {
+    if ((*io)->SlabWidth() > prevWidth)  {
+      //				&&
+      //				code == ' ' )  //	Consider slit type i.e. Radicals ok. 
+      ostr << "Width jump from " << setw(3) << prevWidth
+	   << " to " << setw(3) << (*io)->SlabWidth()
+	   << " is invalid 2BOF outward jump"
+	   << ends;
+      ADD_ERR(CCastStringHeatValidnError::FATAL);
+      //  Had to reverse, not looking at slit type i.e. Radicals ok.	
+      // ADD_ERR(CCastStringHeatValidnError::WARNING); Changing transition width violations to Fatal 12-11-03 k. hubbard
+      isOk = false;
+    }
+  }
+  return isOk;
+}
+
 //### validation functions without a caster-specific argument
 bool CCastStringValidator::IsSlitTypeCodeOk(vector<CCSOrder*>::const_iterator io) {
   bool isOk = true;
@@ -326,7 +346,181 @@ bool CCastStringValidator::IsTekKotePositionalOrderOk(vector<CCSOrder*>::const_i
 
 bool CCastStringValidator::IsWidthChangeOk(vector<CCSOrder*>::const_iterator io) {
   bool isOk = true;
- 
+  char code = (*io)->SlitTypeCode();
+
+  if (prevWidth == 0)
+    // this is the first we've seen, use it for initial width
+    // important to put this initial update before the check above
+    // for CheckStringHeatPosition
+    prevWidth = (*io)->SlabWidth();
+
+  Width widthDiff = fabs((*io)->SlabWidth() - prevWidth);
+  if (widthDiff > TRANS_WIDTH && code == ' ')  { //	Consider slit type i.e. Radicals ok. 11-29-05 k. hubbard
+    ostr << "Width jump from " << setw(3) << prevWidth
+	 << " to " << setw(3) << (*io)->SlabWidth()
+	 << " is invalid"
+	 << ends;
+    ADD_ERR(CCastStringHeatValidnError::FATAL);
+    //	Had to reverse, not looking at slit type i.e. Radicals ok.	ADD_ERR(CCastStringHeatValidnError::WARNING); Changing transition width violations to Fatal 12-11-03 k. hubbard
+    isOk = false;
+  }
+  return isOk;
+}
+
+bool CCastStringValidator::Is80InSpreadSqueezeOk(vector<CCSOrder*>::const_iterator io) {
+  bool isOk = true;
+  if ((*io)->Order() != 0) {
+    Width width = (*io)->SlabWidth();
+    // Width ProvWidthMax = (*io)->ProvSlabWidthMax();
+
+    float ProvWidthMin;   // Added 4 lines here for min check 3-17-06 k. hubbard
+    CString strProvMin;
+    //	strProvMin.Format("%2.1f",(*io)->ProvSlabWidthMin());   Changed line (see next line) to throw reference more reliable Order.h field here for min value 4-5-07 k. hubbard
+    strProvMin.Format("%2.1f",(*io)->Order()->ProvSlabWidthMin());
+    ProvWidthMin = atof(strProvMin);  
+
+    float ProvWidthMax;  
+    CString strProvMax;
+    //			strProvMax.Format("%2.1f",(*io)->ProvSlabWidthMax());   Changed line (see next line) to throw reference more reliable Order.h field here for max value 4-5-07 k. hubbard
+    strProvMax.Format("%2.1f",(*io)->Order()->ProvSlabWidthMax()); 
+    ProvWidthMax = atof(strProvMax);    
+			
+    char code   = (*io)->SlitTypeCode();
+    bool isTrans = (*io)->IsTransition();
+    Width transSpread80 = 1;  //Restored per P. Fronczek maint. 4-18-07 k. hubbard
+
+    //					strProvMax.Format("%2.1f",m_pOrder->ProvSlabWidthMax());
+    //		m_provCastSlabWidthMax = atof(strProvMax);
+    //			Width transProvWidthMax = (ProvWidthMax - transSpread80);
+    bool isStock = ((*io)->FpOrderNum().Left(7) == "9999999");
+    if  (prevWidth != 0 && !isStock && (*io)->Order() != 0) { // Added line to make sure order exist for more reliable Order.h field here for min/max values 4-5-07 k. hubbard
+      //  int transProvWidthMax = (ProvWidthMax - transSpread80);   comm. out 4-5-07 k. hubbard
+      Width widthDiff = fabs((*io)->SlabWidth() - prevWidth);
+      Width NarrowestWidthPoint = min((*io)->SlabWidth(), prevWidth);
+      Width transProvWidthMax = (ProvWidthMax - transSpread80);   //Restored per P. Fronczek maint. 4-18-07 k. hubbard
+
+      // Added or condition here for min check 3-17-06 k. hubbard
+      if  (widthDiff == 1 && (code == ' ') && (isTrans) &&           
+	   (NarrowestWidthPoint > transProvWidthMax || NarrowestWidthPoint < ProvWidthMin))   //Switched per P. Fronczek maint. 4-18-07 k. hubbard
+	// (NarrowestWidthPoint > ProvWidthMax || NarrowestWidthPoint < ProvWidthMin))  //Comm out switched per P. Fronczek maint. 4-18-07 k. hubbard
+	{
+	  ostr << "Transition steel width ("
+	       << NarrowestWidthPoint
+	       << ") is a violation of"
+	       << "80 HSM Spread / Squeeze Prov Min (" << ProvWidthMin
+	       << ") or Prov Max (" << ProvWidthMax
+	       << ends;
+	  ADD_ERR(CCastStringHeatValidnError::WARNING);
+	  isOk = false;
+	}
+    }
+  }
+  return isOk;
+}
+
+bool CCastStringValidator::IsSideSlittingOk(vector<CCSOrder*>::const_iterator io) {
+  bool isOk = true;
+  char code = (*io)->SlitTypeCode();
+  bool isStock = ((*io)->FpOrderNum().Left(7) == "9999999");
+
+  //  Width widthDiff = fabs((*io)->SlabWidth() - prevWidth); 
+  //  Modified width difference comparison to check the current lot width to the ordered aim width 02-10-09 k. hubbard per P. Velasco
+  //  Width widthDiff = fabs((*io)->SlabWidth() - (*io)->Order()->SlabWidth());  // from P-STEEL-MAKE-PLAN file k. hubbard 
+
+  if (!isStock) {
+    Width widthDiff = fabs((*io)->SlabWidth() - (*io)->Order()->SlabWidth());  // from P-STEEL-MAKE-PLAN file k. hubbard 
+    if (widthDiff > 0)
+      { 
+	if (widthDiff < 2 && code == 'S')  //	Check slit type. 
+	  {
+	    //						ostr << "Planned Side Slits from " << setw(3) << prevWidth
+	    ostr << "Planned Side Slits from " << setw(3) << (*io)->SlabWidth() 
+		 << " to " << setw(3) << (*io)->Order()->SlabWidth()  // Throw reference to reliable Order.h (P-STEEL-MAKE-PLAN) field here for aim value 02-10-09 k. hubbard
+		 << " under 2 inches is a dock violation"
+		 << ends;
+	    ADD_ERR(CCastStringHeatValidnError::WARNING);
+	    isOk = false;
+	  }
+      }
+  }
+  return isOk;
+}
+
+bool CCastStringValidator::IsWidthJumpingOk(vector<CCSOrder*>::const_iterator io) {
+  bool isOk = true;
+  int commodcode = (*io)->CICode();
+  char code = (*io)->SlitTypeCode();
+  Width transSpread80 = 0.3;
+  Width transSqueeze80 = 1.6;
+  bool isStock = ((*io)->FpOrderNum().Left(7) == "9999999");
+
+  // if ( prevWidth == 0 )
+  // this is the first we've seen, use it for initial width
+  // important to put this initial update before the check above
+  // for CheckStringHeatPosition
+  // prevWidth = (*io)->SlabWidth(); 
+
+  Width widthDiff = fabs((*io)->SlabWidth() - prevWidth);
+  Width MinTransHBWidth = fabs(prevWidth - transSqueeze80);
+  Width MaxTransHBWidth = fabs(prevWidth + transSpread80);
+  //  this program uses to reference the current order's hotband value. 11-29-05 k. hubbard 
+  if (!isStock)
+    { 
+      Width hbwidth = (*io)->OrderHotBandWidth();   // Built and used a pointer to COrder.h inside (see field) CSOrder.h which 
+			
+      if (widthDiff == 1 && (commodcode == 65 || commodcode == 66) &&
+	  (hbwidth < MinTransHBWidth  ||  hbwidth > MaxTransHBWidth) && code == ' ')  // Consider slit type i.e. Radicals ok. 
+	{
+	  ostr << "Slab Width Jump from " << setw(3) << prevWidth
+	       << " to " << setw(3) << (*io)->SlabWidth()
+	       << " is invalid"
+	       << ends;
+	  ADD_ERR(CCastStringHeatValidnError::FATAL);
+	  isOk = false;
+	}
+    }
+  return isOk;
+}
+
+bool CCastStringValidator::IsStockReasonOk(vector<CCSOrder*>::const_iterator io) {
+  bool isOk = true;
+  CString stockFaclReason = (*io)->StockReason();
+  CString stockCommReason = (*io)->StockCommercialReason();
+  // FP Change
+  //if ( (*io)->OrderNum() == 9999999 ) {
+  if ((*io)->FpOrderNum().Left(7) == "9999999") {
+      if (stockFaclReason == "" ||
+	  stockFaclReason == "0" ||
+	  stockFaclReason == "<blank>" ||
+	  stockCommReason == ""  ||
+	  stockCommReason == "0" ||
+	  stockCommReason == "<blank>")
+	{
+	  ostr << "stock facility reason '" << setw(20) << LPCTSTR(stockFaclReason)
+	       << " ' or stock commercial reason '" << setw(20) << LPCTSTR(stockCommReason)
+	       << " ' must not be blank " 
+	       << ends;
+	  ADD_ERR(CCastStringHeatValidnError::FATAL);  // temp switched from fatal to warning for Dofasco 
+	  isOk = false;
+	}
+  }
+  return isOk;
+}
+
+bool CCastStringValidator::IsSlitReasonOk(vector<CCSOrder*>::const_iterator io) {
+  bool isOk = true;
+  char code = (*io)->SlitTypeCode();
+  CString slitFaclReason = (*io)->SlitReason();
+
+  if (code == 'E' || code == 'S' || code == 'R') {
+    if (slitFaclReason == "" || slitFaclReason == "0" || slitFaclReason == "<blank>") {
+      ostr << "slit facility reason '" << setw(20) << LPCTSTR(slitFaclReason)
+	   << " ' must not be blank " 
+	   << ends;
+      ADD_ERR(CCastStringHeatValidnError::FATAL);  // temp switched from fatal to warning 
+      isOk = false;
+    }
+  }
   return isOk;
 }
 
@@ -351,7 +545,6 @@ bool CCastStringValidator::Validate340080(int strandNum)
   }
 
   Width prevWidth = 0;
-
   for (vector<CCSOrder*>::const_iterator io = strand.begin(); io != strand.end(); ++io) {
     CCastStringHeat& rHeat = (*m_pHeats)[ (*io)->HeatSeqNum() ];
     if (!rHeat.IsMarked())
@@ -864,6 +1057,7 @@ bool CCastStringValidator::Validate340080(int strandNum)
 
 		// Maint. Note: K. Hubbard 3-15-06; Add New Fatal here by checking width (*io)->ProvSlabWidthMin & Max
 
+    /** ##
 		// Audit Transition 80" Slab Spread Squeeze violations against Provided Cast Widths
 		if ( (*io)->Order() != 0 )
 		{
@@ -929,53 +1123,51 @@ bool CCastStringValidator::Validate340080(int strandNum)
 		}
 		// End Maint. Note: K. Hubbard 3-15-06; End maint. of add new fatal here for checking width (*io)->ProvSlabWidthMin & Max
 
-
+		**/
 		
 		// Audit Side Slits Minimum Allowance change.  Added 5-24-06 k. hubbard per P. Velasco
-
+    /** ##
 		{
-			char code = (*io)->SlitTypeCode();
-			bool isStock = ( (*io)->FpOrderNum().Left(7) == "9999999" );
+		  char code = (*io)->SlitTypeCode();
+		  bool isStock = ( (*io)->FpOrderNum().Left(7) == "9999999" );
 
-//			Width widthDiff = fabs((*io)->SlabWidth() - prevWidth); 
-//           Modified width difference comparison to check the current lot width to the ordered aim width 02-10-09 k. hubbard per P. Velasco
-//			Width widthDiff = fabs((*io)->SlabWidth() - (*io)->Order()->SlabWidth());  // from P-STEEL-MAKE-PLAN file k. hubbard 
-
-		//try {		          Tried this for missing orders on CSOrder.h and assoc hotband info (i.e. ? marks instead of number values ) from CSOrder.h 
-			if (! isStock )
-				{				
-					Width widthDiff = fabs((*io)->SlabWidth() - (*io)->Order()->SlabWidth());  // from P-STEEL-MAKE-PLAN file k. hubbard 
-				if (widthDiff > 0)
-					{ 
-					if ( widthDiff < 2
-						&&
-						code == 'S' )  //	Check slit type. 
-						{
-//						ostr << "Planned Side Slits from " << setw(3) << prevWidth
-						ostr << "Planned Side Slits from " << setw(3) << (*io)->SlabWidth() 
-						 << " to " << setw(3) << (*io)->Order()->SlabWidth()  // Throw reference to reliable Order.h (P-STEEL-MAKE-PLAN) field here for aim value 02-10-09 k. hubbard
-						 << " under 2 inches is a dock violation"
-						 << ends;
-						ADD_ERR(CCastStringHeatValidnError::WARNING);
-						isOk = false;
+		  //			Width widthDiff = fabs((*io)->SlabWidth() - prevWidth); 
+		  //           Modified width difference comparison to check the current lot width to the ordered aim width 02-10-09 k. hubbard per P. Velasco
+		  //			Width widthDiff = fabs((*io)->SlabWidth() - (*io)->Order()->SlabWidth());  // from P-STEEL-MAKE-PLAN file k. hubbard 
+		  
+		  //try {		          Tried this for missing orders on CSOrder.h and assoc hotband info (i.e. ? marks instead of number values ) from CSOrder.h 
+		  if (! isStock )
+		    {				
+		      Width widthDiff = fabs((*io)->SlabWidth() - (*io)->Order()->SlabWidth());  // from P-STEEL-MAKE-PLAN file k. hubbard 
+		      if (widthDiff > 0)
+			{ 
+			  if ( widthDiff < 2
+			       &&
+			       code == 'S' )  //	Check slit type. 
+			    {
+			      //						ostr << "Planned Side Slits from " << setw(3) << prevWidth
+			      ostr << "Planned Side Slits from " << setw(3) << (*io)->SlabWidth() 
+				   << " to " << setw(3) << (*io)->Order()->SlabWidth()  // Throw reference to reliable Order.h (P-STEEL-MAKE-PLAN) field here for aim value 02-10-09 k. hubbard
+				   << " under 2 inches is a dock violation"
+				   << ends;
+			      ADD_ERR(CCastStringHeatValidnError::WARNING);
+			      isOk = false;
 						}
-					}
-				}
-			//}
-			 //	catch ( CDBException* e )
+			}
+		    }
+		  //}
+		  //	catch ( CDBException* e )
 			 //		{
 			 //		   AfxMessageBox( e->m_strError,   
-		     //          MB_ICONEXCLAMATION );
-			 //		   e->Delete();
-			 //		}
-			}
-
+		  //          MB_ICONEXCLAMATION );
+		  //		   e->Delete();
+		  //		}
+		}
+    **/
 		// End Maint. audit side slit minimum allowance change end 5-24-06 k. hubbard
-
-
 		
 		// Audit Width Jumps change.  Added 11-29-05 k. hubbard per P. Velasco
-
+    /** ##
 		{
 
 			int commodcode = (*io)->CICode();
@@ -1029,9 +1221,9 @@ bool CCastStringValidator::Validate340080(int strandNum)
 		}
 
 		// Audit Width Jumps change end 11-29-05 k. hubbard
-
+		**/
 		// Audit Stock Reason codes   added audit for stock reason 5-5-09 k. hubbard
-
+    /** ##
 		{
 			CString stockFaclReason = (*io)->StockReason();
 			CString stockCommReason = (*io)->StockCommercialReason();
@@ -1063,9 +1255,9 @@ bool CCastStringValidator::Validate340080(int strandNum)
 				
 			}
 		}
-
+    **/
 		// Audit Slit Reason Code  added audit for slit reason 2-26-10 k. hubbard
-
+    /**
 		{
 			char code = (*io)->SlitTypeCode();
 			CString slitFaclReason = (*io)->SlitReason();
@@ -1091,47 +1283,43 @@ bool CCastStringValidator::Validate340080(int strandNum)
 				}
 			}
 		}
-		
+    **/		
 		// Audit 2BOF inward width change designs.  1-28-10 k. hubbard
+    /**
+    {
+      if (( caster == 2 || caster == 3) //### caster-specific
+	  &&
+	  prevWidth > 0)
+	{
 
-		{
-		if (( caster == 2 || caster == 3) //### caster-specific
-			&&
-			 prevWidth > 0)
-			{
-
-			if ((*io)->SlabWidth() > prevWidth) 
-//				&&
-//				code == ' ' )  //	Consider slit type i.e. Radicals ok. 
-			
-				{
-				ostr << "Width jump from " << setw(3) << prevWidth
-					 << " to " << setw(3) << (*io)->SlabWidth()
-					 << " is invalid 2BOF outward jump"
-					 << ends;
-				ADD_ERR(CCastStringHeatValidnError::FATAL);
-				//	Had to reverse, not looking at slit type i.e. Radicals ok.	ADD_ERR(CCastStringHeatValidnError::WARNING); Changing transition width violations to Fatal 12-11-03 k. hubbard
-				isOk = false;
-				}
-			}
-		}
-		
-
-//     **** !!!!!! Caution the variable below is shared between 2 width audits above and must get populated once after both or else one audit above will fail!!!! 11-29-05 k. hubbard
-		prevWidth = (*io)->SlabWidth();  // Important CAUTION!!!! repositioned here to work inside this For loop and share between width change and width jump audits 11-29-05 k. hubbard
-
-
-		// audit change indicator
-
-		{
-			if ( (*io)->ChangeMarked() ) {
-				ostr << "Change indicator has not been removed." 
-					 << ends;
-				ADD_ERR(CCastStringHeatValidnError::WARNING);
-				isOk = false;
-			}
-		}
+	  if ((*io)->SlabWidth() > prevWidth) 
+	    //				&&
+	    //				code == ' ' )  //	Consider slit type i.e. Radicals ok. 
+	    
+	    {
+	      ostr << "Width jump from " << setw(3) << prevWidth
+		   << " to " << setw(3) << (*io)->SlabWidth()
+		   << " is invalid 2BOF outward jump"
+		   << ends;
+	      ADD_ERR(CCastStringHeatValidnError::FATAL);
+	      //	Had to reverse, not looking at slit type i.e. Radicals ok.	ADD_ERR(CCastStringHeatValidnError::WARNING); Changing transition width violations to Fatal 12-11-03 k. hubbard
+	      isOk = false;
+	    }
 	}
-
-	return isOk;
+    }
+    **/
+    
+//     **** !!!!!! Caution the variable below is shared between 2 width audits above and must get populated once after both or else one audit above will fail!!!! 11-29-05 k. hubbard
+    prevWidth = (*io)->SlabWidth();  // Important CAUTION!!!! repositioned here to work inside this For loop and share between width change and width jump audits 11-29-05 k. hubbard
+    // audit change indicator
+    {
+      if ( (*io)->ChangeMarked() ) {
+	ostr << "Change indicator has not been removed." 
+	     << ends;
+	ADD_ERR(CCastStringHeatValidnError::WARNING);
+	isOk = false;
+      }
+    }
+  }
+  return isOk;
 }
