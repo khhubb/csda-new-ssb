@@ -1,4 +1,6 @@
-//### replaces block: checks only for caster 1, except for trivial check of no pieces on the others.
+//### validation functions called with a caster-specific value: for now, left as an int
+
+//## caster 1 explicitly, the others only implicitly
 bool CCastStringValidator::IsNumberOfPiecesOk(vector<CCSOrder*>::const_iterator io, int caster) {
   bool isOk = true;
   int numPieces = (*io)->NumPieces();
@@ -18,24 +20,7 @@ bool CCastStringValidator::IsNumberOfPiecesOk(vector<CCSOrder*>::const_iterator 
   return isOk;
 }
 
-bool CCastStringValidator::IsSlitTypeCodeOk(vector<CCSOrder*>::const_iterator io) {
-  bool isOk = true;
-  char code = (*io)->SlitTypeCode();
-
-  if (code != 'D' && // Added noslit type code here on xxx4 condition codes 6-27-05 k. hubbard  
-      code != 'E' &&
-      code != 'F' &&
-      code != 'S' &&
-      code != 'R' &&
-      code != ' ') {
-    ostr << "invalid slit type code = " << code << ends;
-    ADD_ERR(CCastStringHeatValidnError::WARNING);
-    isOk = false;
-  }
-  return isOk;
-}
-
-//### Checks caster 3 only, except for trivial check for empty width on the others.
+//## Checks caster 3 only, except for trivial check for empty width on the others.
 bool CCastStringValidator::IsSteelWidthOk(vector<CCSOrder*>::const_iterator io, int caster) {
   bool isOk = true;
   Width width = (*io)->SlabWidth();
@@ -96,6 +81,143 @@ bool CCastStringValidator::IsSteelLengthOk(vector<CCSOrder*>::const_iterator io,
   return isOk;
 }
 
+//## caster 3 only
+bool CCastStringValidator::IsHeatPositionOfCombi3Ok(vector<CCSOrder*>::const_iterator io, int caster) {
+  //  check heat position for 3 combi startup slabs
+  bool isOk = true;
+  if ( caster == 3 ) { //### caster-specific
+    CString heatSpec3 = rHeat.Spec().Left(3);
+    CString heatSpec5 = rHeat.Spec().Left(5);
+    //                comm out spec check 7-01-04 k. hubbard
+    //				if ( heatSpec3 == "521"
+    //					 ||
+    //					 heatSpec3 == "523"
+    //					 || 
+    //					 heatSpec3 == "524"
+    //					 ||
+    //					 heatSpec5 == "52025"
+    //					 ||
+    //					 heatSpec5 == "52822"
+    //					 ||
+    //					 heatSpec5 == "52826" ) {
+    if ( prevWidth == 0  ) { // 1st lot in strand
+      int condn = (*io)->SlabCondnCode();
+      //	  if ( condn == 4682 || condn == 4782 ) {  comm. out low quality exception check 7-1-04 k. hubbard   
+      //		  // no op
+      //	  } 
+      //	  else if ( (*io)->SlabLength() > 315 ) {  changed per cast rules 6-30-04 k.hubbard
+      if ( (*io)->SlabLength() > 362 ) {
+	ostr << "Slab length " << setw(3) << (*io)->SlabLength() 
+	     << " > 362 in 1st slab."    // changed from 315 per cast rules 6-30-04 k.hubbard
+	     << ends;
+	//							ADD_ERR(CCastStringHeatValidnError::FATAL);
+	ADD_ERR(CCastStringHeatValidnError::WARNING);  // changed per J. Sarb-Beer 9-29-08 k. hubbard
+	isOk = false;
+      }   // 362" length check
+    }     // 1st slab startup check 
+          //				}           comm out 7-01-04 k. hubbard // spec check      
+  }               // 3 combi caster check
+  return isOk;
+} 
+
+//## Checks casters 1, 2, and 3
+bool CCastStringValidator::IsSteelLengthComplianceOk(vector<CCSOrder*>::const_iterator io, int caster) {         
+  bool isOk = true;
+  Length len = (*io)->SlabLength();
+
+  // Added 1 Slab Caster length check 2-4-10 k. hubbard  
+  if (caster == 1) { //### caster-specific
+    if (len > GlobalConstants.CasterSlabLengthMax(caster)) { //### caster-specific
+      ostr << "Slab length " << setw(3) << len 
+	   << " not within steelshop length boundary " << GlobalConstants.CasterSlabLengthMax(caster) //### caster-specific
+	   << ends;
+      ADD_ERR(CCastStringHeatValidnError::FATAL);
+      return false;
+    }
+  }
+  
+  // Added 2 Slab Caster length check 2-4-10 k. hubbard  
+  if (caster == 2) { //### caster-specific
+    // if ( len > GlobalConstants.CasterSlabLengthMax(caster) || len < 171 ) { //### caster-specific
+    if (len > GlobalConstants.CasterSlabLengthMax(caster)) { //### caster-specific
+      ostr << "Slab length " << setw(3) << len 
+	   << " not within steelshop length boundary " << GlobalConstants.CasterSlabLengthMax(caster) //### caster-specific
+	   << ends;
+      ADD_ERR(CCastStringHeatValidnError::FATAL);
+      return false;
+    }
+  }
+  else {
+    if (caster == 3) { //### caster-specific
+      if ( len > GlobalConstants.CasterSlabLengthMax(caster) || len < 171 ) { //### caster-specific
+	ostr << "Slab length " << setw(3) << len 
+	     << " not between steelshop length boundaries 171 and " << GlobalConstants.CasterSlabLengthMax(caster) //### caster-specific
+	     << ends;
+	ADD_ERR(CCastStringHeatValidnError::FATAL);
+	return false;
+      }
+    }
+  }
+  //			else {
+  if ((*io)->SlabLength() == 0) {
+    ostr << "Slab length 0 is invalid." << ends;
+    ADD_ERR(CCastStringHeatValidnError::FATAL);
+    isOk = false;
+  }
+  //			}
+  return isOk;
+}
+
+bool CCastStringValidator::IsExposureCodeOk(vector<CCSOrder*>::const_iterator io, int caster) {
+  bool isOk = true;
+  char exp = (*io)->ExposureCode();
+  int condn = (*io)->SlabCondnCode();
+
+  if (caster == 1) { //### caster-specific
+    if (condn > 0 && ( exp == 'E' || exp == 'U')) {
+      // no-op
+    }
+    else {
+      ostr << "Exposure code " << exp
+	   << " must be 'E' or 'U'"
+	   << ends;
+      ADD_ERR(CCastStringHeatValidnError::WARNING);
+      isOk = false;
+    }
+  }
+  else  {
+    if (condn > 0
+	&&
+	(exp == ' ' || exp == 'E' || exp == 'U' || exp == '1' || exp == '2')) {
+      // no-op
+    }
+    else {
+      ostr << "Exposure code '" << exp << "' is invalid" << ends;
+      ADD_ERR(CCastStringHeatValidnError::WARNING);
+      isOk = false;
+    }
+  }
+  return isOk;
+}
+
+//### validation functions without a caster-specific argument
+bool CCastStringValidator::IsSlitTypeCodeOk(vector<CCSOrder*>::const_iterator io) {
+  bool isOk = true;
+  char code = (*io)->SlitTypeCode();
+
+  if (code != 'D' && // Added noslit type code here on xxx4 condition codes 6-27-05 k. hubbard  
+      code != 'E' &&
+      code != 'F' &&
+      code != 'S' &&
+      code != 'R' &&
+      code != ' ') {
+    ostr << "invalid slit type code = " << code << ends;
+    ADD_ERR(CCastStringHeatValidnError::WARNING);
+    isOk = false;
+  }
+  return isOk;
+}
+
 bool CCastStringValidator::IsWidthTransitionOk(vector<CCSOrder*>::const_iterator io) {
   bool isOk = true;
   Width width = (*io)->SlabWidth();
@@ -111,6 +233,29 @@ bool CCastStringValidator::IsWidthTransitionOk(vector<CCSOrder*>::const_iterator
     //### code simplified to eliminate nested ifs
     if ((code == ' ') && !isTrans && (width > provWidthMax)) {
       ostr << "steel width (" << width << ") must not" << "be > Prov Max" << provWidthMax << ends;
+      ADD_ERR(CCastStringHeatValidnError::FATAL);
+      isOk = false;
+    }
+  }
+  return isOk;
+}
+
+bool CCastStringValidator::IsStrandNumOk(vector<CCSOrder*>::const_iterator io) {
+  bool isOk = true;
+  char slitCode = (*io)->SlitTypeCode();
+  int condnCode = (*io)->SlabCondnCode();
+
+  int dig3 = condnCode / 10 % 10; // get D of xxDx, third digit of ordered condition code  
+  int dig4 = condnCode / 1 % 10;  // get D of xxxD, fourth digit of ordered condition code
+
+  if (dig3 == 3 && dig4 == 4) {
+    if (slitCode == ' ' || slitCode == 'D') {
+      // do nothing operation
+    }
+    else {
+      ostr << "Condition code " << condnCode
+	   << " orders CAN NOT be slit per QDE Larry Thomas"
+	   << ends;
       ADD_ERR(CCastStringHeatValidnError::FATAL);
       isOk = false;
     }
@@ -138,52 +283,94 @@ bool CCastStringValidator::IsPlannedLengthOk(vector<CCSOrder*>::const_iterator i
   return isOk;
 }
 
+bool CCastStringValidator::IsTekKotePositionalOrderOk(vector<CCSOrder*>::const_iterator io) {
+  bool isOk = true;
+  int commodcode = (*io)->CICode();
+  bool isStock = ( (*io)->FpOrderNum().Left(7) == "9999999" );
+  int heatNumber = (*io)->HeatSeqNum();
+  int lotNumber = (*io)->LotNum();
+
+  if (prevWidth == 0 && heatNumber == 0)
+    //				&&
+    //					lotNumber == 1 )  // Verification  check for beginning of a Cast!!!
+    // important to put this initial update before the check above
+    //   for CheckStringHeatPosition
+    if (! isStock) { 
+      // Added commocode (11 [stringers], 45-50) to Tek/Kote material check 3-17-06 k. hubbard
+      if (commodcode == 11 ||
+	  commodcode == 12 || 
+	  commodcode == 17 ||
+	  commodcode == 18 ||
+	  commodcode == 19 ||
+	  commodcode == 20 ||
+	  commodcode == 21 ||
+	  commodcode == 45 ||
+	  commodcode == 46 ||
+	  commodcode == 47 ||
+	  commodcode == 48 ||
+	  commodcode == 49 ||
+	  commodcode == 50 ||
+	  commodcode == 72 ||
+	  commodcode == 73)
+	{
+	  ostr << "Tek and Kote commodity code " << setw(3) << commodcode
+	       << " can not be planned at start of a cast" 
+	       << ends;
+	  //  ADD_ERR(CCastStringHeatValidnError::FATAL);   // Changed to warning per new 1st cast piece cropping plans. 02/20/07 k. hubbard  
+	  ADD_ERR(CCastStringHeatValidnError::WARNING);
+	  isOk = false;
+	}
+    }
+  return isOk;
+}
+
+bool CCastStringValidator::IsWidthChangeOk(vector<CCSOrder*>::const_iterator io) {
+  bool isOk = true;
+ 
+  return isOk;
+}
+
 bool CCastStringValidator::Validate340080(int strandNum) 
 {
-	bool isOk = true;
-	ostrstream ostr;
+  bool isOk = true;
+  ostrstream ostr;
 
-	int caster = m_pCastString->Id().Caster(); //### caster-specific
+  int caster = m_pCastString->Id().Caster(); //### caster-specific
 
-	const vector<CCSOrder*>& strand = m_pCastString->Strand(strandNum);
+  const vector<CCSOrder*>& strand = m_pCastString->Strand(strandNum);
 
-	if ( strand.size() == 0 )
-		// nothing to check
-		return true;
+  if (strand.size() == 0)
+    // nothing to check
+    return true;
 
-	if ( strandNum == 2 && Caster::NumStrandsOnCaster(caster) == 1 ) { //### caster-specific
-		ostr << "Caster " << caster << ": There are orders on strand #2!" << ends;
-		//AddValidationString(ostr);
-		AddValidnError(-1,0,-1,ostr,CCastStringHeatValidnError::FATAL);
-		return false;
-	}
+  if (strandNum == 2 && Caster::NumStrandsOnCaster(caster) == 1) { //### caster-specific
+    ostr << "Caster " << caster << ": There are orders on strand #2!" << ends;
+    //AddValidationString(ostr);
+    AddValidnError(-1,0,-1,ostr,CCastStringHeatValidnError::FATAL);
+    return false;
+  }
 
-	Width prevWidth = 0;
+  Width prevWidth = 0;
 
-	for ( vector<CCSOrder*>::const_iterator io = strand.begin();
-		  io != strand.end();
-		  ++io ) {
+  for (vector<CCSOrder*>::const_iterator io = strand.begin(); io != strand.end(); ++io) {
+    CCastStringHeat& rHeat = (*m_pHeats)[ (*io)->HeatSeqNum() ];
+    if (!rHeat.IsMarked())
+      continue;
 
-		CCastStringHeat& rHeat = (*m_pHeats)[ (*io)->HeatSeqNum() ];
+    // audit lot spec -- we should already have this ok'd
+    //  We need to have some fun with certain digits of the spec.
+    FixHeatSpec( rHeat, caster ); //### caster-specific
 
-		if (!rHeat.IsMarked())
-			continue;
-
-		// audit lot spec -- we should already have this ok'd
-		//  We need to have some fun with certain digits of the spec.
-
-		FixHeatSpec( rHeat, caster ); //### caster-specific
-
-		//### predicates to replace code blocks below
-		isOk = IsNumberOfPiecesOk(io, caster) && 
-		  IsSlitTypeCodeOk(io) && 
-		  IsSteelWidthOk(io, caster); 
-
-		// audit numPieces
-		/** ###
-		{
+    //### predicates to replace code blocks below
+    isOk = IsNumberOfPiecesOk(io, caster) && 
+      IsSlitTypeCodeOk(io) && 
+      IsSteelWidthOk(io, caster);  //### and so on
+    
+    // audit numPieces
+    /** ###
+	{
 			int numPieces = (*io)->NumPieces();
-
+			
 			if ( caster == 1 ) { //### caster-specific
 
 				if ( numPieces == 0 
@@ -368,7 +555,7 @@ bool CCastStringValidator::Validate340080(int strandNum)
 
 		// audit planned length
 
-		{
+		// {
 //			{ 
 //				ostrstream msg;
 //				msg << "Slab length: " << (*io)->SlabLength()
@@ -407,9 +594,8 @@ bool CCastStringValidator::Validate340080(int strandNum)
 			}
 			}
 			## **/
-
+		  /**###
 		//  check heat position for 3 combi startup slabs
-
 		{
 			if ( caster == 3 ) { //### caster-specific
 
@@ -451,9 +637,10 @@ bool CCastStringValidator::Validate340080(int strandNum)
 //				}           comm out 7-01-04 k. hubbard // spec check      
 			}               // 3 combi caster check
 		}                   // audit heat position check
+		## **/
 
+    /** ##
 		// audit steel length compliance with steelshop limitations
-
 		{
 			Length len = (*io)->SlabLength();
 
@@ -502,6 +689,7 @@ bool CCastStringValidator::Validate340080(int strandNum)
 			}
 //			}
 		}
+		## **/
 
 
 		// audit strand num
@@ -510,7 +698,7 @@ bool CCastStringValidator::Validate340080(int strandNum)
 		// Reinstalled 8/8/03 K. Hubbard 
 		// New: CastStringValidator.cpp for special condition code assignments; Maint. added by K. Hubbard 8-5-03  
 		// audit ordered condition code for special non-slit instructions. - per Larry Thomas, Quality Design Engineer (QDE). 
-
+    /** ##
 		{
 
 			char slitCode = (*io)->SlitTypeCode();
@@ -538,11 +726,11 @@ bool CCastStringValidator::Validate340080(int strandNum)
 
 
 		}
-
+		## **/
 
 
 		// audit exposure code
-
+    /** ##
 		{
 			char exp = (*io)->ExposureCode();
 			int condn = (*io)->SlabCondnCode();
@@ -575,9 +763,10 @@ bool CCastStringValidator::Validate340080(int strandNum)
 				}
 			}
 		}
+		## **/
 
 		// Audit Tek and Kote positional planned orders at beginning of cast violations.  Added 03-06-06 k. hubbard per P. Velasco
-
+    /** ##
 		{
 
 			int commodcode = (*io)->CICode();
@@ -637,10 +826,10 @@ bool CCastStringValidator::Validate340080(int strandNum)
 				}
 			}
 		}
+		## **/
 
-
+    /** ##
 		// audit width change.  Radicals are ok here 12-11-03 k. hubbard
-
 		{
 
 			char code = (*io)->SlitTypeCode();
@@ -669,6 +858,7 @@ bool CCastStringValidator::Validate340080(int strandNum)
 				isOk = false;
 			}
 		}
+    **/
 
 ////			prevWidth = (*io)->SlabWidth();  //Important !!!! repositioned below width jump audit to work inside this For loop and share between width audits 11-22-05 k. hubbard
 
@@ -737,7 +927,6 @@ bool CCastStringValidator::Validate340080(int strandNum)
 				}
 			}
 		}
-
 		// End Maint. Note: K. Hubbard 3-15-06; End maint. of add new fatal here for checking width (*io)->ProvSlabWidthMin & Max
 
 
