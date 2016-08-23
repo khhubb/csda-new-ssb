@@ -381,7 +381,7 @@ bool CCastStringValidator::Is80InSpreadSqueezeOk(vector<CCSOrder*>::const_iterat
 
 		float ProvWidthMax;
 		CString strProvMax;
-		//			strProvMax.Format("%2.1f",(*io)->ProvSlabWidthMax());   Changed line (see next line) to throw reference more reliable Order.h field here for max value 4-5-07 k. hubbard
+		// strProvMax.Format("%2.1f",(*io)->ProvSlabWidthMax());   Changed line (see next line) to throw reference more reliable Order.h field here for max value 4-5-07 k. hubbard
 		strProvMax.Format("%2.1f", (*io)->Order()->ProvSlabWidthMax());
 		ProvWidthMax = atof(strProvMax);
 
@@ -565,7 +565,7 @@ bool CCastStringValidator::Validate340080(int strandNum)
 		//### There are 19 audit blocks, and so 19 predicates to replace these.
 		//### FOOBAR (for search purposes)
 		isOk =
-			IsNumberOfPiecesOk(io, caster) &&	     // block  1
+			IsNumberOfPiecesOk(io, caster) &&	 // block  1
 			IsSlitTypeCodeOk(io) &&                  // block  2
 			IsSteelWidthOk(io, caster) &&            // block  3
 			IsWidthTransitionOk(io) &&               // block  4
