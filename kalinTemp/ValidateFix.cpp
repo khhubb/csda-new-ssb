@@ -534,7 +534,7 @@ bool CCastStringValidator::IsAuditChangeIndicatorOk(CCSOrder* > :const_iterator 
 	return isOk;
 }
 
-bool CCastStringValidator::Validate340080(int strandNum)
+bool CCastStringValidator::Validate340080TEST(int strandNum)
 {
 	bool isOk = true;
 	ostrstream ostr;
@@ -564,8 +564,8 @@ bool CCastStringValidator::Validate340080(int strandNum)
 		//### predicates to replace code blocks below: predicates called in the same order as the blocks they replace
 		//### There are 19 audit blocks, and so 19 predicates to replace these.
 		//### FOOBAR (for search purposes)
-		isOk =
-			IsNumberOfPiecesOk(io, caster) &&	 // block  1
+		bool isOk =
+			IsNumberOfPiecesOk(io, caster) &&	     // block  1
 			IsSlitTypeCodeOk(io) &&                  // block  2
 			IsSteelWidthOk(io, caster) &&            // block  3
 			IsWidthTransitionOk(io) &&               // block  4
