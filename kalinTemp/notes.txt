@@ -111,6 +111,26 @@ SpecMgr.cpp
 CasterScen.cpp
 ScenMgr.cpp
 
+=======================================
 
+Sections from document that pertain:
+
+see rule attachment: 1.1.1, 1.1.2, 1.1.3, 1.1.7, 1.3, 1.5, 1.6.
+=================================
+
+PerUserDefaultValues table is the new one; see caster-convert-docs.txt\dp-updates.txt
+
+From KH (8-25):
+
+The values you refer to are the IHW (west side for 3SP ONLY ) condition codes.
+We (Mi-Shama Fletcher, and I) are adding a new (alpha 4 byte column) MORD-SMK-COND-WEST to
+CSD’s P-MILL-ORDER table, on database CSD_NEWINL, on SQL Server IHE-SQL2012TV test AND IHE-SQL03P Production.
+This newly added column will be used to provide CSD with the populated west side condition code data values, by Order.
+This will provide the corresponding database values.
+ 
+FYI……
+ On the east side (CSD today) MORD-SLAB-CONDITION-CD (numeric 4 bytes), on P_MiLL_Order, is used to incorporate
+ similar quality cast rules or constraints.
+  
 
 
