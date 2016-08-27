@@ -35,6 +35,11 @@ CREATE TABLE [dbo].[PerUserDefaultValues](
 
 GO
 
-
+However, don't lose the values.
+Add values for casters 4,5:
+ 
+Min 255
+Aim 265
+Max 280
 
 
