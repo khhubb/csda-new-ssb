@@ -33,12 +33,9 @@ public:
 	int		m_caster23HeatSizeAim;
 	int		m_caster23HeatSizeMax;
 	int		m_caster23HeatSizeMin;
-	int m_caster4HeatSizeAim;
-	int m_caster4HeatSizeMax;
-	int m_caster4HeatSizeMin;
-	int m_caster5HeatSizeAim;
-	int m_caster5HeatSizeMax;
-	int m_caster5HeatSizeMin;
+	int m_caster45HeatSizeAim;
+	int m_caster45HeatSizeMax;
+	int m_caster45HeatSizeMin;
 	//}}AFX_DATA
 
 

@@ -45,12 +45,9 @@ CPpgHeatSizes::CPpgHeatSizes() : CPropertyPage(CPpgHeatSizes::IDD)
 	m_caster23HeatSizeAim = 0;
 	m_caster23HeatSizeMax = 0;
 	m_caster23HeatSizeMin = 0;
-	m_caster4HeatSizeAim = 0;
-	m_caster4HeatSizeMax = 0;
-	m_caster4HeatSizeMin = 0;
-	m_caster5HeatSizeAim = 0;
-	m_caster5HeatSizeMax = 0;
-	m_caster5HeatSizeMin = 0;
+	m_caster45HeatSizeAim = 0;
+	m_caster45HeatSizeMax = 0;
+	m_caster45HeatSizeMin = 0;
 	//}}AFX_DATA_INIT
 }
 
@@ -74,18 +71,12 @@ void CPpgHeatSizes::DoDataExchange(CDataExchange* pDX)
 	DDV_MinMaxInt(pDX, m_caster23HeatSizeMax, 0, 500);
 	DDX_Text(pDX, IDC_EDIT_CASTER23_HEAT_SIZE_MIN, m_caster23HeatSizeMin);
 	DDV_MinMaxInt(pDX, m_caster23HeatSizeMin, 0, 500);
-	DDX_Text(pDX, IDC_EDIT_CASTER4_HEAT_SIZE_AIM, m_caster4HeatSizeAim);
-	DDV_MinMaxInt(pDX, m_caster4HeatSizeAim, 0, 500);
-	DDX_Text(pDX, IDC_EDIT_CASTER4_HEAT_SIZE_MAX, m_caster4HeatSizeMax);
-	DDV_MinMaxInt(pDX, m_caster4HeatSizeMax, 0, 500);
-	DDX_Text(pDX, IDC_EDIT_CASTER4_HEAT_SIZE_MIN, m_caster4HeatSizeMin);
-	DDV_MinMaxInt(pDX, m_caster4HeatSizeMin, 0, 500);
-	DDX_Text(pDX, IDC_EDIT_CASTER5_HEAT_SIZE_AIM, m_caster5HeatSizeAim);
-	DDV_MinMaxInt(pDX, m_caster5HeatSizeAim, 0, 500);
-	DDX_Text(pDX, IDC_EDIT_CASTER5_HEAT_SIZE_MAX, m_caster5HeatSizeMax);
-	DDV_MinMaxInt(pDX, m_caster5HeatSizeMax, 0, 500);
-	DDX_Text(pDX, IDC_EDIT_CASTER5_HEAT_SIZE_MIN, m_caster5HeatSizeMin);
-	DDV_MinMaxInt(pDX, m_caster5HeatSizeMin, 0, 500);
+	DDX_Text(pDX, IDC_EDIT_CASTER45_HEAT_SIZE_AIM, m_caster45HeatSizeAim);
+	DDV_MinMaxInt(pDX, m_caster45HeatSizeAim, 0, 500);
+	DDX_Text(pDX, IDC_EDIT_CASTER45_HEAT_SIZE_MAX, m_caster45HeatSizeMax);
+	DDV_MinMaxInt(pDX, m_caster45HeatSizeMax, 0, 500);
+	DDX_Text(pDX, IDC_EDIT_CASTER45_HEAT_SIZE_MIN, m_caster45HeatSizeMin);
+	DDV_MinMaxInt(pDX, m_caster45HeatSizeMin, 0, 500);
 	//}}AFX_DATA_MAP
 }
 
@@ -120,18 +111,13 @@ BOOL CPpgHeatSizes::OnKillActive()
 		msg += "For casters 2,3: Min should be <= Aim\n";
 	else if ( m_caster23HeatSizeMax < m_caster23HeatSizeMin ) 
 		msg += "For casters 2,3: Min should be <= Aim\n";
-	else if (m_caster4HeatSizeAim < m_caster4HeatSizeMin)
-		msg += "For caster 4: Min should be <= Aim\n";
-	else if (m_caster4HeatSizeMax < m_caster4HeatSizeAim)
-		msg += "For caster 4: Min should be <= Aim\n";
-	else if (m_caster4HeatSizeMax < m_caster4HeatSizeMin)
-		msg += "For caster 4: Min should be <= Aim\n";
-	else if (m_caster5HeatSizeAim < m_caster5HeatSizeMin)
-		msg += "For caster 5: Min should be <= Aim\n";
-	else if (m_caster5HeatSizeMax < m_caster5HeatSizeAim)
-		msg += "For caster 5: Min should be <= Aim\n";
-	else if (m_caster5HeatSizeMax < m_caster5HeatSizeMin)
-		msg += "For caster 5: Min should be <= Aim\n";
+	else if (m_caster45HeatSizeAim < m_caster45HeatSizeMin)
+		msg += "For caster 4,5: Min should be <= Aim\n";
+	else if (m_caster45HeatSizeMax < m_caster45HeatSizeAim)
+		msg += "For caster 4,5: Min should be <= Aim\n";
+	else if (m_caster45HeatSizeMax < m_caster45HeatSizeMin)
+		msg += "For caster 4,5: Min should be <= Aim\n";
+
 
 	if ( msg.GetLength() > 0  ) {
 		MessageBox(msg,"Bad values",MB_ICONERROR);
@@ -150,13 +136,13 @@ BOOL CPpgHeatSizes::OnKillActive()
 	m_pConsts->SetAimHeatSize(Caster::C3, m_caster23HeatSizeAim);
 	m_pConsts->SetMaxHeatSize(Caster::C3, m_caster23HeatSizeMax);
 
-	m_pConsts->SetMinHeatSize(Caster::C4, m_caster4HeatSizeMin);
-	m_pConsts->SetAimHeatSize(Caster::C4, m_caster4HeatSizeAim);
-	m_pConsts->SetMaxHeatSize(Caster::C4, m_caster4HeatSizeMax);
+	m_pConsts->SetMinHeatSize(Caster::C4, m_caster45HeatSizeMin);
+	m_pConsts->SetAimHeatSize(Caster::C4, m_caster45HeatSizeAim);
+	m_pConsts->SetMaxHeatSize(Caster::C4, m_caster45HeatSizeMax);
 
-	m_pConsts->SetMinHeatSize(Caster::C5, m_caster5HeatSizeMin);
-	m_pConsts->SetAimHeatSize(Caster::C5, m_caster5HeatSizeAim);
-	m_pConsts->SetMaxHeatSize(Caster::C5, m_caster5HeatSizeMax);
+	m_pConsts->SetMinHeatSize(Caster::C5, m_caster45HeatSizeMin);
+	m_pConsts->SetAimHeatSize(Caster::C5, m_caster45HeatSizeAim);
+	m_pConsts->SetMaxHeatSize(Caster::C5, m_caster45HeatSizeMax);
 
 	m_pConsts->Save();
 
@@ -179,13 +165,9 @@ BOOL CPpgHeatSizes::OnSetActive()
 	m_caster23HeatSizeAim = m_pConsts->AimHeatSize(Caster::C2);
 	m_caster23HeatSizeMax = m_pConsts->MaxHeatSize(Caster::C2);
 	
-	m_caster4HeatSizeMin = m_pConsts->MinHeatSize(Caster::C4);
-	m_caster4HeatSizeAim = m_pConsts->AimHeatSize(Caster::C4);
-	m_caster4HeatSizeMax = m_pConsts->MaxHeatSize(Caster::C4);
-
-	m_caster5HeatSizeMin = m_pConsts->MinHeatSize(Caster::C5);
-	m_caster5HeatSizeAim = m_pConsts->AimHeatSize(Caster::C5);
-	m_caster5HeatSizeMax = m_pConsts->MaxHeatSize(Caster::C5);
+	m_caster45HeatSizeMin = m_pConsts->MinHeatSize(Caster::C4);
+	m_caster45HeatSizeAim = m_pConsts->AimHeatSize(Caster::C4);
+	m_caster45HeatSizeMax = m_pConsts->MaxHeatSize(Caster::C4);
 
 	UpdateData(false);
 
