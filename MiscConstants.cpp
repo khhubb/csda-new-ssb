@@ -68,7 +68,7 @@ double CMiscConstants::m_steelDensity = 0.2833;
 //Length CMiscConstants::m_casterSlabLengthMaxes[4] = { 0, 440, 432, 431 };  // Changed 3Combi to 431" max plan length, exceeding these limits writes 'Fatal' in CastStringValidator,cpp k. hubbard 02-04-10 maint.
 //Length CMiscConstants::m_casterSlabLengthMaxes[4] = { 0, 440, 440, 431 };  // Changed 2BOF to 440" max plan length, exceeding these limits writes 'Fatal' in CastStringValidator,cpp k. hubbard 01-22-16 maint.
 // CASTER TODO: Determine casterSlabLengthMaxes for casters 4,5
-Length CMiscConstants::m_casterSlabLengthMaxes[Caster::CasterArrayLen] = { 0, 452, 452, 431, 450, 450 };  // Changed 1SC and 2SC to 452" max plan length, exceeding these limits writes 'Fatal' in CastStringValidator,cpp k. hubbard 03-31-16 maint.
+Length CMiscConstants::m_casterSlabLengthMaxes[Caster::CasterArrayLen] = { 0, 452, 452, 431, 460, 460 };  // Changed 1SC and 2SC to 452" max plan length, exceeding these limits writes 'Fatal' in CastStringValidator,cpp k. hubbard 03-31-16 maint.
 
 
 //static 
@@ -113,7 +113,6 @@ CMiscConstants::CMiscConstants()
 	m_turnaroundTimes[Caster::C1] = CTimeSpan(0,0,0,0);
 	m_turnaroundTimes[Caster::C2] = CTimeSpan(0, 0, 75, 0);
 	m_turnaroundTimes[Caster::C3] = CTimeSpan(0, 0, 90, 0);
-	// CASTER TODO: determine correct values for turnaround times.
 	m_turnaroundTimes[Caster::C4] = CTimeSpan(0, 0, 150, 0);
 	m_turnaroundTimes[Caster::C5] = CTimeSpan(0, 0, 90, 0);
 
