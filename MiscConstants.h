@@ -58,7 +58,11 @@ private:
 	static double m_steelDensity;
 	static Length m_casterSlabLengthMaxes[Caster::CasterArrayLen];
 	static Length m_max80HsmRunoutLength;
-	static Length m_minCastableSlabLength;
+
+	static Length m_minCastableSlabLengths[Caster::CasterArrayLen];
+		// minimum slab length
+		//  on a per-caster basis, so index = 1,2,3,4,5
+
 
 	static int	m_archiveVersionRetentionCount;
 
@@ -88,8 +92,8 @@ public:
 	static Length Max80HsmRunoutLength()
 	{	return m_max80HsmRunoutLength;	}
 
-	static Length MinCastableSlabLength()
-	{	return m_minCastableSlabLength;	}
+	static Length MinCastableSlabLength(int caster)
+	{	return m_minCastableSlabLengths[caster];	}
 
 	static int ArchiveVersionRetentionCount()
 	{	return m_archiveVersionRetentionCount;	}

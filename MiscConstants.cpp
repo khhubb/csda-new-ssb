@@ -75,7 +75,7 @@ Length CMiscConstants::m_casterSlabLengthMaxes[Caster::CasterArrayLen] = { 0, 45
 Length CMiscConstants::m_max80HsmRunoutLength = 440;
 
 //static 
-Length CMiscConstants::m_minCastableSlabLength = 218;
+Length CMiscConstants::m_minCastableSlabLengths[Caster::CasterArrayLen] = { 0, 218, 218, 218, 200, 200 };
 
 
 // static

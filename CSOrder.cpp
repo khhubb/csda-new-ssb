@@ -95,6 +95,8 @@ static char THIS_FILE[]=__FILE__;
 #include "MiscConstants.h"
 #include "CastStringValidator.h"
 #include "SSBOutput.h"
+#include "CastString.h"
+#include "CasterScen.h"
 
 #include "CheckStockApplicationRules.h"   // added k. hubbard 4-4-08
 
@@ -828,12 +830,12 @@ bool CCSOrder::IsSlit(Width slabWidth, Width maxSlabWidth)
 
 Length CCSOrder::ComputeSlabLengthFromWidth(Width newWidth) const
 {
-	return ComputeSlabLengthFromWidth(Order(),newWidth);
+	return ComputeSlabLengthFromWidth(Order(),m_pCastString->CasterScen()->Caster(), newWidth);
 }
 
 
 // static
-Length CCSOrder::ComputeSlabLengthFromWidth(COrder* pOrder, Width newWidth)
+Length CCSOrder::ComputeSlabLengthFromWidth(COrder* pOrder, int caster, Width newWidth)
 {
 	// This code modified from DPA Program #U0340050
 
@@ -846,7 +848,7 @@ Length CCSOrder::ComputeSlabLengthFromWidth(COrder* pOrder, Width newWidth)
 
  
     length 
-		= min(max(length,CMiscConstants::MinCastableSlabLength()),
+		= min(max(length,CMiscConstants::MinCastableSlabLength(caster)),
 		      CMiscConstants::Max80HsmRunoutLength());
 
 	// return Length(long(length+0.5));
@@ -874,7 +876,8 @@ Weight CCSOrder::ComputeSlabWeight(Width width, Length length)
 //
 
 
-void CCSOrder::CalculateMinMaxLengthsAux(Width width,
+void CCSOrder::CalculateMinMaxLengthsAux(int caster,
+										 Width width,
 										 Thick thickness,
 										 Weight adjustedMinSlabWgt,
 										 Weight adjustedMaxSlabWgt,
@@ -898,11 +901,11 @@ void CCSOrder::CalculateMinMaxLengthsAux(Width width,
 		rMinL = rMaxL * 0.90;
 
 	rMinL = min(max(rMinL,
-				   CMiscConstants::MinCastableSlabLength()),
+				   CMiscConstants::MinCastableSlabLength(caster)),
 			   CMiscConstants::Max80HsmRunoutLength());
 
 	rMaxL = min(max(rMaxL,
-	               CMiscConstants::MinCastableSlabLength()),
+		CMiscConstants::MinCastableSlabLength(caster)),
 			   CMiscConstants::Max80HsmRunoutLength());
 }
 
@@ -911,6 +914,7 @@ void CCSOrder::CalculateMinMaxLengthsAux(Width width,
 
 // static
 void CCSOrder::CalculateMinMaxLengths(COrder* pOrder,
+									  int caster,
 									  Width width,
 									  Length& rMinLength,
 									  Length& rMaxLength)
@@ -929,7 +933,8 @@ void CCSOrder::CalculateMinMaxLengths(COrder* pOrder,
 		adjMaxWgt = pOrder->MaxSlabWgt();
 	}
 
-	CalculateMinMaxLengthsAux(width,
+	CalculateMinMaxLengthsAux(caster,
+							  width,
 						      pOrder->SlabThickness(),
 						      adjMinWgt,
 						      adjMaxWgt,
@@ -947,7 +952,7 @@ void CCSOrder::CalculateLengths(int caster,  //### caster-specific
 								Length& rLength,
 								Length& rMaxLength)
 {
-	rLength = ComputeSlabLengthFromWidth(pOrder,width);
+	rLength = ComputeSlabLengthFromWidth(pOrder,caster,width);
 
 	if ( pOrder->IsCMS() ) {
 
@@ -964,7 +969,7 @@ void CCSOrder::CalculateLengths(int caster,  //### caster-specific
 		}
 	}
 
-	CalculateMinMaxLengths(pOrder,width,rMinLength,rMaxLength);
+	CalculateMinMaxLengths(pOrder,caster,width,rMinLength,rMaxLength);
 
 	// Subtracting 2 inches from reprovide plan (aim) lengths sent to casters. 10/11/04 k. hubbard   
 	if	( rMaxLength - rMinLength > 2 ) {

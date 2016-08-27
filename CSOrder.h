@@ -537,7 +537,7 @@ public:
 	void NoteSlabHeatAssigns(int heatIndex, int numPcs);
 
 	Length ComputeSlabLengthFromWidth(Width newWidth) const;
-	static Length ComputeSlabLengthFromWidth(COrder* pOrder, Width newWidth);
+	static Length ComputeSlabLengthFromWidth(COrder* pOrder, int caster, Width newWidth);
 
 	static Weight ComputeSlabWeight(Width width, Length length);
 
@@ -583,6 +583,7 @@ public:
 
 
 	static void CalculateMinMaxLengths(COrder* pOrder,
+									   int caster,
 									   Width width,
 									   Length& rMinLength,
 									   Length& rMaxLength);
@@ -610,7 +611,8 @@ private:
 	void Init(const CCheckStockApplicationRules& x);  // added 4-4-08 k. hubbard
 
 
-	static void CalculateMinMaxLengthsAux(Width width,
+	static void CalculateMinMaxLengthsAux(int caster,
+										  Width width,
 										 Thick thickness,									   
 										 Weight adjustedMinSlabWgt,
 										 Weight adjustedMaxSlabWgt,

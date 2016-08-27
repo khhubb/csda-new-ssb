@@ -2398,6 +2398,7 @@ void CCastStringValidator::ComputeSlabLength(int caster,	//### caster-specific
 {
 	if ( isLenOk ) {
 		CCSOrder::CalculateMinMaxLengths(pOrder->Order(),
+										 caster,
 										 pOrder->SlabWidth(),
 										 minL,
 									     maxL);
