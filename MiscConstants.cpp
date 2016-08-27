@@ -114,8 +114,8 @@ CMiscConstants::CMiscConstants()
 	m_turnaroundTimes[Caster::C2] = CTimeSpan(0, 0, 75, 0);
 	m_turnaroundTimes[Caster::C3] = CTimeSpan(0, 0, 90, 0);
 	// CASTER TODO: determine correct values for turnaround times.
-	m_turnaroundTimes[Caster::C4] = CTimeSpan(0, 0, 0, 0);
-	m_turnaroundTimes[Caster::C5] = CTimeSpan(0, 0, 0, 0);
+	m_turnaroundTimes[Caster::C4] = CTimeSpan(0, 0, 150, 0);
+	m_turnaroundTimes[Caster::C5] = CTimeSpan(0, 0, 90, 0);
 
 }
 
