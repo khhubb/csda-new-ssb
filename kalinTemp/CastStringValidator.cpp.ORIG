@@ -1422,7 +1422,6 @@ bool CCastStringValidator::Validate340080(int strandNum)
 		// nothing to check
 		return true;
 
-	//#### Presumably casters 4 and 5 should be included here: each has 1 strand
 	if ( strandNum == 2 && Caster::NumStrandsOnCaster(caster) == 1 ) { //### caster-specific
 		ostr << "Caster " << caster << ": There are orders on strand #2!" << ends;
 		//AddValidationString(ostr);
@@ -1497,7 +1496,6 @@ bool CCastStringValidator::Validate340080(int strandNum)
 
 
 		// audit steel width
-		//#### Not clear whether and how width  changes play into this logic.
 		{
 			Width width = (*io)->SlabWidth();
 
@@ -1671,7 +1669,6 @@ bool CCastStringValidator::Validate340080(int strandNum)
 		//  check heat position for 3 combi startup slabs
 
 		{
-			//#### Need rules here for 4 and 5 on slab length. For both, MIN is 200" and MAX is 460".
 			if ( caster == 3 ) { //### caster-specific
 
 				CString heatSpec3 = rHeat.Spec().Left(3);
@@ -1772,7 +1769,6 @@ bool CCastStringValidator::Validate340080(int strandNum)
 		// New: CastStringValidator.cpp for special condition code assignments; Maint. added by K. Hubbard 8-5-03  
 		// audit ordered condition code for special non-slit instructions. - per Larry Thomas, Quality Design Engineer (QDE). 
 
-		//##### How do the scheduling rules in 1.1 Degrades section pertain here?
 		{
 
 			char slitCode = (*io)->SlitTypeCode();
@@ -1804,7 +1800,7 @@ bool CCastStringValidator::Validate340080(int strandNum)
 
 
 		// audit exposure code
-		//######### How do 1.1 Degrade rules pertain here for casters 4 and 5?
+
 		{
 			char exp = (*io)->ExposureCode();
 			int condn = (*io)->SlabCondnCode();
@@ -2168,7 +2164,6 @@ bool CCastStringValidator::Validate340080(int strandNum)
 		// Audit 2BOF inward width change designs.  1-28-10 k. hubbard
 
 		{
-		//######### Not clear on width change rules for 4 and 5 (1.6 in documentation)
 		if (( caster == 2 || caster == 3) //### caster-specific
 			&&
 			 prevWidth > 0)
@@ -2248,7 +2243,6 @@ bool CCastStringValidator::FixHeatSpec( CCastStringHeat& rHeat, int caster ) //#
 
 
 // static 
-//############## Heat spec rules for 4 and 5 are not clear.
 bool CCastStringValidator::FixHeatSpec(CString& heatSpec,
 									   const CString& orderedSpec,
 									   int caster) //### caster-specific
