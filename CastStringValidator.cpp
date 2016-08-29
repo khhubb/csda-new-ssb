@@ -1407,6 +1407,30 @@ bool CCastStringValidator::ValidateLotSpecs( CCastStringHeat& rHeat, int strandN
 
 int TRANS_WIDTH = 1;
 
+bool CCastStringValidator::Validate3SP(int caster) {
+	// Check the strand size, returning true if the size is zero.
+	int strandNum = 1;  // only one strand per caster
+	const vector<CCSOrder*>& strand = m_pCastString->Strand(strandNum);
+	if (strand.size() == 0) return true;  // trivially ok, as there's nothing to check.
+		
+	Width prevWidth = 0; // we start at the beginning
+	// Iterate over the orders, validating as we go.
+	for (vector<CCSOrder*>::const_iterator io = strand.begin();
+		io != strand.end();
+		++io) {
+
+		// Consider only marked heats.
+		CCastStringHeat& rHeat = (*m_pHeats)[(*io)->HeatSeqNum()];
+		if (!rHeat.IsMarked())	
+			continue;
+
+		// Audit the lot spec, looking at specific digits.
+		FixHeatSpec(rHeat, caster); //### caster-specific
+
+
+	}
+
+}
 
 bool CCastStringValidator::Validate340080(int strandNum) 
 {
@@ -1415,6 +1439,9 @@ bool CCastStringValidator::Validate340080(int strandNum)
 
 	int caster = m_pCastString->Id().Caster(); //### caster-specific
 
+	//### new code
+	if (caster == 4 || caster == 5)
+		return Validate3SP(caster);
 
 	const vector<CCSOrder*>& strand = m_pCastString->Strand(strandNum);
 
@@ -2208,6 +2235,81 @@ bool CCastStringValidator::Validate340080(int strandNum)
 	}
 
 	return isOk;
+}
+
+bool CCastStringValidator::FixHeatSpec3SP(CCastStringHeat& rHeat, int caster) { //### caster-specific
+	int strandNum = 1; // only one strand
+
+	// At the end?
+	if (rHeat.StrandBegin(strandNum) == rHeat.StrandEnd(strandNum))
+		return true;
+
+	// Set the order.
+	CCSOrder* pOrder = NULL;
+	if (rHeat.StrandBegin(strandNum) != rHeat.StrandEnd(strandNum))
+		pOrder = *rHeat.StrandBegin(strandNum);
+
+	const CString& orderedSpec = pOrder->LotSpec();
+	CString heatSpec = rHeat.Spec();
+
+	// Extend the fixing of the HeatSpec.
+	bool result = FixHeatSpec3SP(heatSpec, orderedSpec, caster); //### caster-specific
+	if (!result) {
+		ostrstream ostr;
+		ostr << "Unable to find heat spec:"
+			<< "\n  Original heat spec: " << LPCTSTR(rHeat.Spec())
+			<< "\n  First ordered spec: " << LPCTSTR(orderedSpec)
+			<< "\n  Converted heat spec: " << LPCTSTR(heatSpec)
+			<< ends;
+		AfxMessageBox(ostr.str());
+		ostr.freeze(false);
+		return false;
+	}
+
+	rHeat.SetSpec(heatSpec, caster); //### caster-specific
+	return true;
+}
+
+//### For now, entire body is copy of old version for casters 1, 2, and 3
+bool CCastStringValidator::FixHeatSpec3SP(CString& heatSpec, const CString& orderedSpec, int caster) { //### caster-specific
+	if (orderedSpec.GetLength() != 7)
+		return false;
+	if (heatSpec.GetLength() != 7)
+		return false;
+
+	char ord4 = orderedSpec[3];  // compare fourth digit of individual lot specs within the heat spec. k. hubbard
+	char ord6 = orderedSpec[5];  // compare sixth digit of individual lot specs within the heat spec. k. hubbard
+
+	//#### What should these digits be?
+	if (caster == 2 || caster == 3) { //### caster-specific
+
+		if (ord4 == '2' || ord4 == '6')
+			heatSpec.SetAt(3, ord4);
+		else
+			heatSpec.SetAt(3, '2');
+
+		if (ord6 == '4')
+			heatSpec.SetAt(5, '0');
+	}
+	else {
+
+		CString front = heatSpec.Left(5);
+		if (front == "52440" || front == "52442" || front == "52449") {
+			// do nothing.     Added 52442xx spec above, to the exception list of fourth digit modifications. maint. 5/30/06 k. hubbard
+		}
+		else {
+			if (ord4 == '7' || ord4 == '4' || ord4 == '6')
+				heatSpec.SetAt(3, ord4);
+			else
+				heatSpec.SetAt(3, '7');
+
+			if (ord4 == '4')
+				heatSpec.SetAt(5, '4');
+		}
+	}
+
+	CSpec* pSpec = TheSnapshot.SpecMgr().FindSpecMaybe(heatSpec, caster); //### caster-specific
+	return pSpec != 0;
 }
 
 bool CCastStringValidator::FixHeatSpec( CCastStringHeat& rHeat, int caster ) //### caster-specific

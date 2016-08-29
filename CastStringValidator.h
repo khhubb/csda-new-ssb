@@ -103,10 +103,12 @@ public:
 
 	/////////////////////////////////////////////////////////////////
 	//
-	// New predicates (still undecided on this approach)
+	// New stuff for 3SP
 	//
 	/////////////////////////////////////////////////////////////////
-	
+	bool CCastStringValidator::Validate3SP(int caster); 
+	bool CCastStringValidator::FixHeatSpec3SP(CCastStringHeat& rHeat, int caster);
+	bool CCastStringValidator::FixHeatSpec3SP(CString& heatSpec, const CString& orderedSpec, int caster);
 
 	////////////////////////////////////////////////////////////////
 	//	
