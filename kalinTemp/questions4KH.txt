@@ -45,3 +45,22 @@ if (caster == 2 || caster == 3) { //### caster-specific
 Thanks.
 ##########################################################
 
+### August 29th
+
+In the validation code, we have:
+
+//### Does this hold for 3SP?
+// avoid impractical 5% CMS increase if plan steel length >= 365
+// assumption: 384 is max length 384 - 5% = 365
+if ((*io)->SlabLength() >= 365) {
+  (*io)->PlanSteelLengthMin(GlobalConstants.CasterSlabLengthMax(caster)); //### caster-specific
+  (*io)->PlanSteelLengthMax(GlobalConstants.CasterSlabLengthMax(caster)); //### caster-specific
+}
+#####################################################################################
+
+### August 29th Exposure codes
+
+in original, the if-clause is for caster 1; the else clause covers the rest.
+
+
+
