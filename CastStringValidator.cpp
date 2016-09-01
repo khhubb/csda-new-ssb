@@ -1426,7 +1426,7 @@ bool CCastStringValidator::Validate3SP(int caster) {
 			continue;
 
 		// Audit the lot spec, looking at specific digits.
-		FixHeatSpec(rHeat, caster); //### caster-specific
+		FixHeatSpec3SP(rHeat, caster); //### caster-specific
 
 		// Audit the number of pieces. Specific numbers for 4 and 5 other than not zero? See old version for details on caster 1.
 		int numPieces = (*io)->NumPieces();
