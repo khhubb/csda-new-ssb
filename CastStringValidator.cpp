@@ -1438,6 +1438,16 @@ bool CCastStringValidator::Validate3SP(int caster) {
 
 		// Audit slit-code type
 		char code = (*io)->SlitTypeCode();
+		//#### New rule 1.1.1 Degrades for 1st heat after startup
+		if (prevWidth == 0)
+			if ((code != 'D') &&
+				(code != 'H') &&
+				(code != 'T')) {
+				ostr << "invalid slit type code for 1st slab in heat = " << code << ends;
+				ADD_ERR(CCastStringHeatValidnError::FATAL);
+				isOk = false;
+			}
+
 		// Added noslit type code here on xxx4 condition codes 6-27-05 k. hubbard  
 		if (code != 'D' &&
 			code != 'E' &&
