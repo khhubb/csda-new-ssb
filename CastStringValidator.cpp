@@ -1417,6 +1417,7 @@ bool CCastStringValidator::Validate3SP(int caster) {
 	if (strand.size() == 0) return true;  // trivially ok, as there's nothing to check.
 
 	Width prevWidth = 0; // we start at the beginning
+	int slabNum = 1;
 
 	// Iterate over the orders, validating as we go.
 	for (vector<CCSOrder*>::const_iterator io = strand.begin(); io != strand.end(); ++io) {
@@ -1438,11 +1439,19 @@ bool CCastStringValidator::Validate3SP(int caster) {
 
 		// Audit slit-code type
 		char code = (*io)->SlitTypeCode();
-		//#### New rule 1.1.1 Degrades for 1st heat after startup
-		if (prevWidth == 0)
+		//#### New rule 1.1.1 Degrades for 1st slab in heat after startup
+		if (slabNum == 1)
 			if ((code != 'D') &&
 				(code != 'H') &&
 				(code != 'T')) {
+				ostr << "invalid slit type code for 1st slab in heat = " << code << ends;
+				ADD_ERR(CCastStringHeatValidnError::FATAL);
+				isOk = false;
+			}
+
+		//#### Also new: 1.1.2
+		if (slabNum == 2)
+			if ((code != 'D')) {
 				ostr << "invalid slit type code for 1st slab in heat = " << code << ends;
 				ADD_ERR(CCastStringHeatValidnError::FATAL);
 				isOk = false;
@@ -1777,6 +1786,7 @@ bool CCastStringValidator::Validate3SP(int caster) {
 			ADD_ERR(CCastStringHeatValidnError::WARNING);
 			isOk = false;
 		}
+		slabNum++; //##### new: tracking which slab
 	} // for loop
 	return isOk;
 } // method body
