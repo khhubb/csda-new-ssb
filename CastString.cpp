@@ -2217,15 +2217,18 @@ CTimeSpan CCastString::InterStringTime() const
 
 Weight CCastString::HotMetalTonsPerHeat() const
 {
-	Weight w;
-
-	if ( Id().Caster() == 1 )
-		w = 225;
-	// CASTER TODO: What is correct HotMetalTonsPerHeat for casters 4,5
-	else
-		w = 195;
-
-	return w;
+	switch (Id().Caster()) {
+	case Caster::C1:
+		return 225;
+	case Caster::C2:
+	case Caster::C3:
+		return 195;
+	case Caster::C4:
+	case Caster::C5:
+		return 217;
+	default:
+		assert(false);
+	}
 }
 
 

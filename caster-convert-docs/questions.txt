@@ -1,12 +1,26 @@
 Questions:
 
+===================
 MiscConstants:
 We have turnaround times of 75 and 90 minutes on Casters 2 and 3.
 And 0 on Caster 1.
 What are values of turnaround time for Casters 4,5?
 
+Answer: 
+#4 (1CCM) 150 minutes  -- DONE
+#5 (2CCM)  90 minutes  -- DONE
+
+===================
+
+
 Length CMiscConstants::m_casterSlabLengthMaxes[4] = { 0, 452, 452, 431 };
 What are values for casters 4,5?
+
+Answer: Slab Length Both Casters
+ 
+Min 200” Max 460”   -- DONE
+
+====================
 
 
 PerUserDefaultValues:
@@ -18,20 +32,43 @@ Caster5HeatSizeMin
 Caster5HeatSizeAim
 Caster5HeatSizeMax
 
+Answer: Heat size for both West casters
+ 
+Min 255
+Aim 265
+Max 280
+
+This is encoded in the database.  -- DONE on dev, needs to be done on test and in production.
+
+===================
+
+
 PPGHeatSizes:
 There is an editing screen for the caster 1,2,3 heat size min/aim/max that I will add to.
 On that dialog, the values for casters 2,3 are tied to be identical.
 Is there any similar tying of values for 4 and 5?
 
+Answer:  Tie together casters 4 and 5.
+This is in the editing screen.
+DONE.
+
+========================
+
 
 What are the formulas for calculating cast times on casters 4,5?
+
+ Answer: During 3SP lineup handoff, Vino Lawrence can provide from PHD calculations
+ Status: in process.
+
+
+=========================
 
 How are specs associated with casters?
 Specs are in the following tables:
 
 	HeatSpecCrossApp -- 
 		maps specs to specs, caster not involved in the table.
-		However, caster is involved in the lookup ti check certain characters in the spec:
+		However, caster is involved in the lookup oi check certain characters in the spec:
 		
 				// filter for specs suitable for this caster
 			  
@@ -41,13 +78,25 @@ Specs are in the following tables:
 					 ||
 					 ( caster != 1 && ( dig4 == '2' ) ) )			
 		
-		Is this correct for casters 4,5?
+		Question: Is this correct for casters 4,5?
+
+		Interpretation: I take this to mean that this code need no modification.
+		Status: DONE
+
+
+===============================
 		
 	SteelSpecCrossAppSet
 		caster not involved
+		Status: nothing to do, so DONE.
+
+===============================
 		
 	SpecChemRangePreset
 		caster not involved
+		Status: nothing to do, so DONE.
+
+==============================
 		
 	SpecDPAChemsSet
 	SpecDPASet
@@ -59,7 +108,12 @@ Specs are in the following tables:
 			
 		Will the same be true for Casters 4,5?	
 		
-		
+		Answer:  Skip this for casters 4 and 5, do nothing here.
+
+>>>>>		Asking again, a different way:  How do I know if a spec is for caster 4 or 5?
+
+============================
+
 	In CSpecMgr::FindSpecMaybe
 		When looking up spec info given the spec name, we first look it up directly.
 		If not found, we plae with the first digit of the second group:
@@ -67,6 +121,11 @@ Specs are in the following tables:
 			//  XXX-0X-XX ==>  XXX-4X-XX     if caster == 1
 			//  XXX-0X-XX ==>  XXX-7X-XX     if caster == 1
 		Do any of these transformations apply to casters 4,5?  Other transformations?
+
+		Answer: Skip this for casters 4 and 5, do nothing here.
+		Status: DONE
+
+=============================
 		
 		At the moment, calls to FindSpecMaybe from CSpecMgr::InitializeDPAChems has a strange caster calculation:
 		
@@ -82,6 +141,13 @@ Specs are in the following tables:
 				This is true only because we care about caster 1 vs caster 2.  We are checking for "on 1" vs "not on 1" because this triggers code in FindSpecMaybe.
 				What do we do with the new casters?
 
+		Answer: In this body of logic, let’s ensure casters 4 and 5 are omitted from all (chemSet.m_CASTER_INDICATOR) reactions, decisions, or results. 
+		The CASTER_INDICATOR field will not be used, or populated at this time, for casters 4 and 5.
+
+>>>>>		Asking again, a different way:  How do I know if a spec is for caster 4 or 5?
+
+============================
+
 Orders:
 
 	We determine which caster an order is for by looking at table unappliedorders, fields
@@ -91,6 +157,12 @@ Orders:
 			SM_PLAN_FACL_PREF_3_CD
 	These will contain values "4" and "5"  (they are strings) to indicate orders for those casters?
 	
+	ANSWER:   No. For casters 4, and 5 SM_PLAN_FACL_PREF_1_CD = “O” (this is the alpha letter O, not a numeric zero) 
+
+>>>>>>>>  Updated question:  How do I tell if an order is for 4 or 5 or both?
+
+===============================
+
 
 number of strands
 		Caster  #strands
@@ -99,6 +171,12 @@ number of strands
 			3		2
 			4		1  ???
 			5		1  ???
+
+	ANSWER:  This is correct.  Both are one strand.  
+	STATUS:  Already coded this way, so DONE.
+
+==========================
+
 
 CCastStringValidator::Validate340080
 			audit numPieces
@@ -113,6 +191,12 @@ CCastStringValidator::Validate340080
 					isOk = false;
 				}
 			}
+
+	Comment is: TRUE.
+	I take this to mean that this test is Caster 1 only, so no need to change this code.
+	STATUS: DONE
+
+================================
 			
 			audit steel width
 			if ( caster == 3 ) {
@@ -126,21 +210,41 @@ CCastStringValidator::Validate340080
 					isOk = false;
 				}
 			}
+
+	ANSWER: Correct Ignore for casters 4, and 5 (3SP)
+	STATUS: Nothing to do, so DONE.
+
+===============================
 			
 			//  check heat position for 3 combi startup slabs
 
 			{
 				if ( caster == 3 ) {
 			
+	ANSWER: None today Ignore for casters 4 and 5 
+	STATUS: Nothing to do, so DONE.
+
+=================================
 			
 			// audit steel length compliance with steelshop limitations
 			if ( caster == 1 ) {
 			if ( caster == 2 ) {
 			if ( caster == 3 ) {
+
+	ANSWER:   None today Ignore for casters 4 and 5
+	STATUS: nothing to do, so DONE.
+
+=================================
 			
 			// audit exposure code
 			if ( caster == 1 )
 			else
+
+	ANSWER: None today Ignore for casters 4 and 5
+	ACTION:  Need to restrict ELSE clasue to only casters 2,3.
+
+====================================
+
 			
 			// Audit 2BOF inward width change designs.  1-28-10 k. hubbard
 			{
@@ -149,16 +253,52 @@ CCastStringValidator::Validate340080
 	
 			
 			Any such checks for 4, 5?
+			Answer: Ignore for casters 4 and 5 today. In the future some grades will be inward only, but not today.
+			Status: nothing to do, so DONE.
+
+=====================================
 			
 		CCastStringValidator::FixHeatSpec
 			Special rules for casters 2 3
 			Anything for 4,5
 
+			Answer: None today Ignore for casters 4 and 5
+
+			Re-ask:  Should have been more careful here.  This is one case for casters 2,3.
+			There is an else clause.  SHould this else clause apply only to caster 1?
+
+			else {
+		
+				CString front = heatSpec.Left(5);
+				if ( front == "52440" || front == "52442" || front == "52449" ) {
+					// do nothing.     Added 52442xx spec above, to the exception list of fourth digit modifications. maint. 5/30/06 k. hubbard
+				} else {
+					if ( ord4 == '7' || ord4 == '4' || ord4 == '6' )
+						heatSpec.SetAt(3,ord4);
+					else
+						heatSpec.SetAt(3,'7');
+	
+					if ( ord4 == '4' )
+						heatSpec.SetAt(5,'4');
+				}
+
+======================================
+
 		CCastString::PourToOpenTime
 			What is correct calculation of PourToOpenTime for casters 4,5?
 
+		Answer: Unknown, KHH will follow up.
+		Status: PENDING
+
+======================================
+
 		CCastString::HotMetalTonsPerHeat()	
 			What is value for HotMetalTonsPerHeat for casters 4,5?
+
+		Answer: 217 tons per heat
+		Status: DONE
+
+======================================
 
 		CCastStringHeat::FixAimChem
 				//  Fix aim chem for a given element 
@@ -177,9 +317,22 @@ CCastStringValidator::Validate340080
 				//  in case 1), aim = max - 0.001
 				//  in case 2), aim = average(min,max)
 			WHat is correct calculation for casters 4,5?
+
+			Answer: None today Ignore for casters 4 and 5
+			Status: Needed some code to restrict default case.  DONE
+
+=====================================
 			
 		CCastStringIdDlg::SetWidthSpinLimits
 				We have values for 1 and not 1.  What about 4,5?
+
+				Answer: Casters 4 max = 80” and 5 max = 84”
+
+				Ask also:  what are min values?
+
+				Status: Maxes done, need min values
+
+======================================
 			
 		CTabNumDlg::InitTabNum
 			m_force2ndDigit = m_caster != 1;  <- do we force second digit on tab# for casters 4,5
@@ -194,6 +347,12 @@ CCastStringValidator::Validate340080
 				str += "9";			
 			
 			What is starting digit for tab#s for casters 4,5?
+
+			Answers:	Yes, force caster 4 digit 2 = 1, and caster 5 digit 2 = 2.
+						Starting digit for caster 4 is 1. Starting digit for caster 5 is 5.
+			Status: DONE
+
+====================================
 			
 		 CTabNumDlg::ValidateTabNum
 			What are valid tab#s for casters 4,5?
@@ -224,13 +383,31 @@ CCastStringValidator::Validate340080
 								   "Bad TAB #",
 									MB_ICONHAND | MB_OK);
 						return false;
-					}								
+					}		
 					
+					Answer:
+
+						Valid tab#s for caster 4 is digit 1 = 1, 
+							                        digit 2 = 1, 
+                                                    digits 3-4 = CSD String# 00-49,
+                                                    digit 5 = heat sequence 0-9 (special note: 0=heat sequence#1, 1=heat sequence#2, 2=heat sequence#3, 3=heat sequence#4, etc...)    
+                                   for caster 5 is digit 1 = 5,
+                                                   digit 2 = 2,
+                                                   digits 3-4 CSD String# 50-99,
+                                                   digit 5 = heat sequence 0-9 (special note: 0=heat sequence#1, 1=heat sequence#2, 2=heat sequence#3, 3=heat sequence#4, etc...) 											
+					Status: we have implemented checks on digits 1,2,3.  4 is not a problem.  Don't know what to do with digit 5
+					DONE:
+
+=================================
 					
 		CCastStringEditorTextController::OnEditMovestringtoothercaster
 		
 				Can we move strings between casters, involving 4,5?
 				
+				Answer: Yes we definitely need the ability to move strings between casters involving 4, and 5!
+				Status: Nothing to do, so DONE.
+
+==================================
 				
 	CHeatDetailsDlg::OnValidateCell
 		More tab# validation -- what for 4,5
@@ -250,5 +427,20 @@ CCastStringValidator::Validate340080
 					return FALSE;
 				}	
 				
+		Answer: (see tab# logic above to enforce here) 
+		Status: DONE.
+
+=============================
+
+
 	HMLoadGraph -- the hot metal load graph
 		DOES THIS NEED TO BE EXTENDED FOR CASTERS 4,5?
+
+	Answer:  Yes please extend for casters 4, and 5
+
+	Status: THis will take a LOT of work.
+
+	New Question: is there more load data for hot metal involving the other plant?
+
+
+================================

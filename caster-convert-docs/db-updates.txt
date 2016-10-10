@@ -34,6 +34,7 @@ CREATE TABLE [dbo].[PerUserDefaultValues](
 ) ON [PRIMARY]
 
 GO
+/* =======================================
 
 However, don't lose the values.
 Add values for casters 4,5:
@@ -41,5 +42,25 @@ Add values for casters 4,5:
 Min 255
 Aim 265
 Max 280
+*/
+
+USE [csd_csdatest]
+GO
+
+UPDATE [dbo].[PerUserDefaultValues]
+   SET [Caster4HeatSizeMin] = 255
+      ,[Caster4HeatSizeAim] = 265
+      ,[Caster4HeatSizeMax] = 280
+      ,[Caster5HeatSizeMin] = 255
+      ,[Caster5HeatSizeAim] = 265
+      ,[Caster5HeatSizeMax] = 280
+  
+GO
+
+/* ----------------------------------*/
+/*  P_FP_PLAN_SLAB_PRTY */
+
+
+
 
 

@@ -4744,7 +4744,6 @@ void CCastStringEditorTextController::OnEditMovestringtoothercaster()
 	if ( pString == 0 )
 		return;
 
-	// CASTER TODO: Do we allow moving strings to/from 4,5?
 	CPickCasterDlg dlg;
 	dlg.m_ignoreCaster = pString->Id().Caster();
 	dlg.m_caster = pString->Id().Caster() == Caster::C1 ? Caster::C2 : Caster::C1;

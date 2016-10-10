@@ -1805,6 +1805,8 @@ bool CCastStringValidator::Validate340080(int strandNum)
 
 		// audit exposure code
 		//######### How do 1.1 Degrade rules pertain here for casters 4 and 5?
+		//#########  According to KH answer to questions.txt:  None today Ignore for casters 4 and 5
+		//#########  So restricting the else clause to casters 2,3
 		{
 			char exp = (*io)->ExposureCode();
 			int condn = (*io)->SlabCondnCode();
@@ -1822,7 +1824,7 @@ bool CCastStringValidator::Validate340080(int strandNum)
 					isOk = false;
 				}
 			}
-			else  {
+			else if ( caster == 2 || caster == 3 )  {
 
 				if ( condn > 0
 					 &&
@@ -2169,6 +2171,7 @@ bool CCastStringValidator::Validate340080(int strandNum)
 
 		{
 		//######### Not clear on width change rules for 4 and 5 (1.6 in documentation)
+		//######### KH Answer: Ignore for casters 4 and 5 today. In the future some grades will be inward only, but not today.
 		if (( caster == 2 || caster == 3) //### caster-specific
 			&&
 			 prevWidth > 0)

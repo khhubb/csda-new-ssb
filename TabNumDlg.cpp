@@ -75,8 +75,7 @@ BOOL CTabNumDlg::OnInitDialog()
 
 	SetWindowText(m_prompt);
 
-	// CASTER TODO: do we force second digit on tab# for casters 4,5?
-	m_force2ndDigit = m_caster != 1;
+	m_force2ndDigit = m_caster != Caster::C1;
 
 	InitTabNum();
 
@@ -91,15 +90,30 @@ void CTabNumDlg::InitTabNum()
 {
 	CString str;
 
-	// CASTER TODO:  What is starting digit for tab#s for casters 4,5?
-	if ( m_caster == 3 )
-		str = "3";
-	else if ( m_caster == 2 )
-		str = "2";
-	else str = "4";
-	
-	if ( m_force2ndDigit )
-		str += "9";
+	switch (m_caster) {
+	case Caster::C1:
+		str = "4";
+		break;
+
+	case Caster::C2:
+		str = "29";
+		break;
+
+	case Caster::C3:
+		str = "39";
+		break;
+
+	case Caster::C4:
+		str = "11";
+		break;
+
+	case Caster::C5:
+		str = "52";
+		break;
+
+	default:
+		assert(false);
+	}
 
 	m_tabNum = atol(LPCTSTR(str));
 
@@ -129,20 +143,75 @@ bool CTabNumDlg::ValidateTabNum()
 	str.Format("%05d",m_tabNum);
 	
 	char firstDigit = str[0];
+	char secondDigit = str[1];
+	char thirdDigit = str[2];
 
-	// CASTER TODO: What are valid tab #s for casters 4,5?
+	bool firstDigitOkay = true;
+	bool secondDigitOkay = true;
+	bool thirdDigitOkay = true;
 
-	if ( ! (firstDigit == '9' 
-			||
-			(m_caster == 1  && firstDigit != 2 && firstDigit != 3)
-			||
-			firstDigit == '2' && m_caster == 2 
-			||
-			firstDigit == '3' && m_caster == 3 ) ) {
-	
+	switch (m_caster) {
+
+	case Caster::C1:
+	case Caster::C2:
+	case Caster::C3:
+
+		// Original code for caster 1,2,3
+		{
+
+			if (!(firstDigit == '9'
+				||
+				(m_caster == Caster::C1  && firstDigit != 2 && firstDigit != 3)
+				||
+				firstDigit == '2' && m_caster == Caster::C2
+				||
+				firstDigit == '3' && m_caster == Caster::C3)) {
+				firstDigitOkay = false;
+			}
+		}
+		break;
+
+	case Caster::C4:
+		firstDigitOkay = firstDigit == '1';
+		secondDigitOkay = secondDigit == '1';
+		thirdDigitOkay = '0' <= thirdDigit && thirdDigit <= '4';
+		// Digits 3,4 shoudl be in range 00-49
+		break;
+
+	case Caster::C5:
+		firstDigitOkay = firstDigit == '5';
+		secondDigitOkay = secondDigit == '1';
+		thirdDigitOkay = '5' <= thirdDigit && thirdDigit <= '9';
+		// Digits 3,4 shoudl be in range 50-99
+		break;
+
+	default: 
+		assert(false);
+	}
+
+	if (!firstDigitOkay) {
+
 		MessageBox("First digit invalid for caster.",
-				   "Bad TAB #",
-					MB_ICONHAND | MB_OK);
+			"Bad TAB #",
+			MB_ICONHAND | MB_OK);
+		return false;
+	}
+
+
+	if (!secondDigitOkay) {
+
+		MessageBox("Second digit invalid for caster.",
+			"Bad TAB #",
+			MB_ICONHAND | MB_OK);
+		return false;
+	}
+
+
+	if (!thirdDigitOkay) {
+
+		MessageBox("Third digit invalid for caster.",
+			"Bad TAB #",
+			MB_ICONHAND | MB_OK);
 		return false;
 	}
 

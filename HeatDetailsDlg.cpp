@@ -418,25 +418,55 @@ BOOL CHeatDetailsDlg::OnValidateCell(ROWCOL nrow, ROWCOL ncol)
 
 				// we know this is in the range [0,99999] because of range limit on cell
 
-				// CASTER TODO: More tab# validation -- what are rules for 4,5?
-
 				int firstDigit = tabNum/10000;
 				int secondDigit = (tabNum/1000) % 10;
+				int thirdDigit = (tabNum / 100) % 10;
 
 				if ( firstDigit != 9
 					 &&
-					 ( m_pCasterScen->Caster() == 2 || m_pCasterScen->Caster() == 3 )
+					 (m_pCasterScen->Caster() == Caster::C2 || m_pCasterScen->Caster() == Caster::C3)
 					 && 
 					 firstDigit != m_pCasterScen->Caster() ) {
 
 					 m_wndDetailsGrid.SetWarningText("First digit of tab# must be 9 or same as caster.");
 					 return FALSE;
 				}
-				if ( m_pCasterScen->Caster() != 1 
+
+				if ((m_pCasterScen->Caster() == Caster::C2 || m_pCasterScen->Caster() == Caster::C3)
 					 &&
 					 secondDigit != 9 ) {
 					m_wndDetailsGrid.SetWarningText("Second digit of tab# must be 9 (for #2BOF).");
 					return FALSE;
+				}
+
+				if (m_pCasterScen->Caster() == Caster::C4) {
+					if (firstDigit != 1) {
+						m_wndDetailsGrid.SetWarningText("First digit of tab# for caster 4 must be a 1.");
+						return FALSE;
+					}
+					if (secondDigit != 1) {
+						m_wndDetailsGrid.SetWarningText("Second digit of tab# for caster 4 must be a 1.");
+						return FALSE;
+					}
+					if (!(0 <= thirdDigit && thirdDigit <= 4)) {
+						m_wndDetailsGrid.SetWarningText("Third digit of tab# for caster 4 must be a 0-4.");
+						return FALSE;
+					}
+				}
+
+				if (m_pCasterScen->Caster() == Caster::C4) {
+					if (firstDigit != 5) {
+						m_wndDetailsGrid.SetWarningText("First digit of tab# for caster 5 must be a 5.");
+						return FALSE;
+					}
+					if (secondDigit != 2) {
+						m_wndDetailsGrid.SetWarningText("Second digit of tab# for caster 5 must be a 2.");
+						return FALSE;
+					}
+					if (!(5 <= thirdDigit && thirdDigit <= 9)) {
+						m_wndDetailsGrid.SetWarningText("Third digit of tab# for caster 5 must be a 5-9.");
+						return FALSE;
+					}
 				}
 			}
 		}

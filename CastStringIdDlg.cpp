@@ -409,12 +409,43 @@ void CCastStringIdDlg::SetChemPresets()
 
 void CCastStringIdDlg::SetWidthSpinLimits(int caster)
 {
-	// CASTER TODO: What is correct for casters 4,5?
+	// CASTER TODO: We now have max values for 4,5, still need min values.
+	switch (caster){
+	case Caster::C1:
+		m_spinStrand1Start.SetRange(25, 99);
+		m_spinStrand1End.SetRange(25, 99);
+		m_spinStrand2Start.SetRange(25, 99);
+		m_spinStrand2End.SetRange(25, 99);
+		break;
+
+	case Caster::C2:
+	case Caster::C3:
+		m_spinStrand1Start.SetRange(35, 99);
+		m_spinStrand1End.SetRange(35, 99);
+		m_spinStrand2Start.SetRange(35, 99);
+		m_spinStrand2End.SetRange(35, 99);
+		break;
+
+	case Caster::C4:
+		m_spinStrand1Start.SetRange(25, 80);
+		m_spinStrand1End.SetRange(25, 80);
+		m_spinStrand2Start.SetRange(25, 80);
+		m_spinStrand2End.SetRange(25, 80);	
+		break;
+
+	case Caster::C5:
+		m_spinStrand1Start.SetRange(25, 84);
+		m_spinStrand1End.SetRange(25, 84);
+		m_spinStrand2Start.SetRange(25, 84);
+		m_spinStrand2End.SetRange(25, 84);
+		break;
+
+	default:
+		assert(false);
+	}
+
 	if ( caster == 1 )  {
-		m_spinStrand1Start.SetRange(25,99);
-		m_spinStrand1End.SetRange(25,99);
-		m_spinStrand2Start.SetRange(25,99);
-		m_spinStrand2End.SetRange(25,99);
+
 	}
 	else {
 		m_spinStrand1Start.SetRange(35,99);
