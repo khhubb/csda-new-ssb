@@ -132,7 +132,7 @@
 
 #ifdef _DEBUG
 #undef THIS_FILE
-static char THIS_FILE[]=__FILE__;
+static char THIS_FILE[] = __FILE__;
 #define new DEBUG_NEW
 #endif
 
@@ -154,10 +154,10 @@ static char THIS_FILE[]=__FILE__;
 
 CCastStringValidator::CCastStringValidator()
 {
-	m_pHeats		= 0;
-	m_pCastString	= 0;
-	m_pCasterScen	= 0;
-	m_pSuperScen	= 0;
+	m_pHeats = 0;
+	m_pCastString = 0;
+	m_pCasterScen = 0;
+	m_pSuperScen = 0;
 }
 
 
@@ -169,44 +169,44 @@ CCastStringValidator::CCastStringValidator()
 
 
 void CCastStringValidator::AddValidnError(int heatIndex,
-										  int strandNum,
-										  int lotIndex,
-										  const char* str,
-										  CCastStringHeatValidnError::E_Severity severity)
-{	
-	CCastStringHeat* pHeat = ( heatIndex == -1
-								? 0
-								: &(*m_pHeats)[heatIndex] );
+	int strandNum,
+	int lotIndex,
+	const char* str,
+	CCastStringHeatValidnError::E_Severity severity)
+{
+	CCastStringHeat* pHeat = (heatIndex == -1
+		? 0
+		: &(*m_pHeats)[heatIndex]);
 	CString cstr(str);
 
-	CCSOrder* pCSOrder = ( pHeat != 0 
-		                   &&
-						   (strandNum == 1 || strandNum == 2)
-						   &&
-						   lotIndex != -1 )
-						   ? *( pHeat->StrandBegin(strandNum) + lotIndex )
-						   : 0 ;
+	CCSOrder* pCSOrder = (pHeat != 0
+		&&
+		(strandNum == 1 || strandNum == 2)
+		&&
+		lotIndex != -1)
+		? *(pHeat->StrandBegin(strandNum) + lotIndex)
+		: 0;
 
 	CCastStringHeatValidnError err(heatIndex,
-								   pHeat,
-								   strandNum,
-								   lotIndex,
-								   pCSOrder,
-								   str,
-								   severity);
+		pHeat,
+		strandNum,
+		lotIndex,
+		pCSOrder,
+		str,
+		severity);
 
 	m_pCastString->ValidnErrors().push_back(err);
 }
-								   
-						
+
+
 
 void CCastStringValidator::AddValidnError(int heatIndex,
-										  int strandNum,
-										  int lotIndex,
-										  ostrstream& ostr,
-										  CCastStringHeatValidnError::E_Severity severity)
+	int strandNum,
+	int lotIndex,
+	ostrstream& ostr,
+	CCastStringHeatValidnError::E_Severity severity)
 {
-	AddValidnError(heatIndex,strandNum,lotIndex,ostr.str(),severity);
+	AddValidnError(heatIndex, strandNum, lotIndex, ostr.str(), severity);
 	ostr.freeze(false);
 	ostr.seekp(0);
 }
@@ -227,17 +227,17 @@ const vector<CCastStringHeatValidnError>& CCastStringValidator::ValidnErrors() c
 ////////////////////////////////////////////////////////////////
 
 bool CCastStringValidator::Validate(vector<CCastStringHeat>& heats,
-									CCastString* pCastString,
-									CCasterScen* pCasterScen,
-									CSuperScen* pSuperScen) 
+	CCastString* pCastString,
+	CCasterScen* pCasterScen,
+	CSuperScen* pSuperScen)
 {
 	// we use instance variables to store these values
 	// so we don't have to pass them everywhere.
 
-	m_pHeats		= &heats;
-	m_pCastString	= pCastString;
-	m_pCasterScen	= pCasterScen;
-	m_pSuperScen	= pSuperScen;
+	m_pHeats = &heats;
+	m_pCastString = pCastString;
+	m_pCasterScen = pCasterScen;
+	m_pSuperScen = pSuperScen;
 
 	// clear out the vector of errors, from previous validations
 	m_pCastString->ValidnErrors().clear();
@@ -247,7 +247,7 @@ bool CCastStringValidator::Validate(vector<CCastStringHeat>& heats,
 
 	UpdateLotSlabThicknesses();	//  Originally in UpdateCondAndDispCodes
 
-	
+
 	///////////////////////////////////////////////////////////////////////////
 	// DPA Program R0341070
 	// Make modifications to condition and disposition codes 
@@ -255,37 +255,37 @@ bool CCastStringValidator::Validate(vector<CCastStringHeat>& heats,
 
 		UpdateCondAndDispCodes();
 
-		if ( ! Validate340080() )
+		if (!Validate340080())
 			isValid = false;
 
-		if ( ! CheckCondAndDispCodeRelationships() )
+		if (!CheckCondAndDispCodeRelationships())
 			isValid = false;
 
-	}	
+	}
 	// end R0341070
 	///////////////////////////////////////////////////////////////////////////
 
 
 	// Check for duplicate tab nums
-	if ( ! ValidateTabNums() )
+	if (!ValidateTabNums())
 		isValid = false;
 
 	// check for weight under/over
-	if ( ! ValidateWeights() )
+	if (!ValidateWeights())
 		isValid = false;
 
 	// check demand due
-	if ( ! ValidateDemandDue() )
+	if (!ValidateDemandDue())
 		isValid = false;
 
 	// check bad chems
-	if ( ! ValidateChems() )
+	if (!ValidateChems())
 		isValid = false;
 
 	m_pCastString->SetIsValid(isValid);
 
 
-						
+
 
 	return isValid;
 }
@@ -317,16 +317,16 @@ void CCastStringValidator::UpdateLotSlabThicknesses()
 void CCastStringValidator::UpdateLotSlabThicknesses(int strandNum)
 {
 	const vector<CCSOrder*>& strand = m_pCastString->Strand(strandNum);
-	for ( vector<CCSOrder*>::const_iterator io = strand.begin();
-		  io != strand.end();
-		  ++io ) {
+	for (vector<CCSOrder*>::const_iterator io = strand.begin();
+		io != strand.end();
+		++io) {
 
-		CCastStringHeat& rHeat = (*m_pHeats)[ (*io)->HeatSeqNum() ];
+		CCastStringHeat& rHeat = (*m_pHeats)[(*io)->HeatSeqNum()];
 
-		if ( ! rHeat.IsMarked() )
+		if (!rHeat.IsMarked())
 			continue;
-	
-		if ( (*io)->SlabThickness() != 9.25 )
+
+		if ((*io)->SlabThickness() != 9.25)
 			(*io)->SlabThickness(9.25);
 	}
 }
@@ -340,14 +340,14 @@ void CCastStringValidator::UpdateCondAndDispCodes()
 	UpdateCondAndDispCodes(1);
 	UpdateCondAndDispCodes(2);
 
-	for ( vector<CCastStringHeat>::iterator ih = m_pHeats->begin();
-		  ih != m_pHeats->end();
-		  ++ih ) {
+	for (vector<CCastStringHeat>::iterator ih = m_pHeats->begin();
+		ih != m_pHeats->end();
+		++ih) {
 
-		if ( ! (*ih).IsMarked() )
+		if (!(*ih).IsMarked())
 			continue;
 
-		UpdateHeatDispCode( (*ih) );
+		UpdateHeatDispCode((*ih));
 	}
 
 }
@@ -355,16 +355,16 @@ void CCastStringValidator::UpdateCondAndDispCodes()
 void CCastStringValidator::UpdateCondAndDispCodes(int strandNum)
 {
 	const vector<CCSOrder*>& strand = m_pCastString->Strand(strandNum);
-	for ( vector<CCSOrder*>::const_iterator io = strand.begin();
-		  io != strand.end();
-		  ++io ) {
+	for (vector<CCSOrder*>::const_iterator io = strand.begin();
+		io != strand.end();
+		++io) {
 
-		CCastStringHeat& rHeat = (*m_pHeats)[ (*io)->HeatSeqNum() ];
+		CCastStringHeat& rHeat = (*m_pHeats)[(*io)->HeatSeqNum()];
 
-		if ( ! rHeat.IsMarked() )
+		if (!rHeat.IsMarked())
 			continue;
-	
-		UpdateLotDispCode( (*io), rHeat );
+
+		UpdateLotDispCode((*io), rHeat);
 	}
 
 
@@ -373,77 +373,77 @@ void CCastStringValidator::UpdateCondAndDispCodes(int strandNum)
 
 
 
-void CCastStringValidator::UpdateLotDispCode( CCSOrder* pCSOrder, CCastStringHeat& rHeat )
+void CCastStringValidator::UpdateLotDispCode(CCSOrder* pCSOrder, CCastStringHeat& rHeat)
 {
 	// FP Change
 //	bool isStock = ( pCSOrder->OrderNum() == 9999999 );
-	bool isStock = ( pCSOrder->FpOrderNum().Left(7) == "9999999" );
+	bool isStock = (pCSOrder->FpOrderNum().Left(7) == "9999999");
 	COrder* pOrder = pCSOrder->Order();
 
 	// Make output condn and disp codes match the order.
 
 	int condn = pCSOrder->SlabCondnCode();
-	int disp  = pCSOrder->DispCode();
+	int disp = pCSOrder->DispCode();
 
 	int outCondn = condn;
-	int outDisp  = disp;
+	int outDisp = disp;
 
-//  k. hubbard 1-28-03: comes through and declared from CSOrder.h which gets database link from Order.h
-//  Always start in database link from Order.h to see if mill order, smp, or dpa field name exist for usage. 
+	//  k. hubbard 1-28-03: comes through and declared from CSOrder.h which gets database link from Order.h
+	//  Always start in database link from Order.h to see if mill order, smp, or dpa field name exist for usage. 
 
 	int commodcode = pCSOrder->CICode();
-//	bool isSlabSaleCust = ( pCSOrder->HRUnitName().Left(4) != "80HR" );  // 1-24-07 k.hubbard  Slab Customer Sales new identification method in CSD
-//	bool isSlabSaleCust = ( pOrder->HotrollUnitName() != "80HR"	&&  pOrder->HotrollUnitName() != " " );  // 1-24-07 k.hubbard  Slab Customer Sales new identification method in CSD
+	//	bool isSlabSaleCust = ( pCSOrder->HRUnitName().Left(4) != "80HR" );  // 1-24-07 k.hubbard  Slab Customer Sales new identification method in CSD
+	//	bool isSlabSaleCust = ( pOrder->HotrollUnitName() != "80HR"	&&  pOrder->HotrollUnitName() != " " );  // 1-24-07 k.hubbard  Slab Customer Sales new identification method in CSD
 	bool isSlabSaleCust = false;
-	if ( ! isStock 
+	if (!isStock
 		&&
-			pOrder != 0) { 
-		if ( pOrder->HotrollUnitName() != "80HR" &&  pOrder->HotrollUnitName() != " " ) {  // 2-15-07 k.hubbard  Slab Customer Sales new identification method in CSD	
-			isSlabSaleCust = true; 
+		pOrder != 0) {
+		if (pOrder->HotrollUnitName() != "80HR" &&  pOrder->HotrollUnitName() != " ") {  // 2-15-07 k.hubbard  Slab Customer Sales new identification method in CSD	
+			isSlabSaleCust = true;
 		}
 	}
-//  end 1-28-03
+	//  end 1-28-03
 
 
-	//	logic for plan condn code assignment for planned slits
-	//	for disposition codes 3,8, 
-	//	make the following replacements/modifications
-	//		to the condition code:
-	//
-	//	4303 --> 1300
-	//  4373 --> 1570
-	//	4505 --> 1570
-	//	4575 --> 1570
-	//	4585 --> 1570
-	//
-	//  else, 1st digit --> 1
-	//        4th digit --> 0
+		//	logic for plan condn code assignment for planned slits
+		//	for disposition codes 3,8, 
+		//	make the following replacements/modifications
+		//		to the condition code:
+		//
+		//	4303 --> 1300
+		//  4373 --> 1570
+		//	4505 --> 1570
+		//	4575 --> 1570
+		//	4585 --> 1570
+		//
+		//  else, 1st digit --> 1
+		//        4th digit --> 0
 
 	if ((disp == 3
-		 ||
-		 disp == 8)
-		 &&
-		 ! isStock 
-		 &&
-		 pOrder != 0 ) {
+		||
+		disp == 8)
+		&&
+		!isStock
+		&&
+		pOrder != 0) {
 
-		if ( condn == 4303 )
-		
+		if (condn == 4303)
+
 			outCondn = 1300;
 
 		else if (condn == 4373
-				 ||
-				 condn == 4505
-				 || 
-				 condn == 4575
-				 ||
-				 condn == 4585 )
+			||
+			condn == 4505
+			||
+			condn == 4575
+			||
+			condn == 4585)
 
 			outCondn = 1570;
 
 		else {
 			outCondn = 1000 + condn % 1000;		// change 1st digit to 1
-			outCondn = outCondn/10*10;			// change 4th digit to 0
+			outCondn = outCondn / 10 * 10;			// change 4th digit to 0
 		}
 	}
 
@@ -452,17 +452,17 @@ void CCastStringValidator::UpdateLotDispCode( CCSOrder* pCSOrder, CCastStringHea
 	//	for planned slits on mandatory cms and cms/flip
 
 	if ((disp == 3
-		 ||
-		 disp == 8)
-		 &&
-		 ! isStock 
-		 && 
-		 pOrder != 0 ) {
+		||
+		disp == 8)
+		&&
+		!isStock
+		&&
+		pOrder != 0) {
 
-		if ( pOrder->IsCMS() ) {
+		if (pOrder->IsCMS()) {
 
 			outDisp = 8;
-			outCondn = condn/10*10 + 5;	// change 4th digit to 5
+			outCondn = condn / 10 * 10 + 5;	// change 4th digit to 5
 		}
 	}
 
@@ -472,44 +472,44 @@ void CCastStringValidator::UpdateLotDispCode( CCSOrder* pCSOrder, CCastStringHea
 
 	// audit Slab Sale Customers code
 
-	if ( ! isStock ) {
+	if (!isStock) {
 
 		if
-		 (pOrder != 0  
+			(pOrder != 0
 
-//			&&
-//				m_pCastString->Id().Caster() == 1     9-8-05 k.hubbard  Slab Customer Sales now occur at 2&4 BOF 
+				//			&&
+				//				m_pCastString->Id().Caster() == 1     9-8-05 k.hubbard  Slab Customer Sales now occur at 2&4 BOF 
 
-			&&
-				
-				condn/1000 == 4    // 1st digit is of condition code 4xxx only non-CMS added 3-3-2003 k. hubbard 
-	
+				&&
+
+				condn / 1000 == 4    // 1st digit is of condition code 4xxx only non-CMS added 3-3-2003 k. hubbard 
+
 //			&&
 //				( disp == 1 || disp == 4 )  
 
-			&&
+&&
 //				(commodcode == 43 || commodcode == 44 )) 
 //				(commodcode == 86 ))     // 5-4-05 k.hubbard  Slab Customer Sales
-				(isSlabSaleCust ))   // 1-24-07 k.hubbard  Slab Customer Sales new identification method in CSD
-			
-				outDisp = 2;             // dispCode that gets downloaded to Level 6
+(isSlabSaleCust))   // 1-24-07 k.hubbard  Slab Customer Sales new identification method in CSD
 
-			}
+outDisp = 2;             // dispCode that gets downloaded to Level 6
 
-
-//		if ( pOrder->HmPlanHotChargeInd() == "M" )
-//			outDisp = 2;
-// end k. hubbard here 1-28-03
+	}
 
 
+	//		if ( pOrder->HmPlanHotChargeInd() == "M" )
+	//			outDisp = 2;
+	// end k. hubbard here 1-28-03
 
-	if ( disp == 5 )
 
-	  	outCondn = 4782;   // restored to original K. Hubbard 1-15-03 per P. Fronczek
+
+	if (disp == 5)
+
+		outCondn = 4782;   // restored to original K. Hubbard 1-15-03 per P. Fronczek
 
 		//outCondn = 8782;   // comment out 1-15-03, changed K. Hubbard 9-11-02 per P. Fronczek
 
-    
+
 
 	if (disp == 2
 		||
@@ -521,21 +521,21 @@ void CCastStringValidator::UpdateLotDispCode( CCSOrder* pCSOrder, CCastStringHea
 		||
 		disp == 7
 		||
-		disp == 8 ) {
+		disp == 8) {
 
 		// do nothing
 	}
 	else {
 
-		if ( ! isStock ) {
+		if (!isStock) {
 
-			if ( pOrder!= 0 
-				 &&
-				 condn/1000 == 9 // 1st digit is 9
+			if (pOrder != 0
+				&&
+				condn / 1000 == 9 // 1st digit is 9
 //				 &&
 //				 m_pCastString->Id().Caster() == 2    9-8-05 k.hubbard  Flips now occur at 2&4 BOF 
-				 &&
-				 disp == 1 ) {
+&&
+disp == 1) {
 				// do nothing   To integrate with P.A. (K.Wert) flip logic that sends 931 Slab Status codes to Q.A. system. K. Hubbard 11-21-05  per P. Fronczek & T. Lara  
 			}
 			//	 disp == 9 ) comment out K. Hubbard 1-15-03
@@ -545,17 +545,17 @@ void CCastStringValidator::UpdateLotDispCode( CCSOrder* pCSOrder, CCastStringHea
 			//	 m_pCastString->Id().Caster() == 1   comment out 4 lines K. Hubbard 9-11-02 per P. Fronczek
 			//	 &&
 			//	 disp == 1 )
-	
+
 			//	 outCondn = 9212;
-	
+
 			else
-				UpdateCondnCode( pCSOrder, rHeat, outCondn, outDisp );
+				UpdateCondnCode(pCSOrder, rHeat, outCondn, outDisp);
 		}
 	}
 
 
-	pCSOrder->OutputCondnCode( outCondn );
-	pCSOrder->OutputDispCode ( outDisp  );
+	pCSOrder->OutputCondnCode(outCondn);
+	pCSOrder->OutputDispCode(outDisp);
 
 }
 
@@ -581,18 +581,18 @@ void CCastStringValidator::UpdateLotDispCode( CCSOrder* pCSOrder, CCastStringHea
 	codes.push_back(highcode)
 
 
-void CCastStringValidator::UpdateCondnCode(CCSOrder* pOrder, 
-										   CCastStringHeat& rHeat,
-										   int& outCondn,
-										   int& outDisp)
+void CCastStringValidator::UpdateCondnCode(CCSOrder* pOrder,
+	CCastStringHeat& rHeat,
+	int& outCondn,
+	int& outDisp)
 {
 	//CChem::Bound meanC = (pOrder->Order()->MinCarbon() + pOrder->Order()->MaxCarbon())/2.0;
 
 	CChem::Bound meanC = rHeat.AimChem(CChem::ELT_C);
 
-	if ( meanC == 0.0 )
-		meanC = (rHeat.MinChem(CChem::ELT_C) + rHeat.MaxChem(CChem::ELT_C))/2.0;
-	
+	if (meanC == 0.0)
+		meanC = (rHeat.MinChem(CChem::ELT_C) + rHeat.MaxChem(CChem::ELT_C)) / 2.0;
+
 
 	// look for matches, X = wildcard
 	CSpecCmp cmp(pOrder->LotSpec());
@@ -602,7 +602,7 @@ void CCastStringValidator::UpdateCondnCode(CCSOrder* pOrder,
 	//    such as 52163xx before 521xxxx
 	// A few cases are dependent on carbon.
 	// If not dependent on carbon, we push a 0 limit.
-	
+
 	// TODO: we could put this in database table.
 	static vector<CString> specs;
 	static vector<int> codes;
@@ -610,75 +610,75 @@ void CCastStringValidator::UpdateCondnCode(CCSOrder* pOrder,
 	static vector<int> lowCCodes;
 	static bool isInitialized = false;
 
-	if ( ! isInitialized ) {
+	if (!isInitialized) {
 
 		isInitialized = true;
 
-		defp("51XXXXX",4303);
-		defp("520XXXX",4212);
-		defp("52163XX",4505);
-		defp("521XXXX",4212);
-		defp("523XXXX",4212);
-		defp("524XXXX",4212);
-		defp("525XXXX",4212);
-		defp("526XXXX",4212);
-		defp("528X9XX",4303);
-		defpc("528XXXX",0.09,4212,1212);
-		defp("53XXXXX",4303);
-		defp("551XXXX",1303);
-		defp("55520XX",1303);
-		defp("55527XX",1303);
-		defpc("555XXXX",0.12,1303,4303);
-		defp("570259X",1303);
-		defpc("570XXXX",0.12,1303,4303);
-		defp("571X5XX",1303);
-		defp("571XXXX",1212);
-		defp("5736XXX",1303);
-		defp("573XXXX",1212);
-		defp("574XXXX",4212);
-		defp("584XXXX",4303);
-		defp("720XXXX",1212);
-		defp("723XXXX",4212);
-		defp("823XXXX",4212);
-		defp("8262XXX",4303);
-		defp("8264XXX",4212);
-		defp("828XXXX",1303);
-		defp("829XXXX",4303);
-		defpc("855XXXX",0.12,1303,4303);
-		defp("870XXXX",1212);
-		defp("928XXXX",1303);
-		defp("954XXXX",1303);
-		defp("97022XX",4303);
-		defp("97062XX",1303);
-		defp("971XXXX",4343);
-		defp("XXXXXXX",1212);
+		defp("51XXXXX", 4303);
+		defp("520XXXX", 4212);
+		defp("52163XX", 4505);
+		defp("521XXXX", 4212);
+		defp("523XXXX", 4212);
+		defp("524XXXX", 4212);
+		defp("525XXXX", 4212);
+		defp("526XXXX", 4212);
+		defp("528X9XX", 4303);
+		defpc("528XXXX", 0.09, 4212, 1212);
+		defp("53XXXXX", 4303);
+		defp("551XXXX", 1303);
+		defp("55520XX", 1303);
+		defp("55527XX", 1303);
+		defpc("555XXXX", 0.12, 1303, 4303);
+		defp("570259X", 1303);
+		defpc("570XXXX", 0.12, 1303, 4303);
+		defp("571X5XX", 1303);
+		defp("571XXXX", 1212);
+		defp("5736XXX", 1303);
+		defp("573XXXX", 1212);
+		defp("574XXXX", 4212);
+		defp("584XXXX", 4303);
+		defp("720XXXX", 1212);
+		defp("723XXXX", 4212);
+		defp("823XXXX", 4212);
+		defp("8262XXX", 4303);
+		defp("8264XXX", 4212);
+		defp("828XXXX", 1303);
+		defp("829XXXX", 4303);
+		defpc("855XXXX", 0.12, 1303, 4303);
+		defp("870XXXX", 1212);
+		defp("928XXXX", 1303);
+		defp("954XXXX", 1303);
+		defp("97022XX", 4303);
+		defp("97062XX", 1303);
+		defp("971XXXX", 4343);
+		defp("XXXXXXX", 1212);
 	}
 
 	vector<CString>::iterator is = find_if(specs.begin(),
-										   specs.end(),
-										   cmp);
+		specs.end(),
+		cmp);
 
-	if ( is == specs.end() )
+	if (is == specs.end())
 		// shouldn't happen, with the XXXXXXX pattern at the end
 		outCondn = 1212;
 	else {
 		int index = is - specs.begin();
 
-		if ( meanC < limits[index] )
+		if (meanC < limits[index])
 			outCondn = lowCCodes[index];
 		else
 			outCondn = codes[index];
 	}
 
 	// special case
-	if ( (cmp)("551XXXX") )
+	if ((cmp)("551XXXX"))
 		outDisp = 5;
 }
 
 
 
-				
-void CCastStringValidator::UpdateHeatDispCode( CCastStringHeat& rHeat )
+
+void CCastStringValidator::UpdateHeatDispCode(CCastStringHeat& rHeat)
 {
 	bool seen2 = false;
 	bool seen5 = false;
@@ -689,56 +689,56 @@ void CCastStringValidator::UpdateHeatDispCode( CCastStringHeat& rHeat )
 	// Removed 9 (flip) as valid dispcode assignment value for strand 1&2. KHH 1-15-03 
 
 	{
-		for ( vector<CCSOrder*>::iterator io = rHeat.StrandBegin(1);
-			  io != rHeat.StrandEnd(1);
-			  ++io ) {
+		for (vector<CCSOrder*>::iterator io = rHeat.StrandBegin(1);
+			io != rHeat.StrandEnd(1);
+			++io) {
 
 			int disp = (*io)->DispCode();
 
-			if ( disp == 2 ) 
+			if (disp == 2)
 				seen2 = true;
-			else if ( disp == 5 )
+			else if (disp == 5)
 				seen5 = true;
-	//		else if ( disp == 9 )  removed 1-15-03 KHH
-	//			seen9 = true;
-			else if ( disp == 3 || disp == 8 )
+			//		else if ( disp == 9 )  removed 1-15-03 KHH
+			//			seen9 = true;
+			else if (disp == 3 || disp == 8)
 				seen38 = true;
 		}
 	}
 
 
 	{
-		for ( vector<CCSOrder*>::iterator io = rHeat.StrandBegin(2);
-			  io != rHeat.StrandEnd(2);
-			  ++io ) {
+		for (vector<CCSOrder*>::iterator io = rHeat.StrandBegin(2);
+			io != rHeat.StrandEnd(2);
+			++io) {
 
 			int disp = (*io)->DispCode();
 
-			if ( disp == 2 ) 
+			if (disp == 2)
 				seen2 = true;
-			else if ( disp == 5 )
+			else if (disp == 5)
 				seen5 = true;
-	//		else if ( disp == 9 )  removed 1-15-03 KHH
-	//			seen9 = true;
-			else if ( disp == 3 || disp == 8 )
+			//		else if ( disp == 9 )  removed 1-15-03 KHH
+			//			seen9 = true;
+			else if (disp == 3 || disp == 8)
 				seen38 = true;
 		}
 	}
 
-	if ( seen2 )
+	if (seen2)
 		rHeat.DispCode(2);
-	else if ( seen5 )
+	else if (seen5)
 		rHeat.DispCode(5);
 	//else if ( seen9 )      // Added 9 (flip) as valid dispcode assignment value. KHH 9-11-02 
 	//	rHeat.DispCode(9);   removed 1-15-03 KHH
-	else if ( seen38 )
+	else if (seen38)
 		rHeat.DispCode(3);
 
 }
 
 
 
-bool CCastStringValidator::CheckCondAndDispCodeRelationships() 
+bool CCastStringValidator::CheckCondAndDispCodeRelationships()
 {
 	bool result1 = CheckCondAndDispCodeRelationships(1);
 	bool result2 = CheckCondAndDispCodeRelationships(2);
@@ -747,25 +747,25 @@ bool CCastStringValidator::CheckCondAndDispCodeRelationships()
 }
 
 
-bool CCastStringValidator::CheckCondAndDispCodeRelationships(int strandNum) 
+bool CCastStringValidator::CheckCondAndDispCodeRelationships(int strandNum)
 {
 	bool result = true;
 
 	ostrstream ostr;
 
 	const vector<CCSOrder*>& strand = m_pCastString->Strand(strandNum);
-	for ( vector<CCSOrder*>::const_iterator io = strand.begin();
-		  io != strand.end();
-		  ++io ) {
+	for (vector<CCSOrder*>::const_iterator io = strand.begin();
+		io != strand.end();
+		++io) {
 
-		CCastStringHeat& rHeat = (*m_pHeats)[ (*io)->HeatSeqNum() ];
+		CCastStringHeat& rHeat = (*m_pHeats)[(*io)->HeatSeqNum()];
 
-		if ( ! rHeat.IsMarked() )
+		if (!rHeat.IsMarked())
 			continue;
-	
+
 		int disp = (*io)->OutputDispCode();
 
-		switch	( disp ) {
+		switch (disp) {
 		case 1:
 		case 2:
 		case 3:
@@ -773,37 +773,37 @@ bool CCastStringValidator::CheckCondAndDispCodeRelationships(int strandNum)
 		case 5:
 		case 7:
 		case 8:
-//		case 9:                       // Added 9 (flip) maint:KHH 9-11-02  //removed 1-15-03 KHH 
-			// no-op
+			//		case 9:                       // Added 9 (flip) maint:KHH 9-11-02  //removed 1-15-03 KHH 
+						// no-op
 			break;
-        // Added 9 (flip) as valid dispcode assignment value. KHH 9-11-02 
-        //removed 1-15-03 KHH
+			// Added 9 (flip) as valid dispcode assignment value. KHH 9-11-02 
+			//removed 1-15-03 KHH
 		default:
 
-			ostr << "Lot disposition = " << disp 
-				 << ", must be 1,2,3,4,5,7,8"
-				 << ends;
-			AddValidnError( (*io)->HeatSeqNum(),
-							strandNum,
-							io - rHeat.StrandBegin(strandNum),
-							ostr,
-							CCastStringHeatValidnError::WARNING);
+			ostr << "Lot disposition = " << disp
+				<< ", must be 1,2,3,4,5,7,8"
+				<< ends;
+			AddValidnError((*io)->HeatSeqNum(),
+				strandNum,
+				io - rHeat.StrandBegin(strandNum),
+				ostr,
+				CCastStringHeatValidnError::WARNING);
 			result = false;
 			break;
 		}
 
 		int condn = (*io)->OutputCondnCode();
 
-		if ( condn == 0 ) {
+		if (condn == 0) {
 
 			ostr << "Flat condn code = " << condn
-				 << " is invalid."
-				 << ends;
-			AddValidnError( (*io)->HeatSeqNum(),
-							strandNum,
-							io - rHeat.StrandBegin(strandNum),
-							ostr,
-							CCastStringHeatValidnError::WARNING);
+				<< " is invalid."
+				<< ends;
+			AddValidnError((*io)->HeatSeqNum(),
+				strandNum,
+				io - rHeat.StrandBegin(strandNum),
+				ostr,
+				CCastStringHeatValidnError::WARNING);
 			result = false;
 		}
 
@@ -819,88 +819,88 @@ bool CCastStringValidator::CheckCondAndDispCodeRelationships(int strandNum)
 bool CCastStringValidator::ValidateTabNums()
 {
 	ostrstream ostr;
-	
+
 	bool bad = false;
 
 	set<long> tabNums;
 
 	{
-		for ( vector<CCastStringHeat>::iterator ih = m_pHeats->begin();
-			  ih != m_pHeats->end();
-			  ++ih ) {
-	
-			if ( ! (*ih).IsMarked() )
+		for (vector<CCastStringHeat>::iterator ih = m_pHeats->begin();
+			ih != m_pHeats->end();
+			++ih) {
+
+			if (!(*ih).IsMarked())
 				continue;
 
 			long tabNum = (*ih).TabNum();
-			if ( tabNum == 0 ) {
+			if (tabNum == 0) {
 				ostr << "Heat # " << setw(2) << ih - m_pHeats->begin() + 1
-					 << " has no tab # assigned. "
-					 << ends;
-				AddValidnError( ih - m_pHeats->begin(),
-								0,
-								-1,
-								ostr,
-								CCastStringHeatValidnError::FATAL);
+					<< " has no tab # assigned. "
+					<< ends;
+				AddValidnError(ih - m_pHeats->begin(),
+					0,
+					-1,
+					ostr,
+					CCastStringHeatValidnError::FATAL);
 				bad = true;
 			}
-			else if ( tabNums.find(tabNum) != tabNums.end() ) {
+			else if (tabNums.find(tabNum) != tabNums.end()) {
 				ostr << "Duplicate tab# within this string." << ends;
-				AddValidnError( ih - m_pHeats->begin(),
-								0,
-								-1,
-								ostr,
-								CCastStringHeatValidnError::FATAL);
+				AddValidnError(ih - m_pHeats->begin(),
+					0,
+					-1,
+					ostr,
+					CCastStringHeatValidnError::FATAL);
 
 				bad = true;
 			}
 			else
-				tabNums.insert( tabNum );
+				tabNums.insert(tabNum);
 		}
 	}
 
 	vector<CCastString*>& strings = m_pCasterScen->CastStrings();
 
-	for ( vector<CCastString*>::iterator is = strings.begin();
-		  is != strings.end();
-		  ++is ) {
-	
-		if ( (*is) == m_pCastString )  // don't check against self
+	for (vector<CCastString*>::iterator is = strings.begin();
+		is != strings.end();
+		++is) {
+
+		if ((*is) == m_pCastString)  // don't check against self
 			continue;
 
 		//if ( (*is)->Status() != CCastString::STATUS_910 )	// only check against 910s
 		//	continue;
 
-		for ( vector<CCastStringHeat>::iterator ih = (*is)->Heats().begin();
-			  ih != (*is)->Heats().end();
-			  ++ih ) {
+		for (vector<CCastStringHeat>::iterator ih = (*is)->Heats().begin();
+			ih != (*is)->Heats().end();
+			++ih) {
 
 			long tabNum = (*ih).TabNum();
 
-			if ( tabNums.find(tabNum) != tabNums.end() ) {
+			if (tabNums.find(tabNum) != tabNums.end()) {
 				ostr << "Tab # duplicated on string "
-					 << setw(4) << (*is)->Id().Year()
-					 << "-"
-					 << setw(2) << (*is)->Id().Week()
-					 << "-"
-					 << setw(2) << (*is)->Id().StringId()
-					 << ", heat # "
-					 << setw(2) << ih - (*is)->Heats().begin() + 1
-					 << ends;
-				AddValidnError( ih - m_pHeats->begin(),
-								0,
-								-1,
-								ostr,
-								CCastStringHeatValidnError::FATAL);
+					<< setw(4) << (*is)->Id().Year()
+					<< "-"
+					<< setw(2) << (*is)->Id().Week()
+					<< "-"
+					<< setw(2) << (*is)->Id().StringId()
+					<< ", heat # "
+					<< setw(2) << ih - (*is)->Heats().begin() + 1
+					<< ends;
+				AddValidnError(ih - m_pHeats->begin(),
+					0,
+					-1,
+					ostr,
+					CCastStringHeatValidnError::FATAL);
 				bad = true;
 			}
 		}
 	}
-	
-	return ! bad;
+
+	return !bad;
 }
-					
-		
+
+
 
 bool CCastStringValidator::ValidateWeights()
 {
@@ -911,39 +911,39 @@ bool CCastStringValidator::ValidateWeights()
 	Weight minSize = m_pCastString->MinHeatSize();
 	Weight maxSize = m_pCastString->MaxHeatSize();
 
-	for ( vector<CCastStringHeat>::iterator ih = m_pHeats->begin();
-		  ih != m_pHeats->end();
-		  ++ih ) {
+	for (vector<CCastStringHeat>::iterator ih = m_pHeats->begin();
+		ih != m_pHeats->end();
+		++ih) {
 
-		if ( ! (*ih).IsMarked() )
+		if (!(*ih).IsMarked())
 			continue;
 
-		if ( (*ih).HeatTons() < minSize ) {
-				ostr << "Under weight: " 
-					 << setw(3) << (*ih).HeatTons() 
-					 << " tons < minimum of "
-					 << setw(3) << minSize
-					 << ends;
-				AddValidnError( ih - m_pHeats->begin(),
-								0,
-								-1,
-								ostr,
-								CCastStringHeatValidnError::WARNING);
+		if ((*ih).HeatTons() < minSize) {
+			ostr << "Under weight: "
+				<< setw(3) << (*ih).HeatTons()
+				<< " tons < minimum of "
+				<< setw(3) << minSize
+				<< ends;
+			AddValidnError(ih - m_pHeats->begin(),
+				0,
+				-1,
+				ostr,
+				CCastStringHeatValidnError::WARNING);
 
-				isOk = false;
+			isOk = false;
 		}
-		else if ( (*ih).HeatTons() > maxSize ) {
-				ostr << "Over weight: " 
-					 << setw(3) << (*ih).HeatTons() 
-					 << " tons > maximum of "
-					 << setw(3) << maxSize
-					 << ends;
-				AddValidnError( ih - m_pHeats->begin(),
-								0,
-								-1,
-								ostr,
-								CCastStringHeatValidnError::WARNING);
-				isOk = false;
+		else if ((*ih).HeatTons() > maxSize) {
+			ostr << "Over weight: "
+				<< setw(3) << (*ih).HeatTons()
+				<< " tons > maximum of "
+				<< setw(3) << maxSize
+				<< ends;
+			AddValidnError(ih - m_pHeats->begin(),
+				0,
+				-1,
+				ostr,
+				CCastStringHeatValidnError::WARNING);
+			isOk = false;
 		}
 	}
 
@@ -951,8 +951,8 @@ bool CCastStringValidator::ValidateWeights()
 }
 
 
-	
-		
+
+
 bool CCastStringValidator::ValidateDemandDue()
 {
 	bool result1 = ValidateDemandDue(1);
@@ -967,28 +967,28 @@ bool CCastStringValidator::ValidateDemandDue(int strandNum)
 	ostrstream ostr;
 
 	const vector<CCSOrder*>& strand = m_pCastString->Strand(strandNum);
-	for ( vector<CCSOrder*>::const_iterator io = strand.begin();
-		  io != strand.end();
-		  ++io ) {
+	for (vector<CCSOrder*>::const_iterator io = strand.begin();
+		io != strand.end();
+		++io) {
 
-		CCastStringHeat& rHeat = (*m_pHeats)[ (*io)->HeatSeqNum() ];
+		CCastStringHeat& rHeat = (*m_pHeats)[(*io)->HeatSeqNum()];
 
-		if ( ! rHeat.IsMarked() )
+		if (!rHeat.IsMarked())
 			continue;
 
-		if ( (*io)->Order() != 0 
-			 &&
-			 m_pSuperScen->NumSlabsDue((*io)->Order()) < 0 ) {
+		if ((*io)->Order() != 0
+			&&
+			m_pSuperScen->NumSlabsDue((*io)->Order()) < 0) {
 
 			ostr << "Order will be over scheduled by "
-				 << -(m_pSuperScen->NumSlabsDue((*io)->Order()))
-				 << " pieces."
-				 << ends;
-			AddValidnError( (*io)->HeatSeqNum(),
-							strandNum,
-							io - rHeat.StrandBegin(strandNum),
-							ostr,
-							CCastStringHeatValidnError::WARNING);
+				<< -(m_pSuperScen->NumSlabsDue((*io)->Order()))
+				<< " pieces."
+				<< ends;
+			AddValidnError((*io)->HeatSeqNum(),
+				strandNum,
+				io - rHeat.StrandBegin(strandNum),
+				ostr,
+				CCastStringHeatValidnError::WARNING);
 			isOk = false;
 		}
 	}
@@ -996,28 +996,28 @@ bool CCastStringValidator::ValidateDemandDue(int strandNum)
 	return isOk;
 }
 
-	
+
 
 bool CCastStringValidator::ValidateChems()
 {
 	bool isOk = true;
 
 	{
-		for ( vector<CCastStringHeat>::iterator ih = m_pHeats->begin();
-			  ih != m_pHeats->end();
-			  ++ih ) {
-	
-			if ( ! (*ih).IsMarked() )
+		for (vector<CCastStringHeat>::iterator ih = m_pHeats->begin();
+			ih != m_pHeats->end();
+			++ih) {
+
+			if (!(*ih).IsMarked())
 				continue;
 
-			if ( ! ValidateHeatChems( ih - m_pHeats->begin(), (*ih) ) )
+			if (!ValidateHeatChems(ih - m_pHeats->begin(), (*ih)))
 				isOk = false;
 
 
-			if ( ! ValidateLotChems( ih - m_pHeats->begin(), (*ih), 1 ) )
+			if (!ValidateLotChems(ih - m_pHeats->begin(), (*ih), 1))
 				isOk = false;
 
-			if ( ! ValidateLotChems( ih - m_pHeats->begin(), (*ih), 2 ) )
+			if (!ValidateLotChems(ih - m_pHeats->begin(), (*ih), 2))
 				isOk = false;
 		}
 	}
@@ -1027,10 +1027,10 @@ bool CCastStringValidator::ValidateChems()
 
 
 
-bool CCastStringValidator::ValidateHeatChems( int heatIndex, CCastStringHeat& rHeat )
+bool CCastStringValidator::ValidateHeatChems(int heatIndex, CCastStringHeat& rHeat)
 {
 	// If there is no heat spec then we can't continue here.
-	if ( rHeat.SpecPtr() == 0 )
+	if (rHeat.SpecPtr() == 0)
 		return true;
 
 
@@ -1039,120 +1039,120 @@ bool CCastStringValidator::ValidateHeatChems( int heatIndex, CCastStringHeat& rH
 	// The heat chem must be within the range of the spec chem on appSpecific elements
 
 	ostrstream ostr;
-	ostr.setf(ios::fixed,ios::floatfield);
+	ostr.setf(ios::fixed, ios::floatfield);
 
 	bool isOk = true;
 
-	for ( int elt = 0; elt<CChem::NumElements; ++elt ) {
+	for (int elt = 0; elt < CChem::NumElements; ++elt) {
 
-		if ( ( rHeat.MinChem(CChem::Element(elt)) != 0.0
-				 ||
-				 (rHeat.MaxChem(CChem::Element(elt)) != 0.0 
-				  && 
-				  rHeat.MaxChem(CChem::Element(elt)) != 100.0 )
-				 ||
-				 rHeat.AimChem(CChem::Element(elt)) != 0.0 )
+		if ((rHeat.MinChem(CChem::Element(elt)) != 0.0
+			||
+			(rHeat.MaxChem(CChem::Element(elt)) != 0.0
+				&&
+				rHeat.MaxChem(CChem::Element(elt)) != 100.0)
+			||
+			rHeat.AimChem(CChem::Element(elt)) != 0.0)
 
-			  &&
+			&&
 
-			  ( rHeat.MinChem(CChem::Element(elt)) > rHeat.AimChem(CChem::Element(elt))
-			    ||
+			(rHeat.MinChem(CChem::Element(elt)) > rHeat.AimChem(CChem::Element(elt))
+				||
 				rHeat.AimChem(CChem::Element(elt)) > rHeat.MaxChem(CChem::Element(elt))
-			    ||
-				rHeat.MinChem(CChem::Element(elt)) > rHeat.MaxChem(CChem::Element(elt)) ) ) {
+				||
+				rHeat.MinChem(CChem::Element(elt)) > rHeat.MaxChem(CChem::Element(elt)))) {
 
 			ostr << LPCTSTR(CChem::ToString(CChem::Element(elt)))
-				 << ": Heat range is invalid:  "
-				 << setw(6) << setprecision(4) << rHeat.MinChem(CChem::Element(elt))
-				 << "/"
-				 << setw(6) << setprecision(4) << rHeat.AimChem(CChem::Element(elt))
-				 << "/"
-				 << setw(6) << setprecision(4) << rHeat.MaxChem(CChem::Element(elt))
-				 << ends;
-				AddValidnError(heatIndex,
-							   0,
-							   -1,
-							   ostr,
-							   CCastStringHeatValidnError::WARNING);
-				isOk = false;
-				continue;
+				<< ": Heat range is invalid:  "
+				<< setw(6) << setprecision(4) << rHeat.MinChem(CChem::Element(elt))
+				<< "/"
+				<< setw(6) << setprecision(4) << rHeat.AimChem(CChem::Element(elt))
+				<< "/"
+				<< setw(6) << setprecision(4) << rHeat.MaxChem(CChem::Element(elt))
+				<< ends;
+			AddValidnError(heatIndex,
+				0,
+				-1,
+				ostr,
+				CCastStringHeatValidnError::WARNING);
+			isOk = false;
+			continue;
 		}
-		
+
 		const CChemRange* pRange = rHeat.SpecPtr()->GetChemRange(CChem::Element(elt));
 
-		if ( pRange == 0 ) {
+		if (pRange == 0) {
 
-			if ( rHeat.MinChem(CChem::Element(elt)) != 0.0
-				 ||
-				 (rHeat.MaxChem(CChem::Element(elt)) != 0.0 
-				  && 
-				  rHeat.MaxChem(CChem::Element(elt)) != 100.0 )
-				 ||
-				 rHeat.AimChem(CChem::Element(elt)) != 0.0 ) {
+			if (rHeat.MinChem(CChem::Element(elt)) != 0.0
+				||
+				(rHeat.MaxChem(CChem::Element(elt)) != 0.0
+					&&
+					rHeat.MaxChem(CChem::Element(elt)) != 100.0)
+				||
+				rHeat.AimChem(CChem::Element(elt)) != 0.0) {
 
 				ostr << LPCTSTR(CChem::ToString(CChem::Element(elt)))
-					 << ": Spec has no range, heat has "
-					 << setw(6) << setprecision(4) << rHeat.MinChem(CChem::Element(elt))
-					 << "/"
-					 << setw(6) << setprecision(4) << rHeat.AimChem(CChem::Element(elt))
-					 << "/"
-					 << setw(6) << setprecision(4) << rHeat.MaxChem(CChem::Element(elt))
-					 << ends;
+					<< ": Spec has no range, heat has "
+					<< setw(6) << setprecision(4) << rHeat.MinChem(CChem::Element(elt))
+					<< "/"
+					<< setw(6) << setprecision(4) << rHeat.AimChem(CChem::Element(elt))
+					<< "/"
+					<< setw(6) << setprecision(4) << rHeat.MaxChem(CChem::Element(elt))
+					<< ends;
 				AddValidnError(heatIndex,
-							   0,
-							   -1,
-							   ostr,
-							   CCastStringHeatValidnError::WARNING);
+					0,
+					-1,
+					ostr,
+					CCastStringHeatValidnError::WARNING);
 				isOk = false;
 			}
 		}
 		else { // pRange != 0 
 
-			if ( pRange->IsAppSpecific() ) {
+			if (pRange->IsAppSpecific()) {
 
-				if ( rHeat.MinChem(CChem::Element(elt)) < pRange->MinVal()
-					 ||
-					 rHeat.MaxChem(CChem::Element(elt)) > pRange->MaxVal() ) {
-					
+				if (rHeat.MinChem(CChem::Element(elt)) < pRange->MinVal()
+					||
+					rHeat.MaxChem(CChem::Element(elt)) > pRange->MaxVal()) {
+
 					ostr << LPCTSTR(CChem::ToString(CChem::Element(elt)))
-						 << ": (open) Heat range:  "
-						 << setw(6) << setprecision(4) << rHeat.MinChem(CChem::Element(elt))
-						 << "/"
-						 << setw(6) << setprecision(4) << rHeat.MaxChem(CChem::Element(elt))
-						 << " vs spec "
-						 << setw(6) << setprecision(4) << pRange->MinVal()
-						 << "/"
-						 << setw(6) << setprecision(4) << pRange->MaxVal()
-						 << ends;
+						<< ": (open) Heat range:  "
+						<< setw(6) << setprecision(4) << rHeat.MinChem(CChem::Element(elt))
+						<< "/"
+						<< setw(6) << setprecision(4) << rHeat.MaxChem(CChem::Element(elt))
+						<< " vs spec "
+						<< setw(6) << setprecision(4) << pRange->MinVal()
+						<< "/"
+						<< setw(6) << setprecision(4) << pRange->MaxVal()
+						<< ends;
 					AddValidnError(heatIndex,
-								   0,
-								   -1,
-								   ostr,
-								   CCastStringHeatValidnError::WARNING);
+						0,
+						-1,
+						ostr,
+						CCastStringHeatValidnError::WARNING);
 					isOk = false;
 				}
 			}
 			else { // not app-specific
 
-				if ( rHeat.MinChem(CChem::Element(elt)) != pRange->MinVal()
-					 ||
-					 rHeat.MaxChem(CChem::Element(elt)) != pRange->MaxVal() ) {
-					
+				if (rHeat.MinChem(CChem::Element(elt)) != pRange->MinVal()
+					||
+					rHeat.MaxChem(CChem::Element(elt)) != pRange->MaxVal()) {
+
 					ostr << LPCTSTR(CChem::ToString(CChem::Element(elt)))
-						 << ": Heat range:  "
-						 << setw(6) << setprecision(4) << rHeat.MinChem(CChem::Element(elt))
-						 << "/"
-						 << setw(6) << setprecision(4) << rHeat.MaxChem(CChem::Element(elt))
-						 << " vs spec "
-						 << setw(6) << setprecision(4) << pRange->MinVal()
-						 << "/"
-						 << setw(6) << setprecision(4) << pRange->MaxVal()
-						 << ends;
+						<< ": Heat range:  "
+						<< setw(6) << setprecision(4) << rHeat.MinChem(CChem::Element(elt))
+						<< "/"
+						<< setw(6) << setprecision(4) << rHeat.MaxChem(CChem::Element(elt))
+						<< " vs spec "
+						<< setw(6) << setprecision(4) << pRange->MinVal()
+						<< "/"
+						<< setw(6) << setprecision(4) << pRange->MaxVal()
+						<< ends;
 					AddValidnError(heatIndex,
-								   0,
-								   -1,
-								   ostr,
-								   CCastStringHeatValidnError::WARNING);
+						0,
+						-1,
+						ostr,
+						CCastStringHeatValidnError::WARNING);
 					isOk = false;
 				}
 			}
@@ -1164,29 +1164,29 @@ bool CCastStringValidator::ValidateHeatChems( int heatIndex, CCastStringHeat& rH
 
 
 
-bool CCastStringValidator::ValidateLotChems( int heatIndex, CCastStringHeat& rHeat, int strandNum )
+bool CCastStringValidator::ValidateLotChems(int heatIndex, CCastStringHeat& rHeat, int strandNum)
 {
 	// If there is no heat spec then we can't continue here.
-	if ( rHeat.SpecPtr() == 0 )
+	if (rHeat.SpecPtr() == 0)
 		return true;
 
 	ostrstream ostr;
-	
+
 	bool isOk = true;
 
-	for ( vector<CCSOrder*>::iterator io = rHeat.StrandBegin(strandNum);
-		  io != rHeat.StrandEnd(strandNum);
-		  ++ io )  {
+	for (vector<CCSOrder*>::iterator io = rHeat.StrandBegin(strandNum);
+		io != rHeat.StrandEnd(strandNum);
+		++io) {
 
 		// If there is no lot spec, then we can't do our test
 		// (the error is recorded elsewhere)
 
-		if ( (*io)->PtrLotSpec() == 0 )
+		if ((*io)->PtrLotSpec() == 0)
 			continue;
 
 		//  The order and spec chems must contain the heat chem range for each element
 
-		for ( int elt=0; elt<CChem::NumElements; ++elt ) {
+		for (int elt = 0; elt < CChem::NumElements; ++elt) {
 
 			CChem::Bound heatMin = rHeat.MinChem(CChem::Element(elt));
 			CChem::Bound heatMax = rHeat.MaxChem(CChem::Element(elt));
@@ -1194,23 +1194,23 @@ bool CCastStringValidator::ValidateLotChems( int heatIndex, CCastStringHeat& rHe
 			CChem::Bound ordMin;
 			CChem::Bound ordMax;
 			bool hasReasonCode;
-			bool nonTrivial = (*io)->GetChemRange(CChem::Element(elt),ordMin,ordMax,hasReasonCode);
+			bool nonTrivial = (*io)->GetChemRange(CChem::Element(elt), ordMin, ordMax, hasReasonCode);
 
-			if ( nonTrivial ) {
+			if (nonTrivial) {
 
-				if ( ordMin > heatMin
-					 ||
-					 ordMax < heatMax ) {
+				if (ordMin > heatMin
+					||
+					ordMax < heatMax) {
 					ostr << "Elt " << LPCTSTR(CChem::ToString(CChem::Element(elt)))
 						<< ": lot tighter than heat: "
-						 << setw(6) << setprecision(4) << ordMin
-						 << "/"
-						 << setw(6) << setprecision(4) << ordMax
-						 << " vs"
-						 << setw(6) << setprecision(4) << heatMin
-						 << "/"
-						 << setw(6) << setprecision(4) << heatMax
-						 << "/"
+						<< setw(6) << setprecision(4) << ordMin
+						<< "/"
+						<< setw(6) << setprecision(4) << ordMax
+						<< " vs"
+						<< setw(6) << setprecision(4) << heatMin
+						<< "/"
+						<< setw(6) << setprecision(4) << heatMax
+						<< "/"
 						<< ends;
 					AddValidnError(heatIndex,
 						strandNum,
@@ -1229,12 +1229,12 @@ bool CCastStringValidator::ValidateLotChems( int heatIndex, CCastStringHeat& rHe
 
 
 
-bool CCastStringValidator::Validate340080() 
+bool CCastStringValidator::Validate340080()
 {
 	bool isOk = true;
 
 	// Check for valid specs
-	if ( ! ValidateSpecs() )
+	if (!ValidateSpecs())
 		isOk = false;
 
 
@@ -1247,13 +1247,13 @@ bool CCastStringValidator::Validate340080()
 	// We iterate over all lots in all marked heats,
 	// But we have to do one strand and then the other.
 
-	if ( ! Validate340080(1) )
+	if (!Validate340080(1))
 		isOk = false;
 
-	if ( ! Validate340080(2) )
+	if (!Validate340080(2))
 		isOk = false;
 
-	if ( ! Validate340080Weights() )
+	if (!Validate340080Weights())
 		isOk = false;
 
 	return isOk;
@@ -1270,29 +1270,29 @@ bool CCastStringValidator::ValidateSpecs()
 
 	ostrstream ostr;
 
-	for ( vector<CCastStringHeat>::iterator ih = m_pHeats->begin();
-		  ih != m_pHeats->end();
-		  ++ih ) {
+	for (vector<CCastStringHeat>::iterator ih = m_pHeats->begin();
+		ih != m_pHeats->end();
+		++ih) {
 
-		if ( ! (*ih).IsMarked() )
+		if (!(*ih).IsMarked())
 			continue;
-	
-		if ( (*ih).SpecPtr() == 0) {
+
+		if ((*ih).SpecPtr() == 0) {
 
 			ostr << "Bad heat spec: '" << LPCTSTR((*ih).Spec()) << "'." << ends;
 
-			AddValidnError( ih-m_pHeats->begin(),
-							0,
-							-1,
-							ostr,
-							CCastStringHeatValidnError::WARNING);
+			AddValidnError(ih - m_pHeats->begin(),
+				0,
+				-1,
+				ostr,
+				CCastStringHeatValidnError::WARNING);
 			ok = false;
 		}
-		
-		if ( ! ValidateLotSpecs( (*ih), 1 ) )
+
+		if (!ValidateLotSpecs((*ih), 1))
 			ok = false;
 
-		if ( ! ValidateLotSpecs( (*ih), 2 ) )
+		if (!ValidateLotSpecs((*ih), 2))
 			ok = false;
 
 	}
@@ -1302,8 +1302,8 @@ bool CCastStringValidator::ValidateSpecs()
 
 
 
-bool CCastStringValidator::ValidateLotSpecs( CCastStringHeat& rHeat, int strandNum )
-{	
+bool CCastStringValidator::ValidateLotSpecs(CCastStringHeat& rHeat, int strandNum)
+{
 	// Make sure each lot spec has been assigned
 	//  and is compatible with the heat spec
 
@@ -1313,76 +1313,76 @@ bool CCastStringValidator::ValidateLotSpecs( CCastStringHeat& rHeat, int strandN
 
 	int caster = m_pCastString->Id().Caster(); //### caster-specific
 
-	for ( vector<CCSOrder*>::iterator io = rHeat.StrandBegin(strandNum);
-		  io != rHeat.StrandEnd(strandNum);
-		  ++io ) {
-		
-		if ( (*io)->PtrLotSpec() == 0 ) {
-			
+	for (vector<CCSOrder*>::iterator io = rHeat.StrandBegin(strandNum);
+		io != rHeat.StrandEnd(strandNum);
+		++io) {
+
+		if ((*io)->PtrLotSpec() == 0) {
+
 			ostr << "Missing lot spec" << ends;
-			AddValidnError( (*io)->HeatSeqNum(),
-							strandNum,
-							io - rHeat.StrandBegin(strandNum),
-							ostr,
-							CCastStringHeatValidnError::WARNING );
+			AddValidnError((*io)->HeatSeqNum(),
+				strandNum,
+				io - rHeat.StrandBegin(strandNum),
+				ostr,
+				CCastStringHeatValidnError::WARNING);
 			isOk = false;
 		}
-		else if ( rHeat.SpecPtr() != 0 ) {
+		else if (rHeat.SpecPtr() != 0) {
 			// check for compatibility between heat spec and lot spec
-		  if ( ! TheSnapshot.HeatSpecCrossApp().IsCompatible( (*io)->LotSpec(), rHeat.Spec(), caster ) ) { //### caster-specific
+			if (!TheSnapshot.HeatSpecCrossApp().IsCompatible((*io)->LotSpec(), rHeat.Spec(), caster)) { //### caster-specific
 				ostr << "Lot spec "
-					<<  LPCTSTR((*io)->LotSpec())
+					<< LPCTSTR((*io)->LotSpec())
 					<< " incompatible with heat spec "
 					<< LPCTSTR(rHeat.Spec())
 					<< ends;
-				AddValidnError( (*io)->HeatSeqNum(),
-								strandNum,
-								io - rHeat.StrandBegin(strandNum),
-								ostr,
-								CCastStringHeatValidnError::WARNING );
+				AddValidnError((*io)->HeatSeqNum(),
+					strandNum,
+					io - rHeat.StrandBegin(strandNum),
+					ostr,
+					CCastStringHeatValidnError::WARNING);
 				isOk = false;
 			}
-			else if ( rHeat.SpecPtr()->Name()[6] == '0' && (*io)->PtrLotSpec()->Name()[6] == '5' ) {
+			else if (rHeat.SpecPtr()->Name()[6] == '0' && (*io)->PtrLotSpec()->Name()[6] == '5') {
 				ostr << "Lot spec "
-					<<  LPCTSTR((*io)->LotSpec())
+					<< LPCTSTR((*io)->LotSpec())
 					<< " is 05, not compatible with heat spec "
 					<< LPCTSTR(rHeat.Spec())
 					<< ends;
-				AddValidnError( (*io)->HeatSeqNum(),
-								strandNum,
-								io - rHeat.StrandBegin(strandNum),
-								ostr,
-								CCastStringHeatValidnError::WARNING );
+				AddValidnError((*io)->HeatSeqNum(),
+					strandNum,
+					io - rHeat.StrandBegin(strandNum),
+					ostr,
+					CCastStringHeatValidnError::WARNING);
 				isOk = false;
 			}
-//            Added for sixth digit validation of calcium range specs where the sixth digit is 8 or 9 and heat
-//            must also be a 8 or 9 for compatibility 3-21-07 k. hubbard  
-//            if ( rHeat.SpecPtr()->Name()[5] != '8' && (*io)->PtrLotSpec()->Name()[5] == '8' ) {
-			if ( (*io)->Order() != 0 ) {
-		       if ( rHeat.SpecPtr()->Name()[5] != '8' && (*io)->Order()->OrderedSpec()[5] == '8' ) {
-				ostr << "Lot Order Spec "
-					<<  LPCTSTR((*io)->Order()->OrderedSpec())
-					<< " is 8x, not compatible with heat spec "
-					<< LPCTSTR(rHeat.Spec())
-					<< ends;
-				AddValidnError( (*io)->HeatSeqNum(),
-								strandNum,
-								io - rHeat.StrandBegin(strandNum),
-								ostr,
-								CCastStringHeatValidnError::FATAL );
-				isOk = false;
-				}
-				else if ( rHeat.SpecPtr()->Name()[5] != '9' && (*io)->Order()->OrderedSpec()[5] == '9' ) {
+			//            Added for sixth digit validation of calcium range specs where the sixth digit is 8 or 9 and heat
+			//            must also be a 8 or 9 for compatibility 3-21-07 k. hubbard  
+			//            if ( rHeat.SpecPtr()->Name()[5] != '8' && (*io)->PtrLotSpec()->Name()[5] == '8' ) {
+			if ((*io)->Order() != 0) {
+				if (rHeat.SpecPtr()->Name()[5] != '8' && (*io)->Order()->OrderedSpec()[5] == '8') {
 					ostr << "Lot Order Spec "
-						<<  LPCTSTR((*io)->Order()->OrderedSpec())
+						<< LPCTSTR((*io)->Order()->OrderedSpec())
+						<< " is 8x, not compatible with heat spec "
+						<< LPCTSTR(rHeat.Spec())
+						<< ends;
+					AddValidnError((*io)->HeatSeqNum(),
+						strandNum,
+						io - rHeat.StrandBegin(strandNum),
+						ostr,
+						CCastStringHeatValidnError::FATAL);
+					isOk = false;
+				}
+				else if (rHeat.SpecPtr()->Name()[5] != '9' && (*io)->Order()->OrderedSpec()[5] == '9') {
+					ostr << "Lot Order Spec "
+						<< LPCTSTR((*io)->Order()->OrderedSpec())
 						<< " is 9x, not compatible with heat spec "
 						<< LPCTSTR(rHeat.Spec())
 						<< ends;
-					AddValidnError( (*io)->HeatSeqNum(),
-								strandNum,
-								io - rHeat.StrandBegin(strandNum),
-								ostr,
-								CCastStringHeatValidnError::FATAL );
+					AddValidnError((*io)->HeatSeqNum(),
+						strandNum,
+						io - rHeat.StrandBegin(strandNum),
+						ostr,
+						CCastStringHeatValidnError::FATAL);
 					isOk = false;
 				}
 			}
@@ -1407,38 +1407,424 @@ bool CCastStringValidator::ValidateLotSpecs( CCastStringHeat& rHeat, int strandN
 
 int TRANS_WIDTH = 1;
 
+bool CCastStringValidator::Validate3SP(int caster) {
+	bool isOk = true;
+	ostrstream ostr;
 
-bool CCastStringValidator::Validate340080(int strandNum) 
+	// Check the strand size, returning true if the size is zero.
+	int strandNum = 1;  // only one strand per caster
+	const vector<CCSOrder*>& strand = m_pCastString->Strand(strandNum);
+	if (strand.size() == 0) return true;  // trivially ok, as there's nothing to check.
+
+	Width prevWidth = 0; // we start at the beginning
+	int slabNum = 1;
+
+	// Iterate over the orders, validating as we go.
+	for (vector<CCSOrder*>::const_iterator io = strand.begin(); io != strand.end(); ++io) {
+		// Consider only marked heats.
+		CCastStringHeat& rHeat = (*m_pHeats)[(*io)->HeatSeqNum()];
+		if (!rHeat.IsMarked())
+			continue;
+
+		// Audit the lot spec, looking at specific digits.
+		FixHeatSpec3SP(rHeat, caster); //### caster-specific
+
+		// Audit the number of pieces. Specific numbers for 4 and 5 other than not zero? See old version for details on caster 1.
+		int numPieces = (*io)->NumPieces();
+		if (0 == numPieces) {
+			ostr << "#PC invalid" << ends;
+			ADD_ERR(CCastStringHeatValidnError::FATAL);
+			isOk = false;
+		}
+
+		// Audit slit-code type
+		char code = (*io)->SlitTypeCode();
+		//#### New rule 1.1.1 Degrades for 1st slab in heat after startup
+		if (slabNum == 1)
+			if ((code != 'D') &&
+				(code != 'H') &&
+				(code != 'T')) {
+				ostr << "invalid slit type code for 1st slab in heat = " << code << ends;
+				ADD_ERR(CCastStringHeatValidnError::FATAL);
+				isOk = false;
+			}
+
+		//#### Also new: 1.1.2
+		if (slabNum == 2)
+			if ((code != 'D')) {
+				ostr << "invalid slit type code for 1st slab in heat = " << code << ends;
+				ADD_ERR(CCastStringHeatValidnError::FATAL);
+				isOk = false;
+			}
+
+		// Added noslit type code here on xxx4 condition codes 6-27-05 k. hubbard  
+		if (code != 'D' &&
+			code != 'E' &&
+			code != 'F' &&
+			code != 'S' &&
+			code != 'R' &&
+			code != ' ') {
+			ostr << "invalid slit type code = " << code << ends;
+			ADD_ERR(CCastStringHeatValidnError::WARNING);
+			isOk = false;
+		}
+
+		// Audit steel width
+		//### For casters 4 and 5, some other check than non-zero? Original checks caster 3 only.
+		Width width = (*io)->SlabWidth();
+		if (0 == width) {
+			ostr << "steel width (" << setw(2) << width << ") is invalid" << ends;
+			ADD_ERR(CCastStringHeatValidnError::FATAL);
+			isOk = false;
+		}
+		//### New -- assume this is the intended logic for 4 and 5.
+		else {
+			Width min = (*io)->MinAllowedSlabWidth();
+			Width max = (*io)->MaxAllowedSlabWidth();
+			if (width < min || width > max) {
+				ostr << "steel width (" << setw(2) << width << ") not in range [" << min << "," << max << "	]" << ends;
+				ADD_ERR(CCastStringHeatValidnError::FATAL);
+				isOk = false;
+			}
+		}
+
+		// Audit non-transition provided steel widths
+		width = (*io)->SlabWidth();
+		code = (*io)->SlitTypeCode();
+		bool isTrans = (*io)->IsTransition();
+		bool isStock = ((*io)->FpOrderNum().Left(7) == "9999999");
+
+		if ((*io)->Order() != 0 && !isStock) {
+			Width provWidthMax = (*io)->Order()->ProvSlabWidthMax();
+
+			if (code == ' ' && !isTrans && width > provWidthMax) {  // original has: code = ' ', which seems an error
+				ostr << "steel width (" << width << ") must not" << "be > Prov Max" << provWidthMax << ends;
+				ADD_ERR(CCastStringHeatValidnError::FATAL);
+				isOk = false;
+			}
+		}
+		// End Note: K. Hubbard 12-11-03; End maint. of add new fatal here for checking width (*io)->ProvSlabWidthMin & Max
+
+		// Audit min/max steel length
+		if ((*io)->PlanSteelLengthMin() == 0 || (*io)->PlanSteelLengthMax() == 0) {
+			if ((*io)->FpOrderNum().Left(7) == "9999999") {
+				CString spec3 = (*io)->LotSpec().Left(3);
+				// Shouldn't this be a general check for CMS (condn = 5XXX or 8XXX)???
+				if ((*io)->SlabCondnCode() == 5782
+					&& (spec3 == "520" ||
+						spec3 == "524" ||
+						spec3 == "726" ||
+						spec3 == "811" ||
+						spec3 == "820" ||
+						spec3 == "822" ||  // Added for Nancy Hake Honda trials 6-15-09 k. hubbard  
+						spec3 == "826")) {
+					//### Does this hold for 3SP? Yes, confirmed by KH (8-29-2016)
+					// avoid impractical 5% CMS increase if plan steel length >= 365
+					// assumption: 384 is max length 384 - 5% = 365
+					if ((*io)->SlabLength() >= 365) {
+						(*io)->PlanSteelLengthMin(GlobalConstants.CasterSlabLengthMax(caster)); //### caster-specific
+						(*io)->PlanSteelLengthMax(GlobalConstants.CasterSlabLengthMax(caster)); //### caster-specific
+					}
+				}
+				else {
+					(*io)->PlanSteelLengthMin((*io)->SlabLength());
+					(*io)->PlanSteelLengthMax((*io)->SlabLength());
+				}
+			}
+			else {
+				if ((*io)->Order() != 0) {
+					bool isLenOk = AuditSlabLengthData((*io));
+					Length minL;
+					Length maxL;
+					ComputeSlabLength(caster, (*io), isLenOk, minL, maxL); //### caster-specific
+					(*io)->PlanSteelLengthMin(minL);
+					(*io)->PlanSteelLengthMax(maxL);
+				}
+			}
+		}
+
+		// Audit planned length.
+		if ((*io)->FpOrderNum().Left(7) != "9999999") {
+			if ((*io)->Order() != 0 && ((*io)->Order()->CustCoilReq() == 8 || (*io)->Order()->CustCoilReq() == 9)) {
+				// no-op
+			}
+			else if (long((*io)->SlabLength() + 0.5) < long((*io)->PlanSteelLengthMin() + 0.5) ||
+				long((*io)->SlabLength() + 0.5) > long((*io)->PlanSteelLengthMax() + 0.5)) {
+				ostr << "slab length " << long((*io)->SlabLength() + 0.5) << " should be between " << long((*io)->PlanSteelLengthMin() + 0.5)
+					<< " and " << long((*io)->PlanSteelLengthMax() + 0.5) << ends;
+				ADD_ERR(CCastStringHeatValidnError::WARNING);  // temp switched from fatal to warning for Dofasco 
+				// order campaign per P. Fronczek. maint k. hubbard 11-11-04. 					                              
+				isOk = false;
+			}
+		}
+
+		if ((*io)->FpOrderNum().Left(7) != "9999999") {
+			if ((*io)->Order() != 0 && ((*io)->Order()->CustCoilReq() == 8 || (*io)->Order()->CustCoilReq() == 9)) {
+				// no-op
+			}
+			else if (long((*io)->SlabLength() + 0.5) < long((*io)->PlanSteelLengthMin() + 0.5) ||
+				long((*io)->SlabLength() + 0.5) > long((*io)->PlanSteelLengthMax() + 0.5)) {
+				ostr << "slab length " << long((*io)->SlabLength() + 0.5) << " should be between " << long((*io)->PlanSteelLengthMin() + 0.5)
+					<< " and " << long((*io)->PlanSteelLengthMax() + 0.5) << ends;
+				ADD_ERR(CCastStringHeatValidnError::WARNING);  // temp switched from fatal to warning for Dofasco 
+															   // order campaign per P. Fronczek. maint k. hubbard 11-11-04. 					                              
+				isOk = false;
+			}
+		}
+
+		// Audit steel length compliance with steelshop limitations
+		//## Original has if-clauses for casters 1, 2, and 3, which are omitted here. Instead, slab length for 4 and 5 is checked.
+		Length len = (*io)->SlabLength();
+		Length minLen = 200; // per TF's email of 8-6-2016
+		if (0 == len) {
+			ostr << "Slab length 0 is invalid." << ends;
+			ADD_ERR(CCastStringHeatValidnError::FATAL);
+			isOk = false;
+		}
+		else if (len < minLen || len > GlobalConstants.CasterSlabLengthMax(caster)) { //### caster-specific
+			ostr << "Slab length " << setw(3) << len << " not between steelshop length boundaries" << GlobalConstants.CasterSlabLengthMax(caster) << "," << minLen << ends;
+			ADD_ERR(CCastStringHeatValidnError::FATAL);
+			isOk = false;
+		}
+
+		// Audit special condition codes
+		// Reinstalled 8/8/03 K. Hubbard 
+		// New: CastStringValidator.cpp for special condition code assignments; Maint. added by K. Hubbard 8-5-03  
+		// audit ordered condition code for special non-slit instructions. - per Larry Thomas, Quality Design Engineer (QDE). 
+		//##### How do the scheduling rules in 1.1 Degrades section pertain here?
+		char slitCode = (*io)->SlitTypeCode();
+		int condnCode = (*io)->SlabCondnCode();
+		int dig3 = condnCode / 10 % 10; // get D of xxDx, third digit of ordered condition code  
+		int dig4 = condnCode / 1 % 10;  // get D of xxxD, fourth digit of ordered condition code
+		if (dig3 == 3 && dig4 == 4) {
+			if (slitCode == ' ' || slitCode == 'D') {
+				// do nothing operation
+			}
+			else {
+				ostr << "Condition code " << condnCode << " orders CAN NOT be slit per QDE Larry Thomas" << ends;
+				ADD_ERR(CCastStringHeatValidnError::FATAL);
+				isOk = false;
+			}
+		}
+
+		// Audit exposure code
+		//######### How do rules pertain here for casters 4 and 5?
+		//### In original, the if-clause is for caster 1, the else for the rest. Does that still hold?
+		char exp = (*io)->ExposureCode();
+		int condn = (*io)->SlabCondnCode();
+		if (condn > 0 &&
+			(exp == ' ' || exp == 'E' || exp == 'U' || exp == '1' || exp == '2')) {
+			// no-op
+		}
+		else {
+			ostr << "Exposure code '" << exp << "' is invalid" << ends;
+			ADD_ERR(CCastStringHeatValidnError::WARNING);
+			isOk = false;
+		}
+
+
+		// Audit Tek and Kote positional planned orders at beginning of cast violations.  Added 03-06-06 k. hubbard per P. Velasco
+		int commodcode = (*io)->CICode();
+		isStock = ((*io)->FpOrderNum().Left(7) == "9999999");
+		int heatNumber = (*io)->HeatSeqNum();
+		int lotNumber = (*io)->LotNum();
+
+		if (prevWidth == 0 && heatNumber == 0) {
+			if (!isStock) {
+				if (commodcode == 11 ||  // Added commocode (11 [stringers], 45-50) to Tek/Kote material check 3-17-06 k. hubbard
+					commodcode == 12 ||
+					commodcode == 17 ||
+					commodcode == 18 ||
+					commodcode == 19 ||
+					commodcode == 20 ||
+					commodcode == 21 ||
+					commodcode == 45 ||
+					commodcode == 46 ||
+					commodcode == 47 ||
+					commodcode == 48 ||
+					commodcode == 49 ||
+					commodcode == 50 ||
+					commodcode == 72 ||
+					commodcode == 73) {
+					ostr << "Tek and Kote commodity code " << setw(3) << commodcode << " can not be planned at start of a cast" << ends;
+					ADD_ERR(CCastStringHeatValidnError::WARNING);
+					isOk = false;
+				}
+			}
+		}
+
+		// Audit width change.  Radicals are ok here 12-11-03 k. hubbard
+		code = (*io)->SlitTypeCode();
+
+		// This is the first we've seen, use it for initial width: important to put this initial update before the check above
+		// for CheckStringHeatPosition
+		if (0 == prevWidth)
+			prevWidth = (*io)->SlabWidth();
+
+		Width widthDiff = fabs((*io)->SlabWidth() - prevWidth);
+		if (widthDiff > TRANS_WIDTH && code == ' ') {  //	Consider slit type i.e. Radicals ok. 11-29-05 k. hubbard
+			ostr << "Width jump from " << setw(3) << prevWidth << " to " << setw(3) << (*io)->SlabWidth() << " is invalid" << ends;
+			ADD_ERR(CCastStringHeatValidnError::FATAL);
+			//	Changing transition width violations to Fatal 12-11-03 k. hubbard
+			isOk = false;
+		}
+
+		// Audit Transition 80" Slab Spread Squeeze violations against Provided Cast Widths
+		if ((*io)->Order() != 0) {
+			Width width = (*io)->SlabWidth();
+			float ProvWidthMin;   // Added 4 lines here for min check 3-17-06 k. hubbard
+			CString strProvMin;
+			// Changed line (see next line) to throw reference more reliable Order.h field here for min value 4-5-07 k. hubbard
+			strProvMin.Format("%2.1f", (*io)->Order()->ProvSlabWidthMin());
+			ProvWidthMin = atof(strProvMin);
+
+			float ProvWidthMax;
+			CString strProvMax;
+			// Changed line (see next line) to throw reference more reliable Order.h field here for max value 4-5-07 k. hubbard
+			strProvMax.Format("%2.1f", (*io)->Order()->ProvSlabWidthMax());
+			ProvWidthMax = atof(strProvMax);
+
+			char code = (*io)->SlitTypeCode();
+			bool isTrans = (*io)->IsTransition();
+			Width transSpread80 = 1;  //Restored per P. Fronczek maint. 4-18-07 k. hubbard
+									  // strProvMax.Format("%2.1f",m_pOrder->ProvSlabWidthMax());
+									  // m_provCastSlabWidthMax = atof(strProvMax);
+									  // Width transProvWidthMax = (ProvWidthMax - transSpread80);
+			bool isStock = ((*io)->FpOrderNum().Left(7) == "9999999");
+
+			if (prevWidth != 0 && !isStock && (*io)->Order() != 0) { // Added line to make sure order exist for more reliable Order.h field here for min/max values 4-5-07 k. hubbard
+				//	int transProvWidthMax = (ProvWidthMax - transSpread80);   comm. out 4-5-07 k. hubbard
+				Width widthDiff = fabs((*io)->SlabWidth() - prevWidth);
+				Width NarrowestWidthPoint = min((*io)->SlabWidth(), prevWidth);
+				Width transProvWidthMax = (ProvWidthMax - transSpread80);   //Restored per P. Fronczek maint. 4-18-07 k. hubbard
+																			// Added or condition here for min check 3-17-06 k. hubbard
+				if (widthDiff == 1 && (code == ' ') && (isTrans) &&
+					(NarrowestWidthPoint > transProvWidthMax || NarrowestWidthPoint < ProvWidthMin)) {   //Switched per P. Fronczek maint. 4-18-07 k. hubbard
+					// Comm out switched per P. Fronczek maint. 4-18-07 k. hubbard
+					ostr << "Transition steel width (" << NarrowestWidthPoint << ") is a violation of"
+						<< "80 HSM Spread / Squeeze Prov Min (" << ProvWidthMin << ") or Prov Max (" << ProvWidthMax
+						<< ends;
+					ADD_ERR(CCastStringHeatValidnError::WARNING);
+					isOk = false;
+				}
+			}
+		}
+		// End Maint. Note: K. Hubbard 3-15-06; End maint. of add new fatal here for checking width (*io)->ProvSlabWidthMin & Max
+
+		// Audit Side Slits Minimum Allowance change.  Added 5-24-06 k. hubbard per P. Velasco
+		code = (*io)->SlitTypeCode();
+		isStock = ((*io)->FpOrderNum().Left(7) == "9999999");
+
+		if (!isStock) {
+			Width widthDiff = fabs((*io)->SlabWidth() - (*io)->Order()->SlabWidth());  // from P-STEEL-MAKE-PLAN file k. hubbard 
+			if (widthDiff > 0) {
+				if (widthDiff < 2 && code == 'S') { //	Check slit type. 
+					ostr << "Planned Side Slits from " << setw(3) << (*io)->SlabWidth()
+						<< " to " << setw(3) << (*io)->Order()->SlabWidth()  // Throw reference to reliable Order.h (P-STEEL-MAKE-PLAN) field here for aim value 02-10-09 k. hubbard
+						<< " under 2 inches is a dock violation" << ends;
+					ADD_ERR(CCastStringHeatValidnError::WARNING);
+					isOk = false;
+				}
+			}
+		}
+
+		// Audit Width Jumps change.  Added 11-29-05 k. hubbard per P. Velasco
+		commodcode = (*io)->CICode();
+		code = (*io)->SlitTypeCode();
+		Width transSpread80 = 0.3;
+		Width transSqueeze80 = 1.6;
+		isStock = ((*io)->FpOrderNum().Left(7) == "9999999");
+		widthDiff = fabs((*io)->SlabWidth() - prevWidth);
+		Width MinTransHBWidth = fabs(prevWidth - transSqueeze80);
+		Width MaxTransHBWidth = fabs(prevWidth + transSpread80);
+
+		if (!isStock) {
+			Width hbwidth = (*io)->OrderHotBandWidth();
+			if (widthDiff == 1 && (commodcode == 65 || commodcode == 66) &&
+				(hbwidth < MinTransHBWidth || hbwidth > MaxTransHBWidth) && code == ' ') {  //	Consider slit type i.e. Radicals ok. 
+				ostr << "Slab Width Jump from " << setw(3) << prevWidth << " to " << setw(3) << (*io)->SlabWidth()
+					<< " is invalid" << ends;
+				ADD_ERR(CCastStringHeatValidnError::FATAL);
+				isOk = false;
+			}
+		}
+
+		// Audit Stock Reason codes   added audit for stock reason 5-5-09 k. hubbard
+		CString stockFaclReason = (*io)->StockReason();
+		CString stockCommReason = (*io)->StockCommercialReason();
+		// FP Change
+		if ((*io)->FpOrderNum().Left(7) == "9999999") {
+			if (stockFaclReason == "" || stockFaclReason == "0" || stockFaclReason == "<blank>" ||
+				stockCommReason == "" || stockCommReason == "0" || stockCommReason == "<blank>") {
+				ostr << "stock facility reason '" << setw(20) << LPCTSTR(stockFaclReason)
+					<< " ' or stock commercial reason '" << setw(20) << LPCTSTR(stockCommReason)
+					<< " ' must not be blank " << ends;
+				ADD_ERR(CCastStringHeatValidnError::FATAL);  // temp switched from fatal to warning for Dofasco 
+				isOk = false;
+			}
+		}
+
+		// Audit Slit Reason Code  added audit for slit reason 2-26-10 k. hubbard
+		code = (*io)->SlitTypeCode();
+		CString slitFaclReason = (*io)->SlitReason();
+
+		if (code == 'E' || code == 'S' || code == 'R') {
+			if (slitFaclReason == "" || slitFaclReason == "0" || slitFaclReason == "<blank>") {
+				ostr << "slit facility reason '" << setw(20) << LPCTSTR(slitFaclReason)
+					<< " ' must not be blank " << ends;
+				ADD_ERR(CCastStringHeatValidnError::FATAL);  // temp switched from fatal to warning 
+				isOk = false;
+			}
+		}
+
+		// !!!!!! Caution the variable below is shared between 2 width audits above and must get populated once after both or else one audit above will fail!!!! 11-29-05 k. hubbard
+		prevWidth = (*io)->SlabWidth();  // Important CAUTION!!!! repositioned here to work inside this For loop and share between width change and width jump audits 11-29-05 k. hubbard
+
+		// Audit change indicator
+		if ((*io)->ChangeMarked()) {
+			ostr << "Change indicator has not been removed." << ends;
+			ADD_ERR(CCastStringHeatValidnError::WARNING);
+			isOk = false;
+		}
+		slabNum++; //##### new: tracking which slab
+	} // for loop
+	return isOk;
+} // method body
+
+bool CCastStringValidator::Validate340080(int strandNum)
 {
 	bool isOk = true;
 	ostrstream ostr;
 
 	int caster = m_pCastString->Id().Caster(); //### caster-specific
 
+	//### new code
+	if (caster == 4 || caster == 5)
+		return Validate3SP(caster);
 
 	const vector<CCSOrder*>& strand = m_pCastString->Strand(strandNum);
 
-	if ( strand.size() == 0 )
+	if (strand.size() == 0)
 		// nothing to check
 		return true;
 
 	//#### Presumably casters 4 and 5 should be included here: each has 1 strand
-	if ( strandNum == 2 && Caster::NumStrandsOnCaster(caster) == 1 ) { //### caster-specific
+	if (strandNum == 2 && Caster::NumStrandsOnCaster(caster) == 1) { //### caster-specific
 		ostr << "Caster " << caster << ": There are orders on strand #2!" << ends;
 		//AddValidationString(ostr);
-		AddValidnError(-1,0,-1,ostr,CCastStringHeatValidnError::FATAL);
+		AddValidnError(-1, 0, -1, ostr, CCastStringHeatValidnError::FATAL);
 		return false;
 	}
 
 	Width prevWidth = 0;
 
-	for ( vector<CCSOrder*>::const_iterator io = strand.begin();
-		  io != strand.end();
-		  ++io ) {
+	for (vector<CCSOrder*>::const_iterator io = strand.begin();
+		io != strand.end();
+		++io) {
 
-		CCastStringHeat& rHeat = (*m_pHeats)[ (*io)->HeatSeqNum() ];
+		CCastStringHeat& rHeat = (*m_pHeats)[(*io)->HeatSeqNum()];
 
-		if ( ! rHeat.IsMarked() )
+		if (!rHeat.IsMarked())
 			continue;
 
 
@@ -1446,26 +1832,26 @@ bool CCastStringValidator::Validate340080(int strandNum)
 
 		//  We need to have some fun with certain digits of the spec.
 
-		FixHeatSpec( rHeat, caster ); //### caster-specific
+		FixHeatSpec(rHeat, caster); //### caster-specific
 
 		// audit numPieces
 		{
 			int numPieces = (*io)->NumPieces();
 
-			if ( caster == 1 ) { //### caster-specific
+			if (caster == 1) { //### caster-specific
 
-				if ( numPieces == 0 
-					 || 
-					 (numPieces > 32 && numPieces != 99) ) {
+				if (numPieces == 0
+					||
+					(numPieces > 32 && numPieces != 99)) {
 					ostr << "#PC must be < 33"
-						 << ends;
+						<< ends;
 					ADD_ERR(CCastStringHeatValidnError::FATAL);
 					isOk = false;
 				}
 			}
-			else if ( numPieces == 0 ) {
+			else if (numPieces == 0) {
 				ostr << "#PC invalid"
-					 << ends;
+					<< ends;
 				ADD_ERR(CCastStringHeatValidnError::FATAL);
 				isOk = false;
 			}
@@ -1485,11 +1871,11 @@ bool CCastStringValidator::Validate340080(int strandNum)
 				&&
 				code != 'R'
 				&&
-				code != ' ' ) {
-				
+				code != ' ') {
+
 				ostr << "invalid slit type code = "
-					 << code 
-					 << ends;
+					<< code
+					<< ends;
 				ADD_ERR(CCastStringHeatValidnError::WARNING);
 				isOk = false;
 			}
@@ -1501,102 +1887,102 @@ bool CCastStringValidator::Validate340080(int strandNum)
 		{
 			Width width = (*io)->SlabWidth();
 
-			if ( caster == 3 ) { //### caster-specific
+			if (caster == 3) { //### caster-specific
 
-				if ( width < 24 || width > 60 ) {
+				if (width < 24 || width > 60) {
 					ostr << "steel width ("
-						 << setw(2) << width
-						 << ") not in range [24,60]"
-						 << ends;
+						<< setw(2) << width
+						<< ") not in range [24,60]"
+						<< ends;
 					ADD_ERR(CCastStringHeatValidnError::FATAL);
 					isOk = false;
 				}
 			}
-			else if ( width == 0 ) {
+			else if (width == 0) {
 				ostr << "steel width ("
-					 << setw(2) << width
-					 << ") is invalid"
-					 << ends;
+					<< setw(2) << width
+					<< ") is invalid"
+					<< ends;
 				ADD_ERR(CCastStringHeatValidnError::FATAL);
 				isOk = false;
 			}
 		}
 
-// Note: K. Hubbard 12-11-03; Add New Fatal here by checking width (*io)->ProvSlabWidthMin & Max
+		// Note: K. Hubbard 12-11-03; Add New Fatal here by checking width (*io)->ProvSlabWidthMin & Max
 
-		// audit non Transition Provided Steel widths
+				// audit non Transition Provided Steel widths
 		{
 			Width width = (*io)->SlabWidth();
-			char code   = (*io)->SlitTypeCode();
+			char code = (*io)->SlitTypeCode();
 			bool isTrans = (*io)->IsTransition();
-//			Width provWidthMax = (*io)->ProvSlabWidthMax();
-			bool isStock = ( (*io)->FpOrderNum().Left(7) == "9999999" );
+			//			Width provWidthMax = (*io)->ProvSlabWidthMax();
+			bool isStock = ((*io)->FpOrderNum().Left(7) == "9999999");
 
-			if ( (*io)->Order() != 0 
-			 	&&
-			 ! isStock )
-				{
-					Width provWidthMax = (*io)->Order()->ProvSlabWidthMax();
-					Width provWidthMin = (*io)->Order()->ProvSlabWidthMin();
+			if ((*io)->Order() != 0
+				&&
+				!isStock)
+			{
+				Width provWidthMax = (*io)->Order()->ProvSlabWidthMax();
+				Width provWidthMin = (*io)->Order()->ProvSlabWidthMin();
 
-				if  (code = ' ') {
-			//	&&
-					if	(isTrans = false) {
-			//	&&
+				if (code = ' ') {
+					//	&&
+					if (isTrans = false) {
+						//	&&
 						if (width > provWidthMax) {
 
 							ostr << "steel width ("
-								 << width
-								 << ") must not"
-								 << "be > Prov Max" << provWidthMax
-								 << ends;
+								<< width
+								<< ") must not"
+								<< "be > Prov Max" << provWidthMax
+								<< ends;
 							ADD_ERR(CCastStringHeatValidnError::FATAL);
 							isOk = false;
-							}
 						}
 					}
 				}
 			}
+		}
 
-// End Note: K. Hubbard 12-11-03; End maint. of add new fatal here for checking width (*io)->ProvSlabWidthMin & Max
+		// End Note: K. Hubbard 12-11-03; End maint. of add new fatal here for checking width (*io)->ProvSlabWidthMin & Max
 
 
-		// audit min/max steel length
+				// audit min/max steel length
 
 		{
 			if ((*io)->PlanSteelLengthMin() == 0
 				||
-				(*io)->PlanSteelLengthMax() == 0 ) {
+				(*io)->PlanSteelLengthMax() == 0) {
 
 				// FP Change
 				//if ( (*io)->OrderNum() == 9999999 ) {
-				if ( (*io)->FpOrderNum().Left(7) == "9999999" ) {
+				if ((*io)->FpOrderNum().Left(7) == "9999999") {
 
 					CString spec3 = (*io)->LotSpec().Left(3);
-					
+
 					// Shouldn't this be a general check for CMS (condn = 5XXX or 8XXX)???
-					
-					if ( (*io)->SlabCondnCode() == 5782
-						 &&
-						 ( spec3 == "520"
-						   ||
-						   spec3 == "524"
-						   ||
-						   spec3 == "726"
-						   ||
-						   spec3 == "811"
-						   ||
-						   spec3 == "820"
-						   ||
-			               spec3 == "822"  // Added for Nancy Hake Honda trials 6-15-09 k. hubbard  
-						   ||
-						   spec3 == "826" ) ) {
+
+					if ((*io)->SlabCondnCode() == 5782
+						&&
+						(spec3 == "520"
+							||
+							spec3 == "524"
+							||
+							spec3 == "726"
+							||
+							spec3 == "811"
+							||
+							spec3 == "820"
+							||
+							spec3 == "822"  // Added for Nancy Hake Honda trials 6-15-09 k. hubbard  
+							||
+							spec3 == "826")) {
 
 						// avoid impractical 5% CMS increase if plan steel length >= 365
 						// assumption: 384 is max length
 						// 384 - 5% = 365
 
-						if ( (*io)->SlabLength() >= 365 ) {
+						if ((*io)->SlabLength() >= 365) {
 
 							(*io)->PlanSteelLengthMin(GlobalConstants.CasterSlabLengthMax(caster)); //### caster-specific
 							(*io)->PlanSteelLengthMax(GlobalConstants.CasterSlabLengthMax(caster)); //### caster-specific
@@ -1606,23 +1992,23 @@ bool CCastStringValidator::Validate340080(int strandNum)
 
 					}
 					else {
-						
-						(*io)->PlanSteelLengthMin( (*io)->SlabLength() );
-						(*io)->PlanSteelLengthMax( (*io)->SlabLength() );
+
+						(*io)->PlanSteelLengthMin((*io)->SlabLength());
+						(*io)->PlanSteelLengthMax((*io)->SlabLength());
 					}
 				}
 				else {
 
-					if ( (*io)->Order() != 0 ) {
+					if ((*io)->Order() != 0) {
 
 						bool isLenOk = AuditSlabLengthData((*io));
-	
+
 						Length minL;
 						Length maxL;
-	
-						ComputeSlabLength( caster, (*io), isLenOk, minL, maxL ); //### caster-specific
-						(*io)->PlanSteelLengthMin( minL );
-						(*io)->PlanSteelLengthMax( maxL );
+
+						ComputeSlabLength(caster, (*io), isLenOk, minL, maxL); //### caster-specific
+						(*io)->PlanSteelLengthMin(minL);
+						(*io)->PlanSteelLengthMax(maxL);
 					}
 				}
 			}
@@ -1631,35 +2017,35 @@ bool CCastStringValidator::Validate340080(int strandNum)
 		// audit planned length
 
 		{
-//			{ 
-//				ostrstream msg;
-//				msg << "Slab length: " << (*io)->SlabLength()
-//					<< "\nMax: " << (*io)->PlanSteelLengthMax()
-//					<< ends;
-//				AfxMessageBox(msg.str());
-//				msg.freeze(false);
-//			}
+			//			{ 
+			//				ostrstream msg;
+			//				msg << "Slab length: " << (*io)->SlabLength()
+			//					<< "\nMax: " << (*io)->PlanSteelLengthMax()
+			//					<< ends;
+			//				AfxMessageBox(msg.str());
+			//				msg.freeze(false);
+			//			}
 
-			// FP Change
-			//if ( (*io)->OrderNum() != 9999999 ) {
-			if ( (*io)->FpOrderNum().Left(7) != "9999999" ) {
- 
-				if ( (*io)->Order() != 0
-					 &&
-					 ((*io)->Order()->CustCoilReq() == 8
-					  ||
-					  (*io)->Order()->CustCoilReq() == 9 ) ){
+						// FP Change
+						//if ( (*io)->OrderNum() != 9999999 ) {
+			if ((*io)->FpOrderNum().Left(7) != "9999999") {
+
+				if ((*io)->Order() != 0
+					&&
+					((*io)->Order()->CustCoilReq() == 8
+						||
+						(*io)->Order()->CustCoilReq() == 9)) {
 
 					// no-op
 				}
-				else if ( long((*io)->SlabLength()+0.5) < long((*io)->PlanSteelLengthMin()+0.5)
-					      ||
-						  long((*io)->SlabLength()+0.5) > long((*io)->PlanSteelLengthMax()+0.5) ) {
+				else if (long((*io)->SlabLength() + 0.5) < long((*io)->PlanSteelLengthMin() + 0.5)
+					||
+					long((*io)->SlabLength() + 0.5) > long((*io)->PlanSteelLengthMax() + 0.5)) {
 
-					ostr << "slab length " << long((*io)->SlabLength()+0.5)
-						 << " should be between " << long((*io)->PlanSteelLengthMin()+0.5)
-						 << " and " << long((*io)->PlanSteelLengthMax()+0.5)
-						 << ends;
+					ostr << "slab length " << long((*io)->SlabLength() + 0.5)
+						<< " should be between " << long((*io)->PlanSteelLengthMin() + 0.5)
+						<< " and " << long((*io)->PlanSteelLengthMax() + 0.5)
+						<< ends;
 					ADD_ERR(CCastStringHeatValidnError::WARNING);  // temp switched from fatal to warning for Dofasco 
 //                          order campaign per P. Fronczek. maint k. hubbard 11-11-04. 					                              
 //					ADD_ERR(CCastStringHeatValidnError::FATAL);
@@ -1672,43 +2058,43 @@ bool CCastStringValidator::Validate340080(int strandNum)
 
 		{
 			//#### Need rules here for 4 and 5 on slab length. For both, MIN is 200" and MAX is 460".
-			if ( caster == 3 ) { //### caster-specific
+			if (caster == 3) { //### caster-specific
 
 				CString heatSpec3 = rHeat.Spec().Left(3);
 				CString heatSpec5 = rHeat.Spec().Left(5);
 
-//                comm out spec check 7-01-04 k. hubbard
-//				if ( heatSpec3 == "521"
-//					 ||
-//					 heatSpec3 == "523"
-//					 || 
-//					 heatSpec3 == "524"
-//					 ||
-//					 heatSpec5 == "52025"
-//					 ||
-//					 heatSpec5 == "52822"
-//					 ||
-//					 heatSpec5 == "52826" ) {
+				//                comm out spec check 7-01-04 k. hubbard
+				//				if ( heatSpec3 == "521"
+				//					 ||
+				//					 heatSpec3 == "523"
+				//					 || 
+				//					 heatSpec3 == "524"
+				//					 ||
+				//					 heatSpec5 == "52025"
+				//					 ||
+				//					 heatSpec5 == "52822"
+				//					 ||
+				//					 heatSpec5 == "52826" ) {
 
-					 if ( prevWidth == 0  ) { // 1st lot in strand
+				if (prevWidth == 0) { // 1st lot in strand
 
-						int condn = (*io)->SlabCondnCode();
+					int condn = (*io)->SlabCondnCode();
 
-//						if ( condn == 4682 || condn == 4782 ) {  comm. out low quality exception check 7-1-04 k. hubbard   
-//							// no op
-//						} 
+					//						if ( condn == 4682 || condn == 4782 ) {  comm. out low quality exception check 7-1-04 k. hubbard   
+					//							// no op
+					//						} 
 
-//						else if ( (*io)->SlabLength() > 315 ) {  changed per cast rules 6-30-04 k.hubbard
-						if ( (*io)->SlabLength() > 362 ) {
+					//						else if ( (*io)->SlabLength() > 315 ) {  changed per cast rules 6-30-04 k.hubbard
+					if ((*io)->SlabLength() > 362) {
 
-							ostr << "Slab length " << setw(3) << (*io)->SlabLength() 
-								 << " > 362 in 1st slab."    // changed from 315 per cast rules 6-30-04 k.hubbard
-								 << ends;
-//							ADD_ERR(CCastStringHeatValidnError::FATAL);
-							ADD_ERR(CCastStringHeatValidnError::WARNING);  // changed per J. Sarb-Beer 9-29-08 k. hubbard
-							isOk = false;
-						}   // 362" length check
-					 }      // 1st slab startup check 
+						ostr << "Slab length " << setw(3) << (*io)->SlabLength()
+							<< " > 362 in 1st slab."    // changed from 315 per cast rules 6-30-04 k.hubbard
+							<< ends;
+						//							ADD_ERR(CCastStringHeatValidnError::FATAL);
+						ADD_ERR(CCastStringHeatValidnError::WARNING);  // changed per J. Sarb-Beer 9-29-08 k. hubbard
+						isOk = false;
+					}   // 362" length check
+				}      // 1st slab startup check 
 //				}           comm out 7-01-04 k. hubbard // spec check      
 			}               // 3 combi caster check
 		}                   // audit heat position check
@@ -1718,50 +2104,50 @@ bool CCastStringValidator::Validate340080(int strandNum)
 		{
 			Length len = (*io)->SlabLength();
 
-//            Added 1 Slab Caster length check 2-4-10 k. hubbard  
-			if ( caster == 1 ) { //### caster-specific
-				if ( len > GlobalConstants.CasterSlabLengthMax(caster) ) { //### caster-specific
-					ostr << "Slab length " << setw(3) << len 
-						 << " not within steelshop length boundary " << GlobalConstants.CasterSlabLengthMax(caster) //### caster-specific
-						 << ends;
+			//            Added 1 Slab Caster length check 2-4-10 k. hubbard  
+			if (caster == 1) { //### caster-specific
+				if (len > GlobalConstants.CasterSlabLengthMax(caster)) { //### caster-specific
+					ostr << "Slab length " << setw(3) << len
+						<< " not within steelshop length boundary " << GlobalConstants.CasterSlabLengthMax(caster) //### caster-specific
+						<< ends;
 					ADD_ERR(CCastStringHeatValidnError::FATAL);
 					isOk = false;
 				}
 			}
-//            Added 2 Slab Caster length check 2-4-10 k. hubbard  
-			if ( caster == 2 ) { //### caster-specific
+			//            Added 2 Slab Caster length check 2-4-10 k. hubbard  
+			if (caster == 2) { //### caster-specific
 //  				if ( len > GlobalConstants.CasterSlabLengthMax(caster) || len < 171 ) { //### caster-specific
-				if ( len > GlobalConstants.CasterSlabLengthMax(caster) ) { //### caster-specific
-					ostr << "Slab length " << setw(3) << len 
-						 << " not within steelshop length boundary " << GlobalConstants.CasterSlabLengthMax(caster) //### caster-specific
-						 << ends;
+				if (len > GlobalConstants.CasterSlabLengthMax(caster)) { //### caster-specific
+					ostr << "Slab length " << setw(3) << len
+						<< " not within steelshop length boundary " << GlobalConstants.CasterSlabLengthMax(caster) //### caster-specific
+						<< ends;
 					ADD_ERR(CCastStringHeatValidnError::FATAL);
 					isOk = false;
 				}
 			}
 			else {
 
-				if ( caster == 3 ) { //### caster-specific
+				if (caster == 3) { //### caster-specific
 
-					if ( len > GlobalConstants.CasterSlabLengthMax(caster) || len < 171 ) { //### caster-specific
-						ostr << "Slab length " << setw(3) << len 
-						 << " not between steelshop length boundaries 171 and " << GlobalConstants.CasterSlabLengthMax(caster) //### caster-specific
-						 << ends;
+					if (len > GlobalConstants.CasterSlabLengthMax(caster) || len < 171) { //### caster-specific
+						ostr << "Slab length " << setw(3) << len
+							<< " not between steelshop length boundaries 171 and " << GlobalConstants.CasterSlabLengthMax(caster) //### caster-specific
+							<< ends;
 						ADD_ERR(CCastStringHeatValidnError::FATAL);
 						isOk = false;
 					}
 				}
 			}
-//			else {
+			//			else {
 
-			if ( (*io)->SlabLength() == 0 ) {
+			if ((*io)->SlabLength() == 0) {
 
-					ostr << "Slab length 0 is invalid." 
-						 << ends;
-					ADD_ERR(CCastStringHeatValidnError::FATAL);
-					isOk = false;
+				ostr << "Slab length 0 is invalid."
+					<< ends;
+				ADD_ERR(CCastStringHeatValidnError::FATAL);
+				isOk = false;
 			}
-//			}
+			//			}
 		}
 
 
@@ -1779,12 +2165,12 @@ bool CCastStringValidator::Validate340080(int strandNum)
 
 			int condnCode = (*io)->SlabCondnCode();
 
-			int dig3 = condnCode/10%10; // get D of xxDx, third digit of ordered condition code  
-			int dig4 = condnCode/1%10;  // get D of xxxD, fourth digit of ordered condition code
+			int dig3 = condnCode / 10 % 10; // get D of xxDx, third digit of ordered condition code  
+			int dig4 = condnCode / 1 % 10;  // get D of xxxD, fourth digit of ordered condition code
 
-			if ( dig3 == 3 && dig4 == 4 ) {
-				
-				if ( slitCode == ' ' || slitCode == 'D' ) {
+			if (dig3 == 3 && dig4 == 4) {
+
+				if (slitCode == ' ' || slitCode == 'D') {
 					// do nothing operation
 				}
 				else {
@@ -1795,7 +2181,7 @@ bool CCastStringValidator::Validate340080(int strandNum)
 					isOk = false;
 				}
 
-			
+
 			}
 
 
@@ -1811,9 +2197,9 @@ bool CCastStringValidator::Validate340080(int strandNum)
 			char exp = (*io)->ExposureCode();
 			int condn = (*io)->SlabCondnCode();
 
-			if ( caster == 1 ) { //### caster-specific
+			if (caster == 1) { //### caster-specific
 
-				if ( condn > 0 && ( exp == 'E' || exp == 'U' ) ) {
+				if (condn > 0 && (exp == 'E' || exp == 'U')) {
 					// no-op
 				}
 				else {
@@ -1826,14 +2212,14 @@ bool CCastStringValidator::Validate340080(int strandNum)
 			}
 			else if ( caster == 2 || caster == 3 )  {
 
-				if ( condn > 0
-					 &&
-					 ( exp == ' ' || exp == 'E' || exp == 'U' || exp == '1' || exp == '2' ) ) {
+				if (condn > 0
+					&&
+					(exp == ' ' || exp == 'E' || exp == 'U' || exp == '1' || exp == '2')) {
 					// no-op
 				}
 				else {
 					ostr << "Exposure code '" << exp << "' is invalid"
-						 << ends;
+						<< ends;
 					ADD_ERR(CCastStringHeatValidnError::WARNING);
 					isOk = false;
 				}
@@ -1845,61 +2231,61 @@ bool CCastStringValidator::Validate340080(int strandNum)
 		{
 
 			int commodcode = (*io)->CICode();
-			bool isStock = ( (*io)->FpOrderNum().Left(7) == "9999999" );
+			bool isStock = ((*io)->FpOrderNum().Left(7) == "9999999");
 			int heatNumber = (*io)->HeatSeqNum();
 			int lotNumber = (*io)->LotNum();
 
-			if ( prevWidth == 0 
+			if (prevWidth == 0
 				&&
-				 heatNumber == 0 )
-//				&&
-//					lotNumber == 1 )  // Verification  check for beginning of a Cast!!!
+				heatNumber == 0)
+				//				&&
+				//					lotNumber == 1 )  // Verification  check for beginning of a Cast!!!
 
-				// important to put this initial update before the check above
-				//   for CheckStringHeatPosition
-				
-			if (! isStock) { 
-			
-				if	(commodcode == 11   // Added commocode (11 [stringers], 45-50) to Tek/Kote material check 3-17-06 k. hubbard
-				 	||
-				 	commodcode == 12 
-					|| 
-					commodcode == 17
-					|| 
-					commodcode == 18
-					|| 
-					commodcode == 19
-					|| 
-					commodcode == 20
-					|| 
-					commodcode == 21
-					|| 
-					commodcode == 45
-					|| 
-					commodcode == 46
-					|| 
-					commodcode == 47
-					|| 
-					commodcode == 48
-					|| 
-					commodcode == 49
-					|| 
-					commodcode == 50
-					|| 
-					commodcode == 72
-					|| 
-					commodcode == 73 )
+								// important to put this initial update before the check above
+								//   for CheckStringHeatPosition
 
-				{
+				if (!isStock) {
 
-				ostr << "Tek and Kote commodity code " << setw(3) << commodcode
-					 << " can not be planned at start of a cast" 
-					 << ends;
-//				ADD_ERR(CCastStringHeatValidnError::FATAL);   // Changed to warning per new 1st cast piece cropping plans. 02/20/07 k. hubbard  
-				ADD_ERR(CCastStringHeatValidnError::WARNING);
-				isOk = false;
+					if (commodcode == 11   // Added commocode (11 [stringers], 45-50) to Tek/Kote material check 3-17-06 k. hubbard
+						||
+						commodcode == 12
+						||
+						commodcode == 17
+						||
+						commodcode == 18
+						||
+						commodcode == 19
+						||
+						commodcode == 20
+						||
+						commodcode == 21
+						||
+						commodcode == 45
+						||
+						commodcode == 46
+						||
+						commodcode == 47
+						||
+						commodcode == 48
+						||
+						commodcode == 49
+						||
+						commodcode == 50
+						||
+						commodcode == 72
+						||
+						commodcode == 73)
+
+					{
+
+						ostr << "Tek and Kote commodity code " << setw(3) << commodcode
+							<< " can not be planned at start of a cast"
+							<< ends;
+						//				ADD_ERR(CCastStringHeatValidnError::FATAL);   // Changed to warning per new 1st cast piece cropping plans. 02/20/07 k. hubbard  
+						ADD_ERR(CCastStringHeatValidnError::WARNING);
+						isOk = false;
+					}
 				}
-			}
 		}
 
 
@@ -1909,7 +2295,7 @@ bool CCastStringValidator::Validate340080(int strandNum)
 
 			char code = (*io)->SlitTypeCode();
 
-			if ( prevWidth == 0 )
+			if (prevWidth == 0)
 				// this is the first we've seen, use it for initial width
 				// important to put this initial update before the check above
 				//   for CheckStringHeatPosition
@@ -1918,86 +2304,86 @@ bool CCastStringValidator::Validate340080(int strandNum)
 
 			Width widthDiff = fabs((*io)->SlabWidth() - prevWidth);
 
-			if ( widthDiff > TRANS_WIDTH 
+			if (widthDiff > TRANS_WIDTH
 				&&
-				code == ' ' )  //	Consider slit type i.e. Radicals ok. 11-29-05 k. hubbard
-			
+				code == ' ')  //	Consider slit type i.e. Radicals ok. 11-29-05 k. hubbard
+
 			{
 
 				ostr << "Width jump from " << setw(3) << prevWidth
-					 << " to " << setw(3) << (*io)->SlabWidth()
-					 << " is invalid"
-					 << ends;
+					<< " to " << setw(3) << (*io)->SlabWidth()
+					<< " is invalid"
+					<< ends;
 				ADD_ERR(CCastStringHeatValidnError::FATAL);
 				//	Had to reverse, not looking at slit type i.e. Radicals ok.	ADD_ERR(CCastStringHeatValidnError::WARNING); Changing transition width violations to Fatal 12-11-03 k. hubbard
 				isOk = false;
 			}
 		}
 
-////			prevWidth = (*io)->SlabWidth();  //Important !!!! repositioned below width jump audit to work inside this For loop and share between width audits 11-22-05 k. hubbard
+		////			prevWidth = (*io)->SlabWidth();  //Important !!!! repositioned below width jump audit to work inside this For loop and share between width audits 11-22-05 k. hubbard
 
-		// Maint. Note: K. Hubbard 3-15-06; Add New Fatal here by checking width (*io)->ProvSlabWidthMin & Max
+				// Maint. Note: K. Hubbard 3-15-06; Add New Fatal here by checking width (*io)->ProvSlabWidthMin & Max
 
-		// Audit Transition 80" Slab Spread Squeeze violations against Provided Cast Widths
-		if ( (*io)->Order() != 0 )
+				// Audit Transition 80" Slab Spread Squeeze violations against Provided Cast Widths
+		if ((*io)->Order() != 0)
 		{
 			Width width = (*io)->SlabWidth();
-//			Width ProvWidthMax = (*io)->ProvSlabWidthMax();
+			//			Width ProvWidthMax = (*io)->ProvSlabWidthMax();
 
 			float ProvWidthMin;   // Added 4 lines here for min check 3-17-06 k. hubbard
 			CString strProvMin;
-//			strProvMin.Format("%2.1f",(*io)->ProvSlabWidthMin());   Changed line (see next line) to throw reference more reliable Order.h field here for min value 4-5-07 k. hubbard
-			strProvMin.Format("%2.1f",(*io)->Order()->ProvSlabWidthMin());
-	       	ProvWidthMin = atof(strProvMin);  
+			//			strProvMin.Format("%2.1f",(*io)->ProvSlabWidthMin());   Changed line (see next line) to throw reference more reliable Order.h field here for min value 4-5-07 k. hubbard
+			strProvMin.Format("%2.1f", (*io)->Order()->ProvSlabWidthMin());
+			ProvWidthMin = atof(strProvMin);
 
-			float ProvWidthMax;  
+			float ProvWidthMax;
 			CString strProvMax;
-//			strProvMax.Format("%2.1f",(*io)->ProvSlabWidthMax());   Changed line (see next line) to throw reference more reliable Order.h field here for max value 4-5-07 k. hubbard
-			strProvMax.Format("%2.1f",(*io)->Order()->ProvSlabWidthMax()); 
-			ProvWidthMax = atof(strProvMax);    
-			
-			char code   = (*io)->SlitTypeCode();
+			//			strProvMax.Format("%2.1f",(*io)->ProvSlabWidthMax());   Changed line (see next line) to throw reference more reliable Order.h field here for max value 4-5-07 k. hubbard
+			strProvMax.Format("%2.1f", (*io)->Order()->ProvSlabWidthMax());
+			ProvWidthMax = atof(strProvMax);
+
+			char code = (*io)->SlitTypeCode();
 			bool isTrans = (*io)->IsTransition();
 			Width transSpread80 = 1;  //Restored per P. Fronczek maint. 4-18-07 k. hubbard
 
 			//					strProvMax.Format("%2.1f",m_pOrder->ProvSlabWidthMax());
 //		m_provCastSlabWidthMax = atof(strProvMax);
 //			Width transProvWidthMax = (ProvWidthMax - transSpread80);
-			bool isStock = ( (*io)->FpOrderNum().Left(7) == "9999999" );
-			
-			if  ( prevWidth != 0 
+			bool isStock = ((*io)->FpOrderNum().Left(7) == "9999999");
+
+			if (prevWidth != 0
 				&&
-				 ! isStock 
+				!isStock
 				&&
-				 (*io)->Order() != 0 )  // Added line to make sure order exist for more reliable Order.h field here for min/max values 4-5-07 k. hubbard
+				(*io)->Order() != 0)  // Added line to make sure order exist for more reliable Order.h field here for min/max values 4-5-07 k. hubbard
 			{
 
-//				int transProvWidthMax = (ProvWidthMax - transSpread80);   comm. out 4-5-07 k. hubbard
+				//				int transProvWidthMax = (ProvWidthMax - transSpread80);   comm. out 4-5-07 k. hubbard
 				Width widthDiff = fabs((*io)->SlabWidth() - prevWidth);
 				Width NarrowestWidthPoint = min((*io)->SlabWidth(), prevWidth);
 
 				Width transProvWidthMax = (ProvWidthMax - transSpread80);   //Restored per P. Fronczek maint. 4-18-07 k. hubbard
 
 
-				if  (widthDiff == 1 
-					&& 
-					(code == ' ') 
+				if (widthDiff == 1
 					&&
-					(isTrans) 
+					(code == ' ')
+					&&
+					(isTrans)
 					&&           // Added or condition here for min check 3-17-06 k. hubbard
 					(NarrowestWidthPoint > transProvWidthMax || NarrowestWidthPoint < ProvWidthMin))   //Switched per P. Fronczek maint. 4-18-07 k. hubbard
-				
+
 //					(NarrowestWidthPoint > ProvWidthMax || NarrowestWidthPoint < ProvWidthMin))  //Comm out switched per P. Fronczek maint. 4-18-07 k. hubbard
 
 				{
-						ostr << "Transition steel width ("
-							 << NarrowestWidthPoint
-							 << ") is a violation of"
-							 << "80 HSM Spread / Squeeze Prov Min (" << ProvWidthMin
-							 << ") or Prov Max (" << ProvWidthMax
-							 << ends;
-						ADD_ERR(CCastStringHeatValidnError::WARNING);
-						isOk = false;
+					ostr << "Transition steel width ("
+						<< NarrowestWidthPoint
+						<< ") is a violation of"
+						<< "80 HSM Spread / Squeeze Prov Min (" << ProvWidthMin
+						<< ") or Prov Max (" << ProvWidthMax
+						<< ends;
+					ADD_ERR(CCastStringHeatValidnError::WARNING);
+					isOk = false;
 				}
 			}
 		}
@@ -2005,50 +2391,50 @@ bool CCastStringValidator::Validate340080(int strandNum)
 		// End Maint. Note: K. Hubbard 3-15-06; End maint. of add new fatal here for checking width (*io)->ProvSlabWidthMin & Max
 
 
-		
+
 		// Audit Side Slits Minimum Allowance change.  Added 5-24-06 k. hubbard per P. Velasco
 
 		{
 			char code = (*io)->SlitTypeCode();
-			bool isStock = ( (*io)->FpOrderNum().Left(7) == "9999999" );
+			bool isStock = ((*io)->FpOrderNum().Left(7) == "9999999");
 
-//			Width widthDiff = fabs((*io)->SlabWidth() - prevWidth); 
-//           Modified width difference comparison to check the current lot width to the ordered aim width 02-10-09 k. hubbard per P. Velasco
-//			Width widthDiff = fabs((*io)->SlabWidth() - (*io)->Order()->SlabWidth());  // from P-STEEL-MAKE-PLAN file k. hubbard 
+			//			Width widthDiff = fabs((*io)->SlabWidth() - prevWidth); 
+			//           Modified width difference comparison to check the current lot width to the ordered aim width 02-10-09 k. hubbard per P. Velasco
+			//			Width widthDiff = fabs((*io)->SlabWidth() - (*io)->Order()->SlabWidth());  // from P-STEEL-MAKE-PLAN file k. hubbard 
 
-		//try {		          Tried this for missing orders on CSOrder.h and assoc hotband info (i.e. ? marks instead of number values ) from CSOrder.h 
-			if (! isStock )
-				{				
-					Width widthDiff = fabs((*io)->SlabWidth() - (*io)->Order()->SlabWidth());  // from P-STEEL-MAKE-PLAN file k. hubbard 
+					//try {		          Tried this for missing orders on CSOrder.h and assoc hotband info (i.e. ? marks instead of number values ) from CSOrder.h 
+			if (!isStock)
+			{
+				Width widthDiff = fabs((*io)->SlabWidth() - (*io)->Order()->SlabWidth());  // from P-STEEL-MAKE-PLAN file k. hubbard 
 				if (widthDiff > 0)
-					{ 
-					if ( widthDiff < 2
+				{
+					if (widthDiff < 2
 						&&
-						code == 'S' )  //	Check slit type. 
-						{
-//						ostr << "Planned Side Slits from " << setw(3) << prevWidth
-						ostr << "Planned Side Slits from " << setw(3) << (*io)->SlabWidth() 
-						 << " to " << setw(3) << (*io)->Order()->SlabWidth()  // Throw reference to reliable Order.h (P-STEEL-MAKE-PLAN) field here for aim value 02-10-09 k. hubbard
-						 << " under 2 inches is a dock violation"
-						 << ends;
+						code == 'S')  //	Check slit type. 
+					{
+						//						ostr << "Planned Side Slits from " << setw(3) << prevWidth
+						ostr << "Planned Side Slits from " << setw(3) << (*io)->SlabWidth()
+							<< " to " << setw(3) << (*io)->Order()->SlabWidth()  // Throw reference to reliable Order.h (P-STEEL-MAKE-PLAN) field here for aim value 02-10-09 k. hubbard
+							<< " under 2 inches is a dock violation"
+							<< ends;
 						ADD_ERR(CCastStringHeatValidnError::WARNING);
 						isOk = false;
-						}
 					}
 				}
+			}
 			//}
 			 //	catch ( CDBException* e )
 			 //		{
 			 //		   AfxMessageBox( e->m_strError,   
-		     //          MB_ICONEXCLAMATION );
+			 //          MB_ICONEXCLAMATION );
 			 //		   e->Delete();
 			 //		}
-			}
+		}
 
 		// End Maint. audit side slit minimum allowance change end 5-24-06 k. hubbard
 
 
-		
+
 		// Audit Width Jumps change.  Added 11-29-05 k. hubbard per P. Velasco
 
 		{
@@ -2057,50 +2443,50 @@ bool CCastStringValidator::Validate340080(int strandNum)
 			char code = (*io)->SlitTypeCode();
 			Width transSpread80 = 0.3;
 			Width transSqueeze80 = 1.6;
-			bool isStock = ( (*io)->FpOrderNum().Left(7) == "9999999" );
+			bool isStock = ((*io)->FpOrderNum().Left(7) == "9999999");
 
-//			if ( prevWidth == 0 )
-				// this is the first we've seen, use it for initial width
-				// important to put this initial update before the check above
-				//   for CheckStringHeatPosition
+			//			if ( prevWidth == 0 )
+							// this is the first we've seen, use it for initial width
+							// important to put this initial update before the check above
+							//   for CheckStringHeatPosition
 
-//				prevWidth = (*io)->SlabWidth(); 
+			//				prevWidth = (*io)->SlabWidth(); 
 
 			Width widthDiff = fabs((*io)->SlabWidth() - prevWidth);
 			Width MinTransHBWidth = fabs(prevWidth - transSqueeze80);
 			Width MaxTransHBWidth = fabs(prevWidth + transSpread80);
-		//try {		          Tried this for missing orders on CSOrder.h and assoc hotband info (i.e. ? marks instead of number values ) from CSOrder.h 3-13-06 k.hubbard
-				
-				//  this program uses to reference the current order's hotband value. 11-29-05 k. hubbard 
-			if (! isStock )
-				{ 
+			//try {		          Tried this for missing orders on CSOrder.h and assoc hotband info (i.e. ? marks instead of number values ) from CSOrder.h 3-13-06 k.hubbard
+
+					//  this program uses to reference the current order's hotband value. 11-29-05 k. hubbard 
+			if (!isStock)
+			{
 				Width hbwidth = (*io)->OrderHotBandWidth();   // Built and used a pointer to COrder.h inside (see field) CSOrder.h which 
-			
-				if ( widthDiff == 1
-					&&
-					(commodcode == 65 || commodcode == 66 )
-					&&
-					( hbwidth < MinTransHBWidth  ||  hbwidth > MaxTransHBWidth )
-					&&
-					code == ' ' )  //	Consider slit type i.e. Radicals ok. 
 
-					{
+				if (widthDiff == 1
+					&&
+					(commodcode == 65 || commodcode == 66)
+					&&
+					(hbwidth < MinTransHBWidth || hbwidth > MaxTransHBWidth)
+					&&
+					code == ' ')  //	Consider slit type i.e. Radicals ok. 
 
-				ostr << "Slab Width Jump from " << setw(3) << prevWidth
-					 << " to " << setw(3) << (*io)->SlabWidth()
-					 << " is invalid"
-					 << ends;
-				ADD_ERR(CCastStringHeatValidnError::FATAL);
-				isOk = false;
-					}
+				{
+
+					ostr << "Slab Width Jump from " << setw(3) << prevWidth
+						<< " to " << setw(3) << (*io)->SlabWidth()
+						<< " is invalid"
+						<< ends;
+					ADD_ERR(CCastStringHeatValidnError::FATAL);
+					isOk = false;
 				}
-			 //}
-			 //	catch ( CDBException* e )
-			 //		{
-			 //		   AfxMessageBox( e->m_strError,   
-		     //          MB_ICONEXCLAMATION );
-			 //		   e->Delete();
-			 //		}
+			}
+			//}
+			//	catch ( CDBException* e )
+			//		{
+			//		   AfxMessageBox( e->m_strError,   
+			//          MB_ICONEXCLAMATION );
+			//		   e->Delete();
+			//		}
 		}
 
 		// Audit Width Jumps change end 11-29-05 k. hubbard
@@ -2112,30 +2498,30 @@ bool CCastStringValidator::Validate340080(int strandNum)
 			CString stockCommReason = (*io)->StockCommercialReason();
 			// FP Change
 			//if ( (*io)->OrderNum() == 9999999 ) {
-			if ( (*io)->FpOrderNum().Left(7) == "9999999" )
+			if ((*io)->FpOrderNum().Left(7) == "9999999")
 			{
- 
-				if ( stockFaclReason == ""
-					  ||
-  					  stockFaclReason == "0"
-					  || 	
-					  stockFaclReason == "<blank>"
-                      || 
-					  stockCommReason == "" 
-					  ||
-					  stockCommReason == "0" 
-					  ||
-					  stockCommReason == "<blank>" )
+
+				if (stockFaclReason == ""
+					||
+					stockFaclReason == "0"
+					||
+					stockFaclReason == "<blank>"
+					||
+					stockCommReason == ""
+					||
+					stockCommReason == "0"
+					||
+					stockCommReason == "<blank>")
 				{
 
 					ostr << "stock facility reason '" << setw(20) << LPCTSTR(stockFaclReason)
-						 << " ' or stock commercial reason '" << setw(20) << LPCTSTR(stockCommReason)
-						 << " ' must not be blank " 
-						 << ends;
+						<< " ' or stock commercial reason '" << setw(20) << LPCTSTR(stockCommReason)
+						<< " ' must not be blank "
+						<< ends;
 					ADD_ERR(CCastStringHeatValidnError::FATAL);  // temp switched from fatal to warning for Dofasco 
 					isOk = false;
 				}
-				
+
 			}
 		}
 
@@ -2145,28 +2531,28 @@ bool CCastStringValidator::Validate340080(int strandNum)
 			char code = (*io)->SlitTypeCode();
 			CString slitFaclReason = (*io)->SlitReason();
 
-			if (code == 'E'   
+			if (code == 'E'
 				||
 				code == 'S'
 				||
 				code == 'R')
 			{
-				
-				if ( slitFaclReason == ""
-					  ||
-  					  slitFaclReason == "0"
-					  || 	
-					  slitFaclReason == "<blank>" )
-                {
+
+				if (slitFaclReason == ""
+					||
+					slitFaclReason == "0"
+					||
+					slitFaclReason == "<blank>")
+				{
 					ostr << "slit facility reason '" << setw(20) << LPCTSTR(slitFaclReason)
-						 << " ' must not be blank " 
-						 << ends;
+						<< " ' must not be blank "
+						<< ends;
 					ADD_ERR(CCastStringHeatValidnError::FATAL);  // temp switched from fatal to warning 
 					isOk = false;
 				}
 			}
 		}
-		
+
 		// Audit 2BOF inward width change designs.  1-28-10 k. hubbard
 
 		{
@@ -2177,33 +2563,33 @@ bool CCastStringValidator::Validate340080(int strandNum)
 			 prevWidth > 0)
 			{
 
-			if ((*io)->SlabWidth() > prevWidth) 
-//				&&
-//				code == ' ' )  //	Consider slit type i.e. Radicals ok. 
-			
+				if ((*io)->SlabWidth() > prevWidth)
+					//				&&
+					//				code == ' ' )  //	Consider slit type i.e. Radicals ok. 
+
 				{
-				ostr << "Width jump from " << setw(3) << prevWidth
-					 << " to " << setw(3) << (*io)->SlabWidth()
-					 << " is invalid 2BOF outward jump"
-					 << ends;
-				ADD_ERR(CCastStringHeatValidnError::FATAL);
-				//	Had to reverse, not looking at slit type i.e. Radicals ok.	ADD_ERR(CCastStringHeatValidnError::WARNING); Changing transition width violations to Fatal 12-11-03 k. hubbard
-				isOk = false;
+					ostr << "Width jump from " << setw(3) << prevWidth
+						<< " to " << setw(3) << (*io)->SlabWidth()
+						<< " is invalid 2BOF outward jump"
+						<< ends;
+					ADD_ERR(CCastStringHeatValidnError::FATAL);
+					//	Had to reverse, not looking at slit type i.e. Radicals ok.	ADD_ERR(CCastStringHeatValidnError::WARNING); Changing transition width violations to Fatal 12-11-03 k. hubbard
+					isOk = false;
 				}
 			}
 		}
-		
 
-//     **** !!!!!! Caution the variable below is shared between 2 width audits above and must get populated once after both or else one audit above will fail!!!! 11-29-05 k. hubbard
+
+		//     **** !!!!!! Caution the variable below is shared between 2 width audits above and must get populated once after both or else one audit above will fail!!!! 11-29-05 k. hubbard
 		prevWidth = (*io)->SlabWidth();  // Important CAUTION!!!! repositioned here to work inside this For loop and share between width change and width jump audits 11-29-05 k. hubbard
 
 
 		// audit change indicator
 
 		{
-			if ( (*io)->ChangeMarked() ) {
-				ostr << "Change indicator has not been removed." 
-					 << ends;
+			if ((*io)->ChangeMarked()) {
+				ostr << "Change indicator has not been removed."
+					<< ends;
 				ADD_ERR(CCastStringHeatValidnError::WARNING);
 				isOk = false;
 			}
@@ -2213,17 +2599,92 @@ bool CCastStringValidator::Validate340080(int strandNum)
 	return isOk;
 }
 
-bool CCastStringValidator::FixHeatSpec( CCastStringHeat& rHeat, int caster ) //### caster-specific
-{
-	if ( rHeat.StrandBegin(1) == rHeat.StrandEnd(1)
-		 &&
-		 rHeat.StrandBegin(2) == rHeat.StrandEnd(2) )
+bool CCastStringValidator::FixHeatSpec3SP(CCastStringHeat& rHeat, int caster) { //### caster-specific
+	int strandNum = 1; // only one strand
 
-		 return true;
+	// At the end?
+	if (rHeat.StrandBegin(strandNum) == rHeat.StrandEnd(strandNum))
+		return true;
+
+	// Set the order.
+	CCSOrder* pOrder = NULL;
+	if (rHeat.StrandBegin(strandNum) != rHeat.StrandEnd(strandNum))
+		pOrder = *rHeat.StrandBegin(strandNum);
+
+	const CString& orderedSpec = pOrder->LotSpec();
+	CString heatSpec = rHeat.Spec();
+
+	// Extend the fixing of the HeatSpec.
+	bool result = FixHeatSpec3SP(heatSpec, orderedSpec, caster); //### caster-specific
+	if (!result) {
+		ostrstream ostr;
+		ostr << "Unable to find heat spec:"
+			<< "\n  Original heat spec: " << LPCTSTR(rHeat.Spec())
+			<< "\n  First ordered spec: " << LPCTSTR(orderedSpec)
+			<< "\n  Converted heat spec: " << LPCTSTR(heatSpec)
+			<< ends;
+		AfxMessageBox(ostr.str());
+		ostr.freeze(false);
+		return false;
+	}
+
+	rHeat.SetSpec(heatSpec, caster); //### caster-specific
+	return true;
+}
+
+//### For now, entire body is copy of old version for casters 1, 2, and 3
+bool CCastStringValidator::FixHeatSpec3SP(CString& heatSpec, const CString& orderedSpec, int caster) { //### caster-specific
+	if (orderedSpec.GetLength() != 7)
+		return false;
+	if (heatSpec.GetLength() != 7)
+		return false;
+
+	char ord4 = orderedSpec[3];  // compare fourth digit of individual lot specs within the heat spec. k. hubbard
+	char ord6 = orderedSpec[5];  // compare sixth digit of individual lot specs within the heat spec. k. hubbard
+
+	//#### What should these digits be?
+	if (caster == 2 || caster == 3) { //### caster-specific
+
+		if (ord4 == '2' || ord4 == '6')
+			heatSpec.SetAt(3, ord4);
+		else
+			heatSpec.SetAt(3, '2');
+
+		if (ord6 == '4')
+			heatSpec.SetAt(5, '0');
+	}
+	else {
+
+		CString front = heatSpec.Left(5);
+		if (front == "52440" || front == "52442" || front == "52449") {
+			// do nothing.     Added 52442xx spec above, to the exception list of fourth digit modifications. maint. 5/30/06 k. hubbard
+		}
+		else {
+			if (ord4 == '7' || ord4 == '4' || ord4 == '6')
+				heatSpec.SetAt(3, ord4);
+			else
+				heatSpec.SetAt(3, '7');
+
+			if (ord4 == '4')
+				heatSpec.SetAt(5, '4');
+		}
+	}
+
+	CSpec* pSpec = TheSnapshot.SpecMgr().FindSpecMaybe(heatSpec, caster); //### caster-specific
+	return pSpec != 0;
+}
+
+bool CCastStringValidator::FixHeatSpec(CCastStringHeat& rHeat, int caster) //### caster-specific
+{
+	if (rHeat.StrandBegin(1) == rHeat.StrandEnd(1)
+		&&
+		rHeat.StrandBegin(2) == rHeat.StrandEnd(2))
+
+		return true;
 
 	CCSOrder* pOrder;
 
-	if ( rHeat.StrandBegin(1) != rHeat.StrandEnd(1) )
+	if (rHeat.StrandBegin(1) != rHeat.StrandEnd(1))
 		pOrder = *rHeat.StrandBegin(1);
 	else
 		pOrder = *rHeat.StrandBegin(2);
@@ -2231,21 +2692,21 @@ bool CCastStringValidator::FixHeatSpec( CCastStringHeat& rHeat, int caster ) //#
 	const CString& orderedSpec = pOrder->LotSpec();
 	CString heatSpec = rHeat.Spec();
 
-	bool result = FixHeatSpec( heatSpec, orderedSpec, caster ); //### caster-specific
+	bool result = FixHeatSpec(heatSpec, orderedSpec, caster); //### caster-specific
 
-	if ( ! result ) {
+	if (!result) {
 		ostrstream ostr;
 		ostr << "Unable to find heat spec:"
-			 << "\n  Original heat spec: " << LPCTSTR(rHeat.Spec())
-			 << "\n  First ordered spec: " << LPCTSTR(orderedSpec)
-			 << "\n  Converted heat spec: " << LPCTSTR(heatSpec)
-			 << ends;
+			<< "\n  Original heat spec: " << LPCTSTR(rHeat.Spec())
+			<< "\n  First ordered spec: " << LPCTSTR(orderedSpec)
+			<< "\n  Converted heat spec: " << LPCTSTR(heatSpec)
+			<< ends;
 		AfxMessageBox(ostr.str());
 		ostr.freeze(false);
 		return false;
 	}
 
-	rHeat.SetSpec(heatSpec,caster); //### caster-specific
+	rHeat.SetSpec(heatSpec, caster); //### caster-specific
 	return true;
 }
 
@@ -2253,52 +2714,53 @@ bool CCastStringValidator::FixHeatSpec( CCastStringHeat& rHeat, int caster ) //#
 // static 
 //############## Heat spec rules for 4 and 5 are not clear.
 bool CCastStringValidator::FixHeatSpec(CString& heatSpec,
-									   const CString& orderedSpec,
-									   int caster) //### caster-specific
+	const CString& orderedSpec,
+	int caster) //### caster-specific
 {
-	if ( orderedSpec.GetLength() != 7 )
+	if (orderedSpec.GetLength() != 7)
 		return false;
 
-	if ( heatSpec.GetLength() != 7 )
+	if (heatSpec.GetLength() != 7)
 		return false;
 
 	char ord4 = orderedSpec[3];  // compare fourth digit of individual lot specs within the heat spec. k. hubbard
 	char ord6 = orderedSpec[5];  // compare sixth digit of individual lot specs within the heat spec. k. hubbard
 
-	if ( caster == 2 || caster == 3 ) { //### caster-specific
-	
-		if ( ord4 == '2' || ord4 == '6' )
-			heatSpec.SetAt(3,ord4);
-		else
-			heatSpec.SetAt(3,'2');
+	if (caster == 2 || caster == 3) { //### caster-specific
 
-		if ( ord6 == '4' )
-			heatSpec.SetAt(5,'0');
+		if (ord4 == '2' || ord4 == '6')
+			heatSpec.SetAt(3, ord4);
+		else
+			heatSpec.SetAt(3, '2');
+
+		if (ord6 == '4')
+			heatSpec.SetAt(5, '0');
 	}
 	else {
-		
+
 		CString front = heatSpec.Left(5);
-		if ( front == "52440" || front == "52442" || front == "52449" ) {
+		if (front == "52440" || front == "52442" || front == "52449") {
 			// do nothing.     Added 52442xx spec above, to the exception list of fourth digit modifications. maint. 5/30/06 k. hubbard
-		} else {
-			if ( ord4 == '7' || ord4 == '4' || ord4 == '6' )
-				heatSpec.SetAt(3,ord4);
+		}
+		else {
+			if (ord4 == '7' || ord4 == '4' || ord4 == '6')
+				heatSpec.SetAt(3, ord4);
 			else
-				heatSpec.SetAt(3,'7');
-	
-			if ( ord4 == '4' )
-				heatSpec.SetAt(5,'4');
+				heatSpec.SetAt(3, '7');
+
+			if (ord4 == '4')
+				heatSpec.SetAt(5, '4');
 		}
 	}
-	
-	CSpec* pSpec = TheSnapshot.SpecMgr().FindSpecMaybe(heatSpec,caster); //### caster-specific
+
+	CSpec* pSpec = TheSnapshot.SpecMgr().FindSpecMaybe(heatSpec, caster); //### caster-specific
 
 	return pSpec != 0;
 }
 
 
 
-bool CCastStringValidator::Validate340080Weights() 
+bool CCastStringValidator::Validate340080Weights()
 {
 	// this validated heat weight in range.
 	// we have done this elsewhere
@@ -2312,19 +2774,19 @@ bool CCastStringValidator::Validate340080Weights()
 
 bool CCastStringValidator::AuditSlabLengthData(CCSOrder* pOrder)
 {
-	
-	if ( pOrder->Order() == 0 )
+
+	if (pOrder->Order() == 0)
 		return false;
 
 	{
 		CString code = pOrder->Order()->SlabUnitCd();
-		
-		if ( code != "1"
-			 &&
-			 code != "2"
-			 && 
-			 code != "3" )
-			 return false;
+
+		if (code != "1"
+			&&
+			code != "2"
+			&&
+			code != "3")
+			return false;
 	}
 
 	// test on PROV_HOT_MILL_CD == 8
@@ -2334,55 +2796,55 @@ bool CCastStringValidator::AuditSlabLengthData(CCSOrder* pOrder)
 	// we already filter for that
 
 	{
-		if ( pOrder->Order()->CustCoilReq() < 4 )
+		if (pOrder->Order()->CustCoilReq() < 4)
 			return false;
 	}
 
-	
+
 	{
 		Weight wgt = pOrder->Order()->ProvCastSlPcWgt();
 
-		if ( wgt < 6000 || wgt > 79999 )
+		if (wgt < 6000 || wgt > 79999)
 			return false;
 	}
 
-	{	
+	{
 		Width hbw = pOrder->Order()->HbWidth();
 
-		if ( hbw < 18 || hbw > 79.99 )
+		if (hbw < 18 || hbw > 79.99)
 			return false;
 	}
 
 	{
 		Width ow = pOrder->Order()->OrderedWidth();
 
-		if ( ow > 79.99 )
+		if (ow > 79.99)
 			return false;
 	}
 
 	{
 		float yld = pOrder->Order()->ProvHbYldFctr();
 
-		if ( yld < 1 || yld > 1.75 )
+		if (yld < 1 || yld > 1.75)
 			return false;
 	}
 
 	{
 		Weight cw = pOrder->Order()->CustPieceWgt();
 
-		if ( cw < 5000 || cw > 79999 )
+		if (cw < 5000 || cw > 79999)
 			return false;
 	}
 
 	{
 		Weight piw = pOrder->Order()->ProvPiwWgt();
 
-		if ( piw < 20000 || piw > 79000 )
+		if (piw < 20000 || piw > 79000)
 			return false;
 	}
 
 	{
-		if ( pOrder->DispCode() == 3 )
+		if (pOrder->DispCode() == 3)
 			return false;
 	}
 
@@ -2394,17 +2856,17 @@ bool CCastStringValidator::AuditSlabLengthData(CCSOrder* pOrder)
 
 
 void CCastStringValidator::ComputeSlabLength(int caster,	//### caster-specific
-					     CCSOrder* pOrder, 
-					     bool isLenOk, 
-					     Length& minL, 
-					     Length& maxL)
+	CCSOrder* pOrder,
+	bool isLenOk,
+	Length& minL,
+	Length& maxL)
 {
-	if ( isLenOk ) {
+	if (isLenOk) {
 		CCSOrder::CalculateMinMaxLengths(pOrder->Order(),
-										 caster,
-										 pOrder->SlabWidth(),
-										 minL,
-									     maxL);
+			caster,
+			pOrder->SlabWidth(),
+			minL,
+			maxL);
 
 	}
 	else {        // Assign min max slab length when the order min/max is zero. 3-21-06 k. hubbard 
@@ -2422,9 +2884,9 @@ void CCastStringValidator::ComputeSlabLength(int caster,	//### caster-specific
 
 
 #if 0
-// old DPA version, being rewritten
-//  delete, eventually
-	if ( isLenOk ) {
+	// old DPA version, being rewritten
+	//  delete, eventually
+	if (isLenOk) {
 
 		CCSOrder::U0340050Parms parms;
 
@@ -2432,23 +2894,23 @@ void CCastStringValidator::ComputeSlabLength(int caster,	//### caster-specific
 
 		COrder* po = pOrder->Order();
 
-		assert( po != 0 );
+		assert(po != 0);
 
 		//parms.autoCode				= po->AutomotiveCode();
 		//parms.provCastSlPcWgt		= po->ProvCastSlPcWgt();
 		//parms.hbWidth				= po->HbWidth();
 		//parms.custPieceWgt			= po->CustPieceWgt();
 		//parms.provCastSlLength		= pOrder->SlabLength();
-		parms.m_provCastSlWidth		= pOrder->SlabWidth();
-		parms.m_provCastSlThick		= pOrder->SlabThickness();
+		parms.m_provCastSlWidth = pOrder->SlabWidth();
+		parms.m_provCastSlThick = pOrder->SlabThickness();
 		//parms.provHbYldFctr			= po->ProvHbYldFctr();
 		//parms.provSlabLength		= po->SlabLength();
 
-		if ( po->IsCMS() ) {
+		if (po->IsCMS()) {
 
-			if ( po->ProvCastSlLnth() >= 365 ) {
+			if (po->ProvCastSlLnth() >= 365) {
 
-				pOrder->SlabLength( GlobalConstants.CasterSlabLengthMax(caster) ); //### caster-specific
+				pOrder->SlabLength(GlobalConstants.CasterSlabLengthMax(caster)); //### caster-specific
 				minL = GlobalConstants.CasterSlabLengthMax(caster);                //### caster-specific
 				maxL = GlobalConstants.CasterSlabLengthMax(caster);                //### caster-specific
 				return;
@@ -2463,7 +2925,7 @@ void CCastStringValidator::ComputeSlabLength(int caster,	//### caster-specific
 			parms.m_provCastMaxSlabWgt = po->MaxSlabWgt();
 		}
 
-		CCSOrder::U0340050( parms, minL, maxL );
+		CCSOrder::U0340050(parms, minL, maxL);
 	}
 	else {
 

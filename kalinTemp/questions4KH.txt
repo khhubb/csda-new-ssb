@@ -1,0 +1,66 @@
+## August 29th
+
+In the method
+
+    bool CCastStringValidator::FixHeatSpec (CString& heatSpec, const CString& orderedSpec, int caster)
+	
+there are various checks of the heat specs against the order. Some are general, some are caster specific.
+
+Examples:
+
+-- General
+
+	if (orderedSpec.GetLength() != 7)
+		return false;
+
+	if (heatSpec.GetLength() != 7)
+		return false;
+		
+-- Caster specific
+
+if (caster == 2 || caster == 3) { //### caster-specific
+		if (ord4 == '2' || ord4 == '6')
+			heatSpec.SetAt(3, ord4);
+		else
+			heatSpec.SetAt(3, '2');
+		if (ord6 == '4')
+			heatSpec.SetAt(5, '0');
+	}
+	else {
+		CString front = heatSpec.Left(5);
+		if (front == "52440" || front == "52442" || front == "52449") {
+			// do nothing.  Added 52442xx spec above, to the exception list of fourth digit modifications. maint. 5/30/06 k. hubbard
+		}
+		else {
+			if (ord4 == '7' || ord4 == '4' || ord4 == '6')
+				heatSpec.SetAt(3, ord4);
+			else
+				heatSpec.SetAt(3, '7');
+
+			if (ord4 == '4')
+				heatSpec.SetAt(5, '4');
+		}
+	}
+	Are these specs the same for casters 4 and 5? If not, what are the relevant values? 
+Thanks.
+##########################################################
+
+### August 29th
+
+In the validation code, we have:
+
+//### Does this hold for 3SP?
+// avoid impractical 5% CMS increase if plan steel length >= 365
+// assumption: 384 is max length 384 - 5% = 365
+if ((*io)->SlabLength() >= 365) {
+  (*io)->PlanSteelLengthMin(GlobalConstants.CasterSlabLengthMax(caster)); //### caster-specific
+  (*io)->PlanSteelLengthMax(GlobalConstants.CasterSlabLengthMax(caster)); //### caster-specific
+}
+#####################################################################################
+
+### August 29th Exposure codes
+
+in original, the if-clause is for caster 1; the else clause covers the rest.
+
+
+
