@@ -332,6 +332,16 @@ CCastStringValidator::Validate340080
 
 				Status: Maxes done, need min values
 
+				FROM TF emil:
+
+				That one would be difficult since we have two things we are looking at.
+				If we are starting the caster up with the dummy bar in the machine than we need to be at 53” for #4 (1 CCM) and between 47” and 64” for #5 (2CCM). 
+				If we are tundish switching we are not limited on startup sizes for #4 (1 CCM) #5 (2CCM) has a max width for tundish switch 69”.
+
+				RIght now, this is only used to set a min value on a spinner.  I'm  going to set it to a low avalue and be done.
+
+				STATUS: done.
+
 ======================================
 			
 		CTabNumDlg::InitTabNum

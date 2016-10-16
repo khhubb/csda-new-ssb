@@ -4,11 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-<<<<<<< HEAD
-/* at Sun Oct 09 18:51:00 2016
-=======
-/* at Fri Oct 07 13:41:18 2016
->>>>>>> f50ed2b437d33c29b575ca00c210ab14091fbb0d
+/* at Sun Oct 16 17:10:33 2016
  */
 /* Compiler settings for csda.odl:
     Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 

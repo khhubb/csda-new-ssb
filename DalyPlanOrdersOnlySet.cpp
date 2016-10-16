@@ -172,7 +172,11 @@ CDalyPlanOrdersOnlySet::CDalyPlanOrdersOnlySet(CDatabase* pdb)
 	m_MORD_HOTROLL_UNIT_NAME = _T("");  //Added m_MORD_HOTROLL_UNIT_NAME field via MFC Wizard for use in identification of Slab Sale Customers and suspended ci code = 86 1-24-07 k.hubbard 
 	m_HEAT_SPEC = _T("");
 	m_INCLUSION_MODIFIED = _T("");
-	m_nFields = 127;
+	m_MORD_IH_CAST_UNIT_NAME = _T("");
+	m_MORD_AXIOM_ORDER = _T("");
+	m_MORD_SMK_SPEC_WEST = _T("");
+	m_MORD_SMK_COND_WEST = _T("");
+	m_nFields = 131;
 	//}}AFX_FIELD_INIT
 	m_nDefaultType = snapshot;
 }
@@ -319,6 +323,10 @@ void CDalyPlanOrdersOnlySet::DoFieldExchange(CFieldExchange* pFX)
 	RFX_Text(pFX, _T("[MORD_HOTROLL_UNIT_NAME]"), m_MORD_HOTROLL_UNIT_NAME);
 	RFX_Text(pFX, _T("[HEAT_SPEC]"), m_HEAT_SPEC);
 	RFX_Text(pFX, _T("[INCLUSION_MODIFIED]"), m_INCLUSION_MODIFIED);
+	RFX_Text(pFX, _T("[MORD_IH_CAST_UNIT_NAME]"), m_MORD_IH_CAST_UNIT_NAME);
+	RFX_Text(pFX, _T("[MORD_AXIOM_ORDER]"), m_MORD_AXIOM_ORDER);
+	RFX_Text(pFX, _T("[MORD_SMK_SPEC_WEST]"), m_MORD_SMK_SPEC_WEST);
+	RFX_Text(pFX, _T("[MORD_SMK_COND_WEST]"), m_MORD_SMK_COND_WEST);
 	//}}AFX_FIELD_MAP
 }
 

@@ -59,8 +59,20 @@ GO
 
 /* ----------------------------------*/
 /*  P_FP_PLAN_SLAB_PRTY */
+/* There is supposed to be a new column in this table, but haven't seen it yet. */
 
 
+/*------------------------------------*/
+/*  Add new columns to P_MILL_ORDER:  */
 
+/*
 
+MORD_AXIOM_ORDER             varchar(15), null
+MORD_SMK_SPEC_WEST           varchar(15), null
+MORD_SMK_COND_WEST           varchar(15), null
+MORD_IH_CAST_UNIT_NAME       varchar(15), null
 
+*/
+
+/* Add new columns to UnappliedOrders query */
+/* Same as above.                           */
