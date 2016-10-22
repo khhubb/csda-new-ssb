@@ -74,10 +74,7 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 public:
-	afx_msg void OnSelchangeComboCaster4();
-	afx_msg void OnSelchangeComboCaster5();
-	afx_msg void OnRbCaster4();
-	afx_msg void OnRbCaster5();
+
 };
 
 /////////////////////////////////////////////////////////////////////////////
