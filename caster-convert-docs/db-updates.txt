@@ -76,3 +76,10 @@ MORD_IH_CAST_UNIT_NAME       varchar(15), null
 
 /* Add new columns to UnappliedOrders query */
 /* Same as above.                           */
+
+/* Add new column to P_STLMAKE_DAILY_PLAN */
+/*
+
+PLAN_EXPANDED_DISP_CODE		int, null
+
+*/

@@ -86,7 +86,8 @@ CDalyPlanSet::CDalyPlanSet(CDatabase* pdb)
 	m_SLIT_REASON = _T("");    // added reasons 2-26-10 k. hubbard
 	m_STOCK_REASON = _T("");   // added reasons 5-5-09 k. hubbard
 	m_STOCK_COMMERCIAL_REASON = _T("");   // added reasons 5-5-09 k. hubbard
-	m_nFields = 60;
+	m_PLAN_EXPANDED_DISP_CODE = 0;
+	m_nFields = 61;
 	//}}AFX_FIELD_INIT
 	m_nDefaultType = snapshot;
 
@@ -183,6 +184,7 @@ void CDalyPlanSet::DoFieldExchange(CFieldExchange* pFX)
 	RFX_Text(pFX, _T("[SLIT_REASON]"), m_SLIT_REASON);      // Added reasons 2-26-10 k. hubbard
 	RFX_Text(pFX, _T("[STOCK_REASON]"), m_STOCK_REASON);    // Added reasons 5-5-09 k. hubbard
 	RFX_Text(pFX, _T("[STOCK_COMMERCIAL_REASON]"), m_STOCK_COMMERCIAL_REASON);    // Added reasons 5-5-09 k. hubbard
+	RFX_Long(pFX, _T("[PLAN_EXPANDED_DISP_CODE]"), m_PLAN_EXPANDED_DISP_CODE);
 	//}}AFX_FIELD_MAP
 
 
