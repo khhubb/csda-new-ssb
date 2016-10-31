@@ -401,9 +401,7 @@ void CSnapshot::PopulateAvailSteelSpecs()
 		++io) {
 		m_availSteelSpecs.insert((*io)->SteelSpec());
 
-		const CString& ws = (*io)->WestSpec();
-		if (!ws.IsEmpty() )
-			m_availWestSpecs.insert(ws);
+		m_availWestSpecs.insert((*io)->WestSpec());
 	}
 }
 

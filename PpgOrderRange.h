@@ -92,7 +92,8 @@ protected:
 	CPSheetAvailOrders* m_pSheet;
 		// the parent sheet.
 
-	void SetSpecListEntries();
+	void SetSpecListEntries(bool useWestSpecs);
+	bool UseWestSpecs();
 
 public:
 

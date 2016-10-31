@@ -215,7 +215,7 @@ void CPpgOrderRange::SetOrderSelection(COrderSelection* pSelect)
 //
 //  If caster is 4 or 5 and m_eIncludeOrders == INCLUDE_THIS_CASTER_ONLY, then we display available west specs
 
-void CPpgOrderRange::SetSpecListEntries()
+void CPpgOrderRange::SetSpecListEntries(bool useWestSpecs)
 {
 	CComboBox* lists[5];
 	lists[0] = (CComboBox*) GetDlgItem(IDC_COMBO_SPEC1);
@@ -226,8 +226,8 @@ void CPpgOrderRange::SetSpecListEntries()
 
 	for ( int i =0; i<5; ++i ) 
 		lists[i]->ResetContent();
-
-	const set<CString>& specs = TheSnapshot.AvailSteelSpecs();
+	
+	const set<CString>& specs = (useWestSpecs ? TheSnapshot.AvailWestSpecs() : TheSnapshot.AvailSteelSpecs());
 
 	for ( set<CString>::const_iterator is = specs.begin();
 	      is != specs.end();
@@ -262,6 +262,13 @@ void CPpgOrderRange::SetDisplayState()
 
 }
 
+bool CPpgOrderRange::UseWestSpecs()
+{
+	int caster = m_pOrderSelection->Caster();
+	bool useWestSpecs = (caster == Caster::C4 || caster == Caster::C5) && m_eIncludeOrders == COrderSelection::INCLUDE_THIS_CASTER_ONLY;
+
+	return useWestSpecs;
+}
 
 
 BOOL CPpgOrderRange::OnInitDialog() 
@@ -270,7 +277,7 @@ BOOL CPpgOrderRange::OnInitDialog()
 
 	CPropertyPage::OnInitDialog();
 	
-	SetSpecListEntries();
+	SetSpecListEntries(UseWestSpecs());
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
@@ -375,19 +382,34 @@ void CPpgOrderRange::OnCheckNewOrders()
 
 void CPpgOrderRange::OnRadioShowAll() 
 {
-	SetModified(true);	
+	SetModified(true);
+
+	int caster = m_pOrderSelection->Caster();
+	if (caster == Caster::C4 || caster == Caster::C5)
+		SetSpecListEntries(false);
+
 	UpdateOrderSelection();
 }
 
 void CPpgOrderRange::OnRadioShowSwingTons() 
 {
-	SetModified(true);	
+	SetModified(true);
+
+	int caster = m_pOrderSelection->Caster();
+	if (caster == Caster::C4 || caster == Caster::C5)
+		SetSpecListEntries(false);
+
 	UpdateOrderSelection();
 }
 
 void CPpgOrderRange::OnRadioShowThisCaster() 
 {
 	SetModified(true);	
+
+	int caster = m_pOrderSelection->Caster();
+	if (caster == Caster::C4 || caster == Caster::C5)
+		SetSpecListEntries(true);
+	
 	UpdateOrderSelection();
 }
 
