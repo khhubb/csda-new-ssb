@@ -107,6 +107,9 @@ private:
 	set<CString>			m_availSteelSpecs;
 		//  all the steel specs listed in all the orders
 
+	set<CString>			m_availWestSpecs;
+		// All the west specs listed in all orders.
+
 	TSteelSpecCrossAppMap	m_steelSpecCrossAppMap; 
 		//  what it says.
 
@@ -145,6 +148,9 @@ public:
 
 	const set<CString>& AvailSteelSpecs() const
 	{	return m_availSteelSpecs;	}
+
+	const set<CString>& AvailWestSpecs() const
+	{ return m_availWestSpecs; }
 
 	CHMSupplyMgr& HMSupplyMgr()
 	{	return m_hmSupplyMgr;	}

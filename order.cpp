@@ -184,6 +184,17 @@ void COrder::Init(const CUnappOrderSet& x)
 	m_hmPlanMegaLuCd		= x.m_HM_PLAN_MEGA_LINEUP_CD;
 	m_hmPlanHotChargeInd	= x.m_HM_PLAN_HOT_CHARGE_IND;
 	m_smPlanCastSpec		= x.m_SM_PLAN_CAST_SPEC;
+
+	// new caster 4,5 fields
+	m_mordAxiomOrder		= x.m_MORD_AXIOM_ORDER;
+	m_mordSmkCondWest		 = x.m_MORD_SMK_COND_WEST;
+	m_mordSmkSpecWest		= x.m_MORD_SMK_SPEC_WEST;
+	m_mordIhCastUnitName	= x.m_MORD_IH_CAST_UNIT_NAME;
+	m_mordAxiomOrder.Trim();
+	m_mordSmkCondWest.Trim();
+	m_mordSmkSpecWest.Trim();
+	m_mordIhCastUnitName.Trim();
+
 	m_slApplyNewOrderCode	= x.m_SL_APPLY_NEW_ORDER_CODE.GetLength() < 1 
 							  ? ' '
 							  : x.m_SL_APPLY_NEW_ORDER_CODE[0];

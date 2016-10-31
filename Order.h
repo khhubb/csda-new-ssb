@@ -125,6 +125,13 @@ private:
 	Width	m_provCastSlabWidthMax;   // added these 2 fields 11-11-03 k. hubbard
 	Width	m_provCastSlabWidthMin;
 
+	// new fields for casters 4,5
+	CString m_mordAxiomOrder;
+	CString m_mordSmkSpecWest;
+	CString m_mordSmkCondWest;
+	CString m_mordIhCastUnitName;
+
+
 
 	CChem::Bound m_chemMins[CChem::NumElements];
 	CChem::Bound m_chemMaxs[CChem::NumElements];
@@ -195,6 +202,24 @@ public:
 
 	const CString& SteelSpec() const
 	{ return m_smPlanSteelSpec; }
+
+	//////////////////////////////
+	// new fields for casters 4,5
+
+	const CString& WestSpec() const
+	{ return m_mordSmkSpecWest; }
+
+	const CString& CondWest() const
+	{ return m_mordSmkCondWest; }
+
+	const CString& AxiomOrder() const
+	{ return m_mordAxiomOrder; }
+
+	const CString& IhCastUnitName() const
+	{ return m_mordIhCastUnitName; }
+
+	// end new fields
+	//////////////////////////
 
 	CChem::Bound MinCarbon() const
 	{ return m_minCarbon; }

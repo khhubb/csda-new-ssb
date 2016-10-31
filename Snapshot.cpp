@@ -392,15 +392,19 @@ bool CSnapshot::ReadOrders(CDatabase* pDB)
 //
 //  The available steel specs are just the steel spec values from all the orders,
 //		unique-ified.
-//
+//  We add here also the west specs, used in casters 4,5.
 
 void CSnapshot::PopulateAvailSteelSpecs()
 {
-	for ( vector<COrder*>::const_iterator io = m_orders.begin();
-		  io != m_orders.end();
-		  ++io )
-
+	for (vector<COrder*>::const_iterator io = m_orders.begin();
+		io != m_orders.end();
+		++io) {
 		m_availSteelSpecs.insert((*io)->SteelSpec());
+
+		const CString& ws = (*io)->WestSpec();
+		if (!ws.IsEmpty() )
+			m_availWestSpecs.insert(ws);
+	}
 }
 
 

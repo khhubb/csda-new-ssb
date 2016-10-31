@@ -213,6 +213,7 @@ void CPpgOrderRange::SetOrderSelection(COrderSelection* pSelect)
 //  This populates each of the 5 combo boxes with the options, 
 //    namely, the available steel specs
 //
+//  If caster is 4 or 5 and m_eIncludeOrders == INCLUDE_THIS_CASTER_ONLY, then we display available west specs
 
 void CPpgOrderRange::SetSpecListEntries()
 {
@@ -235,6 +236,7 @@ void CPpgOrderRange::SetSpecListEntries()
 		for ( int i = 0; i<5; ++i ) 
 		
 			lists[i]->AddString((*is));
+
 }
 
 		
