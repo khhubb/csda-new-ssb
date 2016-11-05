@@ -445,6 +445,10 @@ public:
 	bool UseCrossApp() const
 	{	return m_useCrossApp;		}
 
+	// We don't look at m_useCrossApp on casters 4,5
+	bool ReallyUseCrossApp() const
+	{	return m_useCrossApp && m_caster != Caster::C4 && m_caster != Caster::C5; }
+
 	const CString& SelectedSpec(int i) const
 	{	
 		static const CString empty;

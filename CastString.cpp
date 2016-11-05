@@ -2228,6 +2228,7 @@ Weight CCastString::HotMetalTonsPerHeat() const
 		return 217;
 	default:
 		assert(false);
+		return 0;
 	}
 }
 

@@ -1085,7 +1085,7 @@ void COrderSelection::FilterOrders(CSuperScen* pSS)
 		// Put the desired specs in specsToUse
 		// if we are using cross-apps, compute the cross-app specs of the first selected spec
 		// otherwise, just use the selected specs.
-		if ( m_useCrossApp ) {
+		if ( ReallyUseCrossApp() ) {
 			const set<CString>& crossAppSpecs 
 				= TheSnapshot.FindSteelSpecCrossApp( (m_selectedSpecs.size() > 0 
 													 ? m_selectedSpecs[0] 
@@ -1134,37 +1134,88 @@ void COrderSelection::FilterOrders(CSuperScen* pSS)
 		if ( ! hrWkOk )
 			continue;
 
-		
-		// we compare against steelSpec unless we are using cross-apps,
+		// Casters 1,2,3: 
+		//   we compare against steelSpec unless we are using cross-apps,
 		//   in which case we use orderedSpec
+		// Casters 4,5: 
+		//  We compare against westSpec if we are THIS_CASTER_ONLY,
+		//   otherwise we compare against steelSpec (no cross-apps?)
 
-		if ( m_useAllSpecs || ! m_useCrossApp )
-			cmp.SetString((*io)->SteelSpec());
-		else
-			cmp.SetString((*io)->OrderedSpec());
+		bool specOk = false;
 
-		bool specOk = ( m_useAllSpecs
-						||
-						find_if(specsToUse.begin(),
-								specsToUse.end(),
-								cmp)  != specsToUse.end() );
+		switch (m_caster) {
+		case Caster::C1:
+		case Caster::C2:
+		case Caster::C3:
+			if (m_useAllSpecs || !m_useCrossApp)
+				cmp.SetString((*io)->SteelSpec());
+			else
+				cmp.SetString((*io)->OrderedSpec());
+
+			specOk = (m_useAllSpecs
+				||
+				find_if(specsToUse.begin(),
+				specsToUse.end(),
+				cmp) != specsToUse.end());
+			break;
+
+		case Caster::C4:
+		case Caster::C5:
+		{
+			CString spec;
+			if (m_includeOrders == INCLUDE_THIS_CASTER_ONLY)
+				spec = (*io)->WestSpec();
+			else
+				spec = (*io)->SteelSpec();
+
+			specOk = (m_useAllSpecs
+				||
+				find(specsToUse.begin(),
+				specsToUse.end(),
+				spec) != specsToUse.end());
+		}
+			break;
+		}
 
 		if ( ! specOk )
 			continue;
 
-		bool casterOk = m_includeOrders == INCLUDE_ALL 
-						|| 
-						(m_includeOrders == INCLUDE_SWING_TONS
-						 && 
-						 ((*io)->FaclPrefCd(1) == casterStr
-						  ||
-						  (*io)->FaclPrefCd(2) == casterStr
-						  ||
-						  (*io)->FaclPrefCd(3) == casterStr))
-						||
-						(*io)->SlabUnitCd() == casterStr;
+		bool casterOk = false;
 
+		switch (m_includeOrders)
+		{
+		case INCLUDE_ALL:
+			casterOk = true;
+			break;
 
+		case INCLUDE_SWING_TONS:
+			casterOk = 
+				((*io)->FaclPrefCd(1) == casterStr
+				 ||
+				 (*io)->FaclPrefCd(2) == casterStr
+				 ||
+				 (*io)->FaclPrefCd(3) == casterStr);
+			break;
+
+		case INCLUDE_THIS_CASTER_ONLY:
+
+			switch (m_caster)
+			{
+			case Caster::C1:
+			case Caster::C2:
+			case Caster::C3:
+				casterOk = (*io)->SlabUnitCd() == casterStr;
+				break;
+			case Caster::C4:
+				casterOk = (*io)->IhCastUnitName() == "1CCM";
+				break;
+			case Caster::C5:
+				casterOk = (*io)->IhCastUnitName() == "2CCM";
+				break;
+			}
+			break;
+		}
+		
 		if ( ! casterOk )
 			continue;
 
