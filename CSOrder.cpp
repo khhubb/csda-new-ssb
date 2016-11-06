@@ -195,8 +195,9 @@ void CCSOrder::Init()
 
 	m_changeFlag	= ' ';
 
-	m_dispCode		= 1;
-	m_slitTypeCode	= ' ';
+	m_dispCode		   = 1;
+	m_expandedDispCode = 0;
+	m_slitTypeCode	   = ' ';
 
 	m_isTransition	= false;
 	m_isRadical		= false;
@@ -253,6 +254,7 @@ void CCSOrder::Init(const CDalyPlanSet& planSet,    // DPA field data initializa
 					   : planSet.m_PLAN_CHANGE_INDICATOR[0]);
 
 	m_dispCode		= planSet.m_PLAN_LOT_DISP_CODE;
+	m_expandedDispCode = planSet.m_PLAN_EXPANDED_DISP_CODE;
 	m_slitTypeCode	= (planSet.m_PLAN_LOT_TYPE_SLIT_CODE.IsEmpty()
 						? ' '
 						: planSet.m_PLAN_LOT_TYPE_SLIT_CODE[0]);
@@ -482,8 +484,9 @@ void CCSOrder::Init(const CCSOrder& x)
 
 	m_changeFlag	= x.m_changeFlag;
 
-	m_dispCode		= x.m_dispCode;
-	m_slitTypeCode	= x.m_slitTypeCode;
+	m_dispCode		   = x.m_dispCode;
+	m_expandedDispCode = x.m_expandedDispCode;
+	m_slitTypeCode	   = x.m_slitTypeCode;
 
 	m_isTransition	= x.m_isTransition;
 	m_isRadical		= x.m_isRadical;

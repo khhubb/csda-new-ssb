@@ -152,6 +152,7 @@ private:
 		// Marked coming from download as an order to which changes have been made.
 
 	int m_dispCode;
+	int m_expandedDispCode;
 	char m_slitTypeCode;
 		// computed from the values on the order, the slabCondnCode, whether we
 		//   are slitting, even slitting, etc.
@@ -405,6 +406,9 @@ public:
 
 	int DispCode() const
 	{	return m_dispCode;	}
+
+	int ExpandedDispCode() const
+	{		return m_expandedDispCode;  }
 
 	void DispCode(int newVal)
 	{

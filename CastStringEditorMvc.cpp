@@ -2124,6 +2124,7 @@ void CCastStringEditorTextViewport::SetStrandOrderListHeaders()
 	static const char* strHrWk		= " HR "	   ; // Increased title spacing to ensure full field data display, eliminating mandatory resizing of column 4-26-10 k. hubbard
 	static const char* strTons		= "Tons"   ;
 	static const char* strDispSlit	= "DSPLT"  ;
+	static const char* strExpDisp   = "ExpDisp";
 	static const char* strStartTime	= "PST"	   ;
 	static const char* str80Type	= "  80Lu  "   ; // Increased title spacing to ensure full field data display, eliminating mandatory resizing of column 4-26-10 k. hubbard
 	static const char* strCust		= "Cust"   ;
@@ -2148,6 +2149,7 @@ void CCastStringEditorTextViewport::SetStrandOrderListHeaders()
 	static const int widthHrWk		= CompWidth3( 15, strHrWk,      "9999"			);
 	static const int widthTons		= CompWidth2( 15,               "9999"			);
 	static const int widthDispSlit  = CompWidth3( 15, strDispSlit,	"9M"			);
+	static const int widthExpDisp   = CompWidth3( 15, strExpDisp,   "999"           );
 	static const int widthStartTime	= CompWidth3( 15, strStartTime, "-9999"			);
 	static const int width80Type	= CompWidth3( 15, str80Type,	"MMMM"			);
 	static const int widthCust		= CompWidth3( 15, strCust,		"MMMMMMMMMM"	);
@@ -2168,19 +2170,20 @@ void CCastStringEditorTextViewport::SetStrandOrderListHeaders()
 	DefCol(LVCFMT_RIGHT,  strCondn,     widthCondn     ); //  8
 	DefCol(LVCFMT_RIGHT,  strWCondn,    widthWCondn    ); //  9
 	DefCol(LVCFMT_RIGHT,  strDispSlit,	widthDispSlit  ); // 10
-	DefCol(LVCFMT_RIGHT,  strPcs,	    widthPcs       ); // 11
-	DefCol(LVCFMT_RIGHT,  strTons,      widthTons      ); // 12
-	DefCol(LVCFMT_RIGHT,  strPrio,      widthPrio      ); // 13
-	DefCol(LVCFMT_RIGHT,  strStartTime,	widthStartTime ); // 14
-	DefCol(LVCFMT_RIGHT,  strLength,    widthLength    ); // 15
+	DefCol(LVCFMT_RIGHT,  strExpDisp,   widthExpDisp   ); // 11
+	DefCol(LVCFMT_RIGHT,  strPcs,	    widthPcs       ); // 12
+	DefCol(LVCFMT_RIGHT,  strTons,      widthTons      ); // 13
+	DefCol(LVCFMT_RIGHT,  strPrio,      widthPrio      ); // 14
+	DefCol(LVCFMT_RIGHT,  strStartTime,	widthStartTime ); // 15
+	DefCol(LVCFMT_RIGHT,  strLength,    widthLength    ); // 16
 //	DefCol(LVCFMT_RIGHT,  strHrWk,      widthHrWk      ); // 16
-	DefCol(LVCFMT_CENTER, strHrWk,      widthHrWk      ); // 16
-	DefCol(LVCFMT_RIGHT,  strCI,        widthCI        ); // 17
-	DefCol(LVCFMT_CENTER, str80Type,	width80Type	   ); // 18
-	DefCol(LVCFMT_LEFT,	  strCust,		widthCust	   ); // 19
-	DefCol(LVCFMT_RIGHT,  strC,         widthC         ); // 20
-	DefCol(LVCFMT_RIGHT,  strMn,        widthMn        ); // 21
-	DefCol(LVCFMT_RIGHT,  strSignifEl,  widthSignifEl  ); // 22
+	DefCol(LVCFMT_CENTER, strHrWk,      widthHrWk      ); // 17
+	DefCol(LVCFMT_RIGHT,  strCI,        widthCI        ); // 19
+	DefCol(LVCFMT_CENTER, str80Type,	width80Type	   ); // 19
+	DefCol(LVCFMT_LEFT,	  strCust,		widthCust	   ); // 20
+	DefCol(LVCFMT_RIGHT,  strC,         widthC         ); // 21
+	DefCol(LVCFMT_RIGHT,  strMn,        widthMn        ); // 22
+	DefCol(LVCFMT_RIGHT,  strSignifEl,  widthSignifEl  ); // 23
 }
 
 
@@ -2330,12 +2333,12 @@ void CCastStringEditorTextViewport::SetStrandOrderListItem(CCSOrder* pCSOrder,
 	// Col  5 -- West spec
 	// Col  6 -- HB Width
 	// Col  9 -- West Condn
-	// Col 17 -- CI Code
-	// Col 13 -- priority
-	// Col 16 -- HR Week
-	// Col 14 -- StartTime
-	// Col 18 -- MegaLuCd
-	// Col 19 -- Customer
+	// Col 18 -- CI Code
+	// Col 14 -- priority
+	// Col 17 -- HR Week
+	// Col 15 -- StartTime
+	// Col 19 -- MegaLuCd
+	// Col 20 -- Customer
 
 	//	Increased column count by 1 to make room for new Hotroll unitname column 4-28-10 k. hubbard
 	if ( pCSOrder->Order() == 0 ) {
@@ -2343,12 +2346,12 @@ void CCastStringEditorTextViewport::SetStrandOrderListItem(CCSOrder* pCSOrder,
 		listCtrl.SetItemText(itemNum, 5,"?");
 		listCtrl.SetItemText(itemNum, 6,"?");
 		listCtrl.SetItemText(itemNum, 9,"?");
-		listCtrl.SetItemText(itemNum,17,"?");
-		listCtrl.SetItemText(itemNum,13,"?");
-		listCtrl.SetItemText(itemNum,16,"?");
+		listCtrl.SetItemText(itemNum,18, "?");
 		listCtrl.SetItemText(itemNum,14,"?");
-		listCtrl.SetItemText(itemNum,18,"?");
+		listCtrl.SetItemText(itemNum,17,"?");
+		listCtrl.SetItemText(itemNum,15,"?");
 		listCtrl.SetItemText(itemNum,19,"?");
+		listCtrl.SetItemText(itemNum,20,"?");
 	}
 	else {
 
@@ -2364,28 +2367,27 @@ void CCastStringEditorTextViewport::SetStrandOrderListItem(CCSOrder* pCSOrder,
 		listCtrl.SetItemText(itemNum, 6,buf);
 
 		listCtrl.SetItemText(itemNum, 9, pCSOrder->Order()->CondWest());
-
-		listCtrl.SetItemText(itemNum,17,_itoa(pCSOrder->Order()->CICode(),buf,10));
+		listCtrl.SetItemText(itemNum,18,_itoa(pCSOrder->Order()->CICode(),buf,10));
 
 		sprintf(buf,"%s%2d-%2d",
 				(pCSOrder->Order()->CommodityPriority() == 99 ? ">>>" : "   "),
 			    pCSOrder->Order()->CommodityPriority(),
 				pCSOrder->Order()->OrderPriority());
-		listCtrl.SetItemText(itemNum,13,buf);
+		listCtrl.SetItemText(itemNum,14,buf);
 
-		listCtrl.SetItemText(itemNum,16,_itoa(pCSOrder->Order()->HrYrWk().Week(),buf,10));
+		listCtrl.SetItemText(itemNum,17,_itoa(pCSOrder->Order()->HrYrWk().Week(),buf,10));
 
 		//sprintf(buf,"%08d",
 		//		pCSOrder->Order()->PlannedLatestStartDate());
 		sprintf(buf,"%5d",
 				NTime::PSDateDelta(pCSOrder->Order()->PlannedLatestStartDate()));
 
-		listCtrl.SetItemText(itemNum,14,buf);
+		listCtrl.SetItemText(itemNum,15,buf);
 
 		strcpy(buf,LPCTSTR(pCSOrder->Order()->CustName().Left(10)));
-		listCtrl.SetItemText(itemNum,19,buf);
+		listCtrl.SetItemText(itemNum,20,buf);
 
-		listCtrl.SetItemText(itemNum,18,pCSOrder->Order()->MegaLuCd());
+		listCtrl.SetItemText(itemNum,19,pCSOrder->Order()->MegaLuCd());
 
 	}
 
@@ -2393,7 +2395,8 @@ void CCastStringEditorTextViewport::SetStrandOrderListItem(CCSOrder* pCSOrder,
 	// Col  7 -- Slab width
 	// Col  8 -- Condn code
 	// Col 10 -- Disp/Slit
-	// Col 11 -- numPieces
+	// Col 11 -- Expanded Disp Code
+	// Col 12 -- numPieces
 	// Col 15 -- Slab length
 	// Col 12 -- Tons
 //	sprintf(buf,"%2.1f",pCSOrder->Order()->SlabWidth());        // 9-14-07 k.hubbard testing
@@ -2403,9 +2406,10 @@ void CCastStringEditorTextViewport::SetStrandOrderListItem(CCSOrder* pCSOrder,
 
 //	listCtrl.SetItemText( itemNum,  5, _ltoa(long(pCSOrder->SlabWidth()),  buf, 10));  // 9-14-07 k.hubbard original comm. out b4 testing above.
 	listCtrl.SetItemText( itemNum,  8, _itoa(pCSOrder->SlabCondnCode(),    buf, 10));
-	listCtrl.SetItemText( itemNum, 11, _itoa(pCSOrder->NumPieces(),        buf, 10));
-	listCtrl.SetItemText( itemNum, 15, _ltoa(long(pCSOrder->SlabLength()), buf, 10));
-	listCtrl.SetItemText( itemNum, 12, _ltoa(long(pCSOrder->Tons()),       buf, 10));
+	listCtrl.SetItemText(itemNum,  11, _itoa(pCSOrder->ExpandedDispCode(), buf, 10));
+	listCtrl.SetItemText( itemNum, 12, _itoa(pCSOrder->NumPieces(),        buf, 10));
+	listCtrl.SetItemText( itemNum, 16, _ltoa(long(pCSOrder->SlabLength()), buf, 10));
+	listCtrl.SetItemText( itemNum, 13, _ltoa(long(pCSOrder->Tons()),       buf, 10));
 
 	sprintf(buf,"%d-%c",
 			pCSOrder->DispCode(),
@@ -2421,9 +2425,9 @@ void CCastStringEditorTextViewport::SetStrandOrderListItem(CCSOrder* pCSOrder,
 							  LVIS_STATEIMAGEMASK);
 
 	
-	// Col 20 -- Carbon
-	// Col 21 -- Manganese
-	// Col 22 -- SignifEl
+	// Col 21 -- Carbon
+	// Col 22 -- Manganese
+	// Col 23 -- SignifEl
 
 	CString strChem;
 
@@ -2462,7 +2466,7 @@ void CCastStringEditorTextViewport::SetStrandOrderListItem(CCSOrder* pCSOrder,
 	else
 		strChem.Format("-");
 
-	listCtrl.SetItemText( itemNum,20, LPCTSTR(strChem) );
+	listCtrl.SetItemText( itemNum,21, LPCTSTR(strChem) );
 
 	// Mn
 	if ( mnOk )
@@ -2470,7 +2474,7 @@ void CCastStringEditorTextViewport::SetStrandOrderListItem(CCSOrder* pCSOrder,
 	else
 		strChem.Format("-");
 
-	listCtrl.SetItemText( itemNum,21, LPCTSTR(strChem) );
+	listCtrl.SetItemText( itemNum,22, LPCTSTR(strChem) );
 
 	// Signif el
 	if ( sigOk )
@@ -2478,7 +2482,7 @@ void CCastStringEditorTextViewport::SetStrandOrderListItem(CCSOrder* pCSOrder,
 	else
 		strChem.Format("-");
 	
-	listCtrl.SetItemText( itemNum,22, LPCTSTR(strChem) );
+	listCtrl.SetItemText( itemNum,23, LPCTSTR(strChem) );
 
 	//listCtrl.SetItemData(itemNum,EncodeOrderIndex(orderCount));
 
