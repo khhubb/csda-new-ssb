@@ -96,7 +96,8 @@ CDailyPlanUploadSet::CDailyPlanUploadSet(CDatabase* pdb)
 	m_STOCK_REASON; // Added 3 reason fields 5-5-09 k. hubbard
 	m_STOCK_COMMERCIAL_REASON; 
 	m_SLIT_REASON;
-	m_nFields = 63;
+	m_PLAN_EXPANDED_DISP_CODE;
+	m_nFields = 64;
 	//}}AFX_FIELD_INIT
 	m_nDefaultType = dynaset;
 }
@@ -179,6 +180,7 @@ void CDailyPlanUploadSet::DoFieldExchange(CFieldExchange* pFX)
 	RFX_Text(pFX, _T("[STOCK_REASON]"), m_STOCK_REASON);  // added 3 reason fields 5-5-09 k. hubbard
 	RFX_Text(pFX, _T("[STOCK_COMMERCIAL_REASON]"), m_STOCK_COMMERCIAL_REASON);  
 	RFX_Text(pFX, _T("[SLIT_REASON]"), m_SLIT_REASON);
+	RFX_Long(pFX, _T("[PLAN_EXPANDED_DISP_CODE]"), m_PLAN_EXPANDED_DISP_CODE);
 	//}}AFX_FIELD_MAP
 }
 

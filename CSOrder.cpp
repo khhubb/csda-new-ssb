@@ -420,6 +420,8 @@ void CCSOrder::Init(COrder* pOrder,
 	m_dispCode = ComputeDispCode(m_slitTypeCode,m_slabCondnCode,m_ciCode,m_millOrderNum,m_hotrollUnitName,m_inclusionModified);  //Added millOrderNum for stock disp code assignment k. hubbard 2-3-06
 //	m_dispCode = ComputeDispCode(m_slitTypeCode,m_slabCondnCode,m_mordHotrollUnitName,m_millOrderNum);  //Added millOrderNum for stock disp code assignment k. hubbard 2-3-06
 
+	m_expandedDispCode = 0;
+
 	m_isTransition	= false;
 	m_isRadical	 = false;
 
@@ -569,6 +571,7 @@ void CCSOrder::Init(const CSSBOutput& sbSet,
 
 //   Added new Slab Sale Customer identification substituting CI Code with Hotroll Unit name below 1-24-07 k. hubbard 
 	m_dispCode = ComputeDispCode(m_slitTypeCode,m_slabCondnCode,m_ciCode,m_millOrderNum,m_hotrollUnitName,m_inclusionModified);  //Added millOrderNum for stock disp code assignment k. hubbard 2-3-06
+	m_expandedDispCode = 0;
 
 	// piece weight set by order.
 	if ( m_slitTypeCode == 'E' )
@@ -630,6 +633,8 @@ void CCSOrder::Init(const CCasterStringOrdersSet& ordersSet)
 
 	DispCode		( ordersSet.m_DispCode		);
 	SlabCondnCode	( ordersSet.m_CondnCode		);
+
+	ExpandedDispCode(ordersSet.m_ExpandedDispCode);
 	
 	ChangeFlag		( ordersSet.m_ChangeFlag.GetLength() == 0 
 				      ? ' ' 
@@ -744,6 +749,8 @@ CCSOrder* CCSOrder::CreateStockOrder(const CString& lotSpec,
 									     pOrder->m_millOrderNum,    // added for stock disp code req. k. hubbard 2-3-06 
 										 pOrder->m_hotrollUnitName, // Added new Slab Sale Customer identification substituting CI Code with Hotroll Unit name below 1-24-07 k. hubbard
                                          pOrder->m_inclusionModified); // Added for material direction of stock (planned unapplied) slabs k. hubbard 5-20-08 
+
+	pOrder->m_expandedDispCode = 0;
 
 	pOrder->m_isTransition	= false;
 	pOrder->m_isRadical	 = false;

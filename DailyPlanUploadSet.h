@@ -81,6 +81,7 @@ public:
 	CString	m_STOCK_REASON; // Added 3 reason fields 5-5-09 k. hubbard
 	CString	m_STOCK_COMMERCIAL_REASON; 
 	CString	m_SLIT_REASON;
+	long m_PLAN_EXPANDED_DISP_CODE;
 	//}}AFX_FIELD
 
 

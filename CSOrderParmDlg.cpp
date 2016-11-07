@@ -102,6 +102,7 @@ CCSOrderParmDlg::CCSOrderParmDlg(CWnd* pParent /*=NULL*/)
 	m_minCastWidth = _T("");
 	m_slitTypeCode = _T("");
 	m_dispoCode = 0;
+	m_expandedDispCode = 0;
 	m_changeIndic = _T("");
 	m_expCode = _T("");
 	m_ciCode = 0;
@@ -138,6 +139,7 @@ void CCSOrderParmDlg::DoDataExchange(CDataExchange* pDX)
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CCSOrderParmDlg)
 	DDX_Control(pDX, IDC_SPIN_DISP_CODE, m_spinDispCode);
+	DDX_Control(pDX, IDC_SPIN_EXPANDED_DISP_CODE, m_spinExpandedDispCode);
 	DDX_Control(pDX, IDC_EDIT_CONDN_CODE, m_editCondnCode);
 	DDX_Control(pDX, IDC_EDIT_SPEC, m_editSpec);
 	DDX_Control(pDX, IDC_SPIN_CAST_WIDTH, m_spinCastWidth);
@@ -163,6 +165,8 @@ void CCSOrderParmDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_CBString(pDX, IDC_COMBO_SLIT_TYPE_CODE, m_slitTypeCode);
 	DDX_Text(pDX, IDC_EDIT_DISPO_CODE, m_dispoCode);
 	DDV_MinMaxInt(pDX, m_dispoCode, 0, 9);
+	DDX_Text(pDX, IDC_EDIT_EXPANDED_DISP_CODE, m_expandedDispCode);
+	DDV_MinMaxInt(pDX, m_expandedDispCode, 0, 99);
 	DDX_Text(pDX, IDC_EDIT_CHANGE_INDICATOR, m_changeIndic);
 	DDX_Text(pDX, IDC_EDIT_EXPOSURE_CODE, m_expCode);
 	DDX_Text(pDX, IDC_EDIT_CI_CODE, m_ciCode);
@@ -282,6 +286,7 @@ BOOL CCSOrderParmDlg::OnInitDialog()
 	//	m_spinCastWidth.SetRangeAndDelta (0.1, 1.0, 0.5); // added test 1-08-09 k. hubbard
 
 	m_spinDispCode.SetRange(0,9);
+	m_spinDispCode.SetRange(33, 99);
 
 	// the OK button is enabled if we are creating
 	// or we are editing a CSOrder from an editable string.
@@ -431,6 +436,7 @@ char buf[50];
 			               ? " <blank>" 
 						   : CString(m_pCSOrder->SlitTypeCode()));
 		m_dispoCode		= m_pCSOrder->DispCode();
+		m_expandedDispCode = m_pCSOrder->ExpandedDispCode();
 		m_changeIndic	= CString(m_pCSOrder->ChangeFlag());
 		m_expCode		= CString(m_pCSOrder->ExposureCode());
 
@@ -459,10 +465,12 @@ char buf[50];
 		m_castWidth		= atof(buf);      // Converting cstring to double here 1-9-09 k. hubbard
 
 		m_condnCode		= ( m_bCreate && m_bStock ?  4782 : m_pOrder->SlabCondnCode() );
+
 		m_numPieces		= ( m_bCreate && m_bStock ?     1 : m_pSuperScen->NumSlabsDue(m_pOrder) );
 		m_slitTypeCode	= " <blank>";
 //		m_dispoCode		= 2;  // Changed default stock disposition code from 4 to 2 in order to direct slab material to #2 Slab Yard for #2 BOF. maint k. hubbard  01-31-06
  		m_dispoCode		= 4;  // Changed default stock disposition code from 2 back to 4 in order to direct slab material to #4 Slab Yard for Slab Logistics project maint k. hubbard  01-24-08
+		m_expandedDispCode = 0;
 
 		m_changeIndic	= " ";
 		m_expCode		= (m_pOrder->PgmExposure() == 1 ? "E" : "U");
@@ -492,7 +500,8 @@ char buf[50];
 		m_slitTypeCode  = " <blank>";
 //		m_dispoCode		= 2;    // Changed default stock disposition code from 4 to 2 in order to direct slab material to #2 Slab Yard for #2 BOF. maint k. hubbard  01-31-06 
 		m_dispoCode		= 4;    // Changed default stock disposition code from 2 back to 4 in order to direct slab material to #4 Slab Yard for Slab Logistics project maint k. hubbard  01-24-08
- 
+		m_expandedDispCode = 0;
+
 		m_changeIndic	= " ";
 		m_expCode		= "U";
 		m_planSteelLengthMin = m_castLength;
@@ -565,6 +574,11 @@ void CCSOrderParmDlg::OnOK()
 
 	if ( m_expCode != "U" && m_expCode != "E" ) {
 		MessageBox("Exposure code must be E or U.");
+		return;
+	}
+
+	if (!(m_expandedDispCode = 00 || (33 <= m_expandedDispCode && m_expandedDispCode <= 99))) {
+		MessageBox("Expanded Disp Code must be 0 or in range 33-99");
 		return;
 	}
 
@@ -780,6 +794,12 @@ bool CCSOrderParmDlg::XferToCSOrder( CCSOrder* pCSOrder )  // Will actually save
 		pCSOrder->DispCode(m_dispoCode);
 		changed = true;
 	}
+
+	if (pCSOrder->ExpandedDispCode() != m_expandedDispCode) {
+		pCSOrder->ExpandedDispCode(m_expandedDispCode);
+		changed = true;
+	}
+
 // test truncation 2-19-03 k. hubbard
 	if ( pCSOrder->PlanSteelLengthMin() != m_planSteelLengthMin ) {
 		pCSOrder->PlanSteelLengthMin(long(m_planSteelLengthMin));

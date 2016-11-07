@@ -261,6 +261,7 @@
 #define IDC_EDIT_MIN_MN                 1091
 #define IDC_EDIT_CAST_LENGTH3           1091
 #define IDC_EDIT_MAX_MN                 1092
+#define IDC_EDIT_EXPANDED_DISP_CODE     1092
 #define IDC_COMBO_SPEC1                 1098
 #define IDC_COMBO_SPEC2                 1099
 #define IDC_COMBO_CHEM1                 1099
@@ -574,6 +575,7 @@
 #define IDC_COMBO1                      1321
 #define IDC_EDIT_PARENT_PIECES_DUE_ONLU 1322
 #define IDC_COMBO2                      1322
+#define IDC_SPIN_EXPANDED_DISP_CODE     1323
 #define ID_EDIT_EDITCASTERSCEN          32771
 #define ID_VIEW_AVAILABLEORDERS         32772
 #define ID_ZOOM_IN                      32773
@@ -680,7 +682,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        224
 #define _APS_NEXT_COMMAND_VALUE         32863
-#define _APS_NEXT_CONTROL_VALUE         1323
+#define _APS_NEXT_CONTROL_VALUE         1324
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

@@ -1438,6 +1438,7 @@ void CCasterScenArchiverAux::ArchiveCSOrder(CCSOrder* pOrder,
 	m_pOrdersSet->m_StockReason 	= pOrder->StockReason();     // added stock reason CsdaTest update CasterStringOrders 5-5-09 k. hubbard
 	m_pOrdersSet->m_StockCommercialReason 	= pOrder->StockCommercialReason();   // added stock commercial reason CsdaTest update CasterStringOrders 5-5-09 k. hubbard
 	m_pOrdersSet->m_SlitReason 	    = pOrder->SlitReason();      // added slit reason CsdaTest update CasterStringOrders 2-26-10 k. hubbard
+	m_pOrdersSet->m_ExpandedDispCode = pOrder->ExpandedDispCode();
 
 	m_pOrdersSet->Update();
 }

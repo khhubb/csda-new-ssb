@@ -407,13 +407,20 @@ public:
 	int DispCode() const
 	{	return m_dispCode;	}
 
-	int ExpandedDispCode() const
-	{		return m_expandedDispCode;  }
-
 	void DispCode(int newVal)
 	{
 		m_dispCode = newVal;
 		m_outputDispCode = newVal;
+	}
+
+	int ExpandedDispCode() const
+	{
+		return m_expandedDispCode;
+	}
+
+	void ExpandedDispCode(int newVal)
+	{
+		m_expandedDispCode = newVal;
 	}
 
 	char SlitTypeCode() const

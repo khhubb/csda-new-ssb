@@ -56,7 +56,8 @@ CCasterStringOrdersSet::CCasterStringOrdersSet(CDatabase* pdb)
 	m_StockReason = _T("");  // added reason field 5-5-09 k. hubbard
 	m_StockCommercialReason = _T("");  // added reason field 5-5-09 k. hubbard
 	m_SlitReason = _T("");   // added reason field 2-26-10 k. hubbard
-	m_nFields = 27;
+	m_ExpandedDispCode = 0;
+	m_nFields = 28;
 	//}}AFX_FIELD_INIT
 	m_nDefaultType = dynaset;
 }
@@ -103,6 +104,7 @@ void CCasterStringOrdersSet::DoFieldExchange(CFieldExchange* pFX)
 	RFX_Text(pFX, _T("[StockReason]"), m_StockReason);  // added reason field 5-5-09 k. hubbard
 	RFX_Text(pFX, _T("[StockCommercialReason]"), m_StockCommercialReason);  // added reason field 5-5-09 k. hubbard
 	RFX_Text(pFX, _T("[SlitReason]"), m_SlitReason);    // added reason field 2-26-10 k. hubbard
+	RFX_Int(pFX, _T("[ExpandedDispCode]"), m_ExpandedDispCode);
 	//}}AFX_FIELD_MAP
 
 

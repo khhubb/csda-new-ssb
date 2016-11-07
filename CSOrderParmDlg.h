@@ -28,6 +28,7 @@ public:
 	//{{AFX_DATA(CCSOrderParmDlg)
 	enum { IDD = IDD_DLG_STRING_ORDER_PARMS };
 	CSpinButtonCtrl	m_spinDispCode;
+	CSpinButtonCtrl	m_spinExpandedDispCode;
 	CEdit	m_editCondnCode;
 	CEdit	m_editSpec;
 	CSpinButtonCtrl	m_spinCastWidth;
@@ -50,6 +51,7 @@ public:
 	CString	m_minCastWidth;
 	CString	m_slitTypeCode;
 	int		m_dispoCode;
+	int     m_expandedDispCode;
 	CString	m_changeIndic;
 	CString	m_expCode;
 	int		m_ciCode;

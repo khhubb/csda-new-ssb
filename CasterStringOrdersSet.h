@@ -45,6 +45,7 @@ public:
 	CString	m_StockReason;  // added reason field 5-5-09 k. hubbard
 	CString	m_StockCommercialReason;  // added reason field 5-5-09 k. hubbard
 	CString	m_SlitReason;   // added reason field 2-26-10 k. hubbard
+	int     m_ExpandedDispCode;
 	//}}AFX_FIELD
 
 

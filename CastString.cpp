@@ -2782,6 +2782,9 @@ void CCastString::UploadCSOrder( CUploadMgr& uMgr,
 	dpSet.m_PLAN_LOT_DISP_CODE
 		= pOrder->OutputDispCode();
 
+	dpSet.m_PLAN_EXPANDED_DISP_CODE
+		= pOrder->ExpandedDispCode();
+
 	dpSet.m_PLAN_LOT_TYPE_SLIT_CODE
 		= pOrder->SlitTypeCode();
 

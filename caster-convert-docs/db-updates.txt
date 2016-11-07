@@ -83,3 +83,17 @@ MORD_IH_CAST_UNIT_NAME       varchar(15), null
 PLAN_EXPANDED_DISP_CODE		int, null
 
 */
+
+/* Add new column to CSDA_DAILY_PLAN */
+/*
+
+PLAN_EXPANDED_DISP_CODE		int, null
+
+*/
+
+/* Add new column to [csd_csdatest].[CasterStringOrders] */
+/*
+
+ExpandedDispCode		int, null
+
+*/
