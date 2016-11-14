@@ -1437,25 +1437,50 @@ bool CCastStringValidator::Validate3SP(int caster) {
 			isOk = false;
 		}
 
-		// Audit slit-code type
-		char code = (*io)->SlitTypeCode();
+		//### Get COrder from CSOrder
+		COrder* order = (*io)->Order();
+		//### new rules
 		//#### New rule 1.1.1 Degrades for 1st slab in heat after startup
-		if (slabNum == 1)
-			if ((code != 'D') &&
-				(code != 'H') &&
-				(code != 'T')) {
-				ostr << "invalid slit type code for 1st slab in heat = " << code << ends;
+		//### TODO: 25T or greater rule
+		if (slabNum == 1 && order != 0)
+		{
+			CString conditionCode = order->CondWest();
+			CString conditionSpec = order->WestSpec().Mid(2, 3);
+			
+			// If the code or spec is missing, ensure failure by setting to bad values.
+			if (conditionCode.GetLength() < 2) conditionCode = "00";
+			if (conditionSpec.GetLength() < 3) conditionSpec = "00Z";
+					
+			CString lastChar = conditionSpec.Mid(2, 1);   // should be "T"
+			CString digitChars = conditionSpec.Mid(0, 2); // for instance, 25
+			int num = atoi(digitChars);
+
+			if ((conditionCode.Compare("7D") != 0) && (conditionCode.Compare("8H") != 0))
+			{	
+				ostr << "Invalid condition code for 1st slab in heat = " << conditionCode << ends;
 				ADD_ERR(CCastStringHeatValidnError::FATAL);
 				isOk = false;
 			}
 
+			if ((lastChar.Compare("T") != 0) && (num < 25))
+			{
+				ostr << "Invalid condition spec for 1st slab in heat = " << conditionSpec << ends;
+				ADD_ERR(CCastStringHeatValidnError::FATAL);
+				isOk = false;
+			}
+		}
+
 		//#### Also new: 1.1.2
+		/*
 		if (slabNum == 2)
 			if ((code != 'D')) {
 				ostr << "invalid slit type code for 1st slab in heat = " << code << ends;
 				ADD_ERR(CCastStringHeatValidnError::FATAL);
 				isOk = false;
 			}
+			*/
+		// Audit slit-code type
+		char code = (*io)->SlitTypeCode(); //### inherited code, not a new one
 
 		// Added noslit type code here on xxx4 condition codes 6-27-05 k. hubbard  
 		if (code != 'D' &&

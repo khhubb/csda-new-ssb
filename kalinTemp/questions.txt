@@ -1,0 +1,23 @@
+Questions on Scheduling Rules:
+
+General question:
+
+Are the slit-type codes used for the other casters also used for these new casters?
+In other words, are we adding new rules or replacing old rules with new ones?
+
+The codes for the other casters are 1-character: for example, 'D', 'H', 'T'.
+The codes for the new casters are at least 2-character and sometimes 3-character: for example, "7D", "8H", "25T"
+
+To repeat: Are we applying the _old_ codes and the _new_ codes, or just the new ones?
+------------------------------------------------------------------------------------------------------------------
+
+Specific questions on the rules from the the "Scheduling Rules" document for the 3SP casters
+
+1.1.1: This rule refers to 7D, 6D, and 8H -- all of which are 2-character MORD_SMK_COND_WEST codes
+
+       The rule also refers to 25T, which is not a MORD_SMK_COND_WEST looks like the last 3 characters
+       of the 5-character MORD_SMK_SPEC_WEST code.
+
+       ### Is this correct?
+
+1.1.7: This rule applies to "Line pipe" scheduling. How is line pipe scheduling determined?
