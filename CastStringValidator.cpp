@@ -1441,55 +1441,43 @@ bool CCastStringValidator::Validate3SP(int caster) {
 		COrder* order = (*io)->Order();
 		CString conditionCode = order->CondWest();
 		CString specificationCode = order->WestSpec();
-		CString lastChar = conditionCode.Mid(conditionCode.GetLength() - 1, 1);
 
 		//### new rules
 		//#### New rule 1.1.1 Degrades for 1st slab in heat after startup
+
+		//### 1st slab in 1st heat
 		if ((*io)->HeatSeqNum() == 0 &&   //### heat numbers start at 0: 1st heat?
 			slabNum == 1 &&               //### 1st slab in 1st heat?
 			order != 0)                   //### ensure non-null order
 		{
-        	//## line pipe (rule 1.1.7) defined as follows: MORD_SMK_SPEC_WEST = “J26” and  MORD_SMK_COND_WEST code last character = “J”
-			//### PROBLEM: check with KH -- how can last char be "J" if code must be "8H"?
-			if ((specificationCode.Compare("J26") == 0) && ((lastChar.Compare("J") == 0) || (lastChar.Compare("H") == 0)))
+			//## line pipe (rule 1.1.7) defined as follows: MORD_SMK_SPEC_WEST = “J26” and  MORD_SMK_COND_WEST code last character = “J”
+			//### Amended per Tom F.: 1st slab is "H", 2nd is "J"
+			if ((specificationCode.Compare("J26") == 0) && (conditionCode.Compare("8H") != 0))
 			{
-				if (conditionCode.Compare("8H") != 0)
-				{
-					ostr << "Invalid condition code for 1st slab in 1st heat in line pipe schedule = " << conditionCode << ends;
-					ADD_ERR(CCastStringHeatValidnError::FATAL);
-					isOk = false;
-				}
+				ostr << "Invalid condition code for 1st slab in 1st heat in line pipe schedule = " << conditionCode << ends;
+				ADD_ERR(CCastStringHeatValidnError::FATAL);
+				isOk = false;
 			}
 			else if ((conditionCode.Compare("7D") != 0) && (conditionCode.Compare("8H") != 0))
-			{	
+			{
 				ostr << "Invalid condition code for 1st slab in 1st heat = " << conditionCode << ends;
 				ADD_ERR(CCastStringHeatValidnError::FATAL);
 				isOk = false;
 			}
 		}
-
 		//#### Also new (1.1.2): check 2nd slab in heat
-		if ((*io)->HeatSeqNum() == 0 &&   //### heat numbers seem to start at 0
+		//### 2nd slab in 1st heat
+		else if ((*io)->HeatSeqNum() == 0 &&   //### heat numbers seem to start at 0
 			slabNum == 2 &&               //### 2nd slab in 1st heat?
 			order != 0)                   //### ensure non-null order
 		{
-			CString conditionCode = order->CondWest();
-			CString specificationCode = order->WestSpec();
-
-			if (conditionCode.GetLength() < 2)
-			{
-				ostr << "Can't check bad condition code for 2nd slab in 1st heat = " << conditionCode << ends;
-				ADD_ERR(CCastStringHeatValidnError::FATAL);
-				isOk = false;
-			}
-			else if (specificationCode.GetLength() < 5)
-			{
-				ostr << "Can't check bad specification code for 2nd slab in 1st heat = " << specificationCode << ends;
-				ADD_ERR(CCastStringHeatValidnError::FATAL);
-				isOk = false;
-			}
 			//### line pipe stuff goes here
-
+			if ((specificationCode.Compare("J26") == 0) && (conditionCode.Compare("8J") != 0))
+			{
+				ostr << "Invalid condition code for 1st slab in 1st heat in line pipe schedule = " << conditionCode << ends;
+				ADD_ERR(CCastStringHeatValidnError::FATAL);
+				isOk = false;
+			}
 			// For spec K201G, the conditionCondition cannot be TD, 2D, or 3D
 			else if (specificationCode.Compare("K201G") == 0) //### rule 1.1.3 (b)
 			{
@@ -1497,7 +1485,7 @@ bool CCastStringValidator::Validate3SP(int caster) {
 					(conditionCode.Compare("2D") == 0) ||
 					(conditionCode.Compare("3D") == 0))
 				{
-					ostr << "Invalid condition code for 2nd slab in 1st heat = " << conditionCode << 
+					ostr << "Invalid condition code for 2nd slab in 1st heat = " << conditionCode <<
 						" with specificationCode " << specificationCode << ends;
 					ADD_ERR(CCastStringHeatValidnError::FATAL);
 					isOk = false;
@@ -1509,7 +1497,7 @@ bool CCastStringValidator::Validate3SP(int caster) {
 				if ((conditionCode.Compare("TD") == 0) ||
 					(conditionCode.Compare("2D") == 0))
 				{
-					ostr << "Invalid condition code for 2nd slab in 1st heat = " << conditionCode << 
+					ostr << "Invalid condition code for 2nd slab in 1st heat = " << conditionCode <<
 						" with specification code " << specificationCode << ends;
 					ADD_ERR(CCastStringHeatValidnError::FATAL);
 					isOk = false;
@@ -1517,14 +1505,6 @@ bool CCastStringValidator::Validate3SP(int caster) {
 			}
 		}
 
-		/*
-		if (slabNum == 2)
-			if ((code != 'D')) {
-				ostr << "invalid slit type code for 1st slab in heat = " << code << ends;
-				ADD_ERR(CCastStringHeatValidnError::FATAL);
-				isOk = false;
-			}
-			*/
 		// Audit slit-code type
 		char code = (*io)->SlitTypeCode(); //### inherited code, not a new one
 
@@ -1534,6 +1514,7 @@ bool CCastStringValidator::Validate3SP(int caster) {
 			code != 'F' &&
 			code != 'S' &&
 			code != 'R' &&
+			code != 'H' &&  // per KH
 			code != ' ') {
 			ostr << "invalid slit type code = " << code << ends;
 			ADD_ERR(CCastStringHeatValidnError::WARNING);
@@ -2289,7 +2270,7 @@ bool CCastStringValidator::Validate340080(int strandNum)
 					isOk = false;
 				}
 			}
-			else if ( caster == 2 || caster == 3 )  {
+			else if (caster == 2 || caster == 3) {
 
 				if (condn > 0
 					&&
@@ -2635,11 +2616,11 @@ bool CCastStringValidator::Validate340080(int strandNum)
 		// Audit 2BOF inward width change designs.  1-28-10 k. hubbard
 
 		{
-		//######### Not clear on width change rules for 4 and 5 (1.6 in documentation)
-		//######### KH Answer: Ignore for casters 4 and 5 today. In the future some grades will be inward only, but not today.
-		if (( caster == 2 || caster == 3) //### caster-specific
-			&&
-			 prevWidth > 0)
+			//######### Not clear on width change rules for 4 and 5 (1.6 in documentation)
+			//######### KH Answer: Ignore for casters 4 and 5 today. In the future some grades will be inward only, but not today.
+			if ((caster == 2 || caster == 3) //### caster-specific
+				&&
+				prevWidth > 0)
 			{
 
 				if ((*io)->SlabWidth() > prevWidth)
