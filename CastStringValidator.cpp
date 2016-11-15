@@ -1437,40 +1437,29 @@ bool CCastStringValidator::Validate3SP(int caster) {
 			isOk = false;
 		}
 
-		//### Get COrder from CSOrder
+		//### Get COrder from CSOrder to access condition code and specification code
 		COrder* order = (*io)->Order();
+
 		//### new rules
 		//#### New rule 1.1.1 Degrades for 1st slab in heat after startup
-		if ((*io)->HeatSeqNum() == 0 &&   //### heat numbers seem to start at 0
+		if ((*io)->HeatSeqNum() == 0 &&   //### heat numbers start at 0: 1st heat?
 			slabNum == 1 &&               //### 1st slab in 1st heat?
 			order != 0)                   //### ensure non-null order
 		{
 			CString conditionCode = order->CondWest();
-			// CString conditionSpec = order->WestSpec().Mid(2, 3);
-			
-			// If the code is missing, ensure failure by setting to bad values.
-			if (conditionCode.GetLength() < 2) conditionCode = "00";
-			// if (conditionSpec.GetLength() < 3) conditionSpec = "00Z";
-					
-			//CString lastChar = conditionSpec.Mid(2, 1);   // should be "T"
-			//CString digitChars = conditionSpec.Mid(0, 2); // for instance, 25
-			//int num = atoi(digitChars);
-
-			if ((conditionCode.Compare("7D") != 0) && (conditionCode.Compare("8H") != 0))
+			// If the code is missing, issue an error.
+			if (conditionCode.GetLength() < 2)
+			{
+				ostr << "Can't check empty condition code for 1st slab in 1st heat = " << conditionCode << ends;
+				ADD_ERR(CCastStringHeatValidnError::FATAL);
+				isOk = false;
+			}
+			else if ((conditionCode.Compare("7D") != 0) && (conditionCode.Compare("8H") != 0))
 			{	
 				ostr << "Invalid condition code for 1st slab in 1st heat = " << conditionCode << ends;
 				ADD_ERR(CCastStringHeatValidnError::FATAL);
 				isOk = false;
 			}
-
-			/**
-			if ((lastChar.Compare("T") != 0) && (num > 25))  // check if this captures "at least 25T" in their documentation
-			{
-				ostr << "Invalid condition spec for 1st slab in 1st heat = " << conditionSpec << ends;
-				ADD_ERR(CCastStringHeatValidnError::FATAL);
-				isOk = false;
-			}
-			*/
 		}
 
 		//#### Also new: 1.1.2
@@ -1478,7 +1467,46 @@ bool CCastStringValidator::Validate3SP(int caster) {
 			slabNum == 2 &&               //### 2nd slab in 1st heat?
 			order != 0)                   //### ensure non-null order
 		{
+			CString conditionCode = order->CondWest();
+			CString specificationCode = order->WestSpec();
 
+			if (conditionCode.GetLength() < 2)
+			{
+				ostr << "Can't check empty condition code for 2nd slab in 1st heat = " << conditionCode << ends;
+				ADD_ERR(CCastStringHeatValidnError::FATAL);
+				isOk = false;
+			}
+			else if (specificationCode.GetLength() < 5)
+			{
+				ostr << "Can't check empty specification code for 2nd slab in 1st heat = " << specificationCode << ends;
+				ADD_ERR(CCastStringHeatValidnError::FATAL);
+				isOk = false;
+			}
+			// For spec K201G, the conditionCondition cannot be TD, 2D, or 3D
+			else if (specificationCode.Compare("K201G") == 0) //### rule 1.1.3 (b)
+			{
+				if ((conditionCode.Compare("TD") == 0) ||
+					(conditionCode.Compare("2D") == 0) ||
+					(conditionCode.Compare("3D") == 0))
+				{
+					ostr << "Invalid condition code for 2nd slab in 1st heat = " << conditionCode << 
+						" with specificationCode " << specificationCode << ends;
+					ADD_ERR(CCastStringHeatValidnError::FATAL);
+					isOk = false;
+				}
+			}
+			// otherwise, no TD or 2D condition code (but 3D is ok)
+			else
+			{
+				if ((conditionCode.Compare("TD") == 0) ||
+					(conditionCode.Compare("2D") == 0))
+				{
+					ostr << "Invalid condition code for 2nd slab in 1st heat = " << conditionCode << 
+						" with specification code " << specificationCode << ends;
+					ADD_ERR(CCastStringHeatValidnError::FATAL);
+					isOk = false;
+				}
+			}
 		}
 
 		/*
