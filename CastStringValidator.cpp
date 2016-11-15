@@ -1439,6 +1439,9 @@ bool CCastStringValidator::Validate3SP(int caster) {
 
 		//### Get COrder from CSOrder to access condition code and specification code
 		COrder* order = (*io)->Order();
+		CString conditionCode = order->CondWest();
+		CString specificationCode = order->WestSpec();
+		CString lastChar = conditionCode.Mid(conditionCode.GetLength() - 1, 1);
 
 		//### new rules
 		//#### New rule 1.1.1 Degrades for 1st slab in heat after startup
@@ -1446,13 +1449,16 @@ bool CCastStringValidator::Validate3SP(int caster) {
 			slabNum == 1 &&               //### 1st slab in 1st heat?
 			order != 0)                   //### ensure non-null order
 		{
-			CString conditionCode = order->CondWest();
-			// If the code is missing, issue an error.
-			if (conditionCode.GetLength() < 2)
+        	//## line pipe (rule 1.1.7) defined as follows: MORD_SMK_SPEC_WEST = “J26” and  MORD_SMK_COND_WEST code last character = “J”
+			//### PROBLEM: check with KH -- how can last char be "J" if code must be "8H"?
+			if ((specificationCode.Compare("J26") == 0) && ((lastChar.Compare("J") == 0) || (lastChar.Compare("H") == 0)))
 			{
-				ostr << "Can't check empty condition code for 1st slab in 1st heat = " << conditionCode << ends;
-				ADD_ERR(CCastStringHeatValidnError::FATAL);
-				isOk = false;
+				if (conditionCode.Compare("8H") != 0)
+				{
+					ostr << "Invalid condition code for 1st slab in 1st heat in line pipe schedule = " << conditionCode << ends;
+					ADD_ERR(CCastStringHeatValidnError::FATAL);
+					isOk = false;
+				}
 			}
 			else if ((conditionCode.Compare("7D") != 0) && (conditionCode.Compare("8H") != 0))
 			{	
@@ -1462,7 +1468,7 @@ bool CCastStringValidator::Validate3SP(int caster) {
 			}
 		}
 
-		//#### Also new: 1.1.2
+		//#### Also new (1.1.2): check 2nd slab in heat
 		if ((*io)->HeatSeqNum() == 0 &&   //### heat numbers seem to start at 0
 			slabNum == 2 &&               //### 2nd slab in 1st heat?
 			order != 0)                   //### ensure non-null order
@@ -1472,16 +1478,18 @@ bool CCastStringValidator::Validate3SP(int caster) {
 
 			if (conditionCode.GetLength() < 2)
 			{
-				ostr << "Can't check empty condition code for 2nd slab in 1st heat = " << conditionCode << ends;
+				ostr << "Can't check bad condition code for 2nd slab in 1st heat = " << conditionCode << ends;
 				ADD_ERR(CCastStringHeatValidnError::FATAL);
 				isOk = false;
 			}
 			else if (specificationCode.GetLength() < 5)
 			{
-				ostr << "Can't check empty specification code for 2nd slab in 1st heat = " << specificationCode << ends;
+				ostr << "Can't check bad specification code for 2nd slab in 1st heat = " << specificationCode << ends;
 				ADD_ERR(CCastStringHeatValidnError::FATAL);
 				isOk = false;
 			}
+			//### line pipe stuff goes here
+
 			// For spec K201G, the conditionCondition cannot be TD, 2D, or 3D
 			else if (specificationCode.Compare("K201G") == 0) //### rule 1.1.3 (b)
 			{
@@ -1529,6 +1537,14 @@ bool CCastStringValidator::Validate3SP(int caster) {
 			code != ' ') {
 			ostr << "invalid slit type code = " << code << ends;
 			ADD_ERR(CCastStringHeatValidnError::WARNING);
+			isOk = false;
+		}
+
+		//### New condition code 'H' per KH: the length must not exceed 460
+		if (code == 'H' && (*io)->SlabLength() > 460)
+		{
+			ostr << "For slit-code H, the slab length of  " << (*io)->SlabLength() << " exceeds 460" << ends;
+			ADD_ERR(CCastStringHeatValidnError::FATAL);
 			isOk = false;
 		}
 
