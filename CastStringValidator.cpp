@@ -1441,8 +1441,9 @@ bool CCastStringValidator::Validate3SP(int caster) {
 		COrder* order = (*io)->Order();
 		//### new rules
 		//#### New rule 1.1.1 Degrades for 1st slab in heat after startup
-		//### TODO: 25T or greater rule
-		if (slabNum == 1 && order != 0)
+		if ((*io)->HeatSeqNum() == 0 &&   //### heat numbers seem to start at 0
+			slabNum == 1 &&               //### 1st slab in 1st heat?
+			order != 0)                   //### ensure non-null order
 		{
 			CString conditionCode = order->CondWest();
 			CString conditionSpec = order->WestSpec().Mid(2, 3);
@@ -1457,20 +1458,27 @@ bool CCastStringValidator::Validate3SP(int caster) {
 
 			if ((conditionCode.Compare("7D") != 0) && (conditionCode.Compare("8H") != 0))
 			{	
-				ostr << "Invalid condition code for 1st slab in heat = " << conditionCode << ends;
+				ostr << "Invalid condition code for 1st slab in 1st heat = " << conditionCode << ends;
 				ADD_ERR(CCastStringHeatValidnError::FATAL);
 				isOk = false;
 			}
 
-			if ((lastChar.Compare("T") != 0) && (num < 25))
+			if ((lastChar.Compare("T") != 0) && (num > 25))  // check if this captures "at least 25T" in their documentation
 			{
-				ostr << "Invalid condition spec for 1st slab in heat = " << conditionSpec << ends;
+				ostr << "Invalid condition spec for 1st slab in 1st heat = " << conditionSpec << ends;
 				ADD_ERR(CCastStringHeatValidnError::FATAL);
 				isOk = false;
 			}
 		}
 
 		//#### Also new: 1.1.2
+		if ((*io)->HeatSeqNum() == 0 &&   //### heat numbers seem to start at 0
+			slabNum == 2 &&               //### 2nd slab in 1st heat?
+			order != 0)                   //### ensure non-null order
+		{
+
+		}
+
 		/*
 		if (slabNum == 2)
 			if ((code != 'D')) {
