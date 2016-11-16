@@ -1848,6 +1848,7 @@ bool CCastStringValidator::Validate3SP(int caster) {
 		}
 		slabNum++; //##### new: tracking which slab
 	} // for loop
+	//### checks on last two slabs
 	return isOk;
 } // method body
 
