@@ -1411,6 +1411,10 @@ bool CCastStringValidator::Validate3SP(int caster) {
 	bool isOk = true;
 	ostrstream ostr;
 
+	//### 1.1.3: locals to track order and width info, which is used to validate last slabes
+	CString orderType = "";
+	int widthOf2ndToLastSlab = -1;
+
 	// Check the strand size, returning true if the size is zero.
 	int strandNum = 1;  // only one strand per caster
 	const vector<CCSOrder*>& strand = m_pCastString->Strand(strandNum);
@@ -1418,6 +1422,9 @@ bool CCastStringValidator::Validate3SP(int caster) {
 
 	Width prevWidth = 0; // we start at the beginning
 	int slabNum = 1;
+	bool secondSlabNext = false;
+	CCSOrder* nextToLastOrder = 0;
+	CCSOrder* lastOrder = 0;
 
 	// Iterate over the orders, validating as we go.
 	for (vector<CCSOrder*>::const_iterator io = strand.begin(); io != strand.end(); ++io) {
@@ -1425,6 +1432,9 @@ bool CCastStringValidator::Validate3SP(int caster) {
 		CCastStringHeat& rHeat = (*m_pHeats)[(*io)->HeatSeqNum()];
 		if (!rHeat.IsMarked())
 			continue;
+
+		//### Need this to track last two slabs.
+		//int slabCountForOrder = (*io)->NumSlabs();
 
 		// Audit the lot spec, looking at specific digits.
 		FixHeatSpec3SP(rHeat, caster); //### caster-specific
@@ -1447,9 +1457,10 @@ bool CCastStringValidator::Validate3SP(int caster) {
 
 		//### 1st slab in 1st heat
 		if ((*io)->HeatSeqNum() == 0 &&   //### heat numbers start at 0: 1st heat?
-			slabNum == 1 &&               //### 1st slab in 1st heat?
+			prevWidth == 0 &&             //### 1st slab in 1st heat?
 			order != 0)                   //### ensure non-null order
 		{
+			secondSlabNext = true;
 			//## line pipe (rule 1.1.7) defined as follows: MORD_SMK_SPEC_WEST = “J26” and  MORD_SMK_COND_WEST code last character = “J”
 			//### Amended per Tom F.: 1st slab is "H", 2nd is "J"
 			if ((specificationCode.Compare("J26") == 0) && (conditionCode.Compare("8H") != 0))
@@ -1468,13 +1479,14 @@ bool CCastStringValidator::Validate3SP(int caster) {
 		//#### Also new (1.1.2): check 2nd slab in heat
 		//### 2nd slab in 1st heat
 		else if ((*io)->HeatSeqNum() == 0 &&   //### heat numbers seem to start at 0
-			slabNum == 2 &&               //### 2nd slab in 1st heat?
-			order != 0)                   //### ensure non-null order
+			secondSlabNext &&                    //### 2nd slab in 1st heat?
+			order != 0)                        //### ensure non-null order
 		{
+			secondSlabNext = false;
 			//### line pipe stuff goes here
 			if ((specificationCode.Compare("J26") == 0) && (conditionCode.Compare("8J") != 0))
 			{
-				ostr << "Invalid condition code for 1st slab in 1st heat in line pipe schedule = " << conditionCode << ends;
+				ostr << "Invalid condition code for 2nd slab in 1st heat in line pipe schedule = " << conditionCode << ends;
 				ADD_ERR(CCastStringHeatValidnError::FATAL);
 				isOk = false;
 			}
@@ -1846,7 +1858,7 @@ bool CCastStringValidator::Validate3SP(int caster) {
 			ADD_ERR(CCastStringHeatValidnError::WARNING);
 			isOk = false;
 		}
-		slabNum++; //##### new: tracking which slab
+		// slabNum++; //##### new: not used any more tracking which slab
 	} // for loop
 	//### checks on last two slabs
 	return isOk;
