@@ -1404,7 +1404,6 @@ bool CCastStringValidator::ValidateLotSpecs(CCastStringHeat& rHeat, int strandNu
 							io - rHeat.StrandBegin(strandNum),		\
 							ostr, severity )
 
-
 int TRANS_WIDTH = 1;
 
 bool CCastStringValidator::Validate3SP(int caster) {
@@ -1423,18 +1422,23 @@ bool CCastStringValidator::Validate3SP(int caster) {
 	Width prevWidth = 0; // we start at the beginning
 	int slabNum = 1;
 	bool secondSlabNext = false;
-	CCSOrder* nextToLastOrder = 0;
-	CCSOrder* lastOrder = 0;
+	COrder* nextToLastOrder = 0;
+	COrder* lastOrder = 0;
 
 	// Iterate over the orders, validating as we go.
-	for (vector<CCSOrder*>::const_iterator io = strand.begin(); io != strand.end(); ++io) {
+	//### Need to take the 'io' variable and 'rHeat' outside loop to use ADD_ERR beyond the loop.
+	vector<CCSOrder*>::const_iterator io = strand.begin();
+	CCastStringHeat& rHeat = (*m_pHeats)[(*io)->HeatSeqNum()];
+
+	for (io = strand.begin(); io != strand.end(); ++io) {
 		// Consider only marked heats.
-		CCastStringHeat& rHeat = (*m_pHeats)[(*io)->HeatSeqNum()];
-		if (!rHeat.IsMarked())
+		rHeat = (*m_pHeats)[(*io)->HeatSeqNum()];
+		if (!rHeat.IsMarked()) 
 			continue;
 
-		//### Need this to track last two slabs.
-		//int slabCountForOrder = (*io)->NumSlabs();
+		// Track the last and next-to-last orders for post-loop validation.
+		nextToLastOrder = lastOrder;
+		lastOrder = (*io)->Order();
 
 		// Audit the lot spec, looking at specific digits.
 		FixHeatSpec3SP(rHeat, caster); //### caster-specific
@@ -1479,7 +1483,7 @@ bool CCastStringValidator::Validate3SP(int caster) {
 		//#### Also new (1.1.2): check 2nd slab in heat
 		//### 2nd slab in 1st heat
 		else if ((*io)->HeatSeqNum() == 0 &&   //### heat numbers seem to start at 0
-			secondSlabNext &&                    //### 2nd slab in 1st heat?
+			secondSlabNext &&                  //### 2nd slab in 1st heat?
 			order != 0)                        //### ensure non-null order
 		{
 			secondSlabNext = false;
@@ -1559,7 +1563,7 @@ bool CCastStringValidator::Validate3SP(int caster) {
 				isOk = false;
 			}
 		}
-
+		
 		// Audit non-transition provided steel widths
 		width = (*io)->SlabWidth();
 		code = (*io)->SlitTypeCode();
@@ -1693,7 +1697,6 @@ bool CCastStringValidator::Validate3SP(int caster) {
 			ADD_ERR(CCastStringHeatValidnError::WARNING);
 			isOk = false;
 		}
-
 
 		// Audit Tek and Kote positional planned orders at beginning of cast violations.  Added 03-06-06 k. hubbard per P. Velasco
 		int commodcode = (*io)->CICode();
@@ -1858,9 +1861,30 @@ bool CCastStringValidator::Validate3SP(int caster) {
 			ADD_ERR(CCastStringHeatValidnError::WARNING);
 			isOk = false;
 		}
-		// slabNum++; //##### new: not used any more tracking which slab
 	} // for loop
+
 	//### checks on last two slabs
+	CString lastConditionCode = lastOrder->CondWest();
+	Width lastWidth = lastOrder->SlabWidth();
+	Width nextToLastWidth = nextToLastOrder->SlabWidth();
+
+	io--; // decrement iterator for possible error messages.
+	if ((lastConditionCode != "5D") && (lastConditionCode != "5M") &&
+		(lastConditionCode != "8J") && (lastConditionCode != "8M") &&
+		(lastConditionCode != "7D"))
+	{
+		ostr << "Bad condition code on last slab: " << lastConditionCode << ends;
+		ADD_ERR(CCastStringHeatValidnError::FATAL);
+		isOk = false;
+	}
+
+	if (lastWidth != nextToLastWidth)
+	{
+		ostr << "Last two widths dffer: " << nextToLastWidth << " and " << lastWidth << ends;
+		ADD_ERR(CCastStringHeatValidnError::FATAL);  // temp switched from fatal to warning 
+		isOk = false;
+	}
+	
 	return isOk;
 } // method body
 
